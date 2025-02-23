@@ -1,5 +1,5 @@
-# Fernhelm
-Fernhelm is a 2D, 2-player local co-op turn-based battle game developed using C++ and SDL2.
+# Turn-Based RPG
+A 2D, 2-player local co-op turn-based battle game developed using C++ and SDL2.
 
 ![fernhelm gif](https://github.com/ramirezfernando/fernhelm/assets/91701930/bc2a694d-81aa-49db-82b4-314f83566f76)
 
@@ -63,7 +63,7 @@ The system requirements for running on a macOS are:
 
 1. Clone the repo
     ```sh
-    git clone https://github.com/ramirezfernando/fernhelm.git
+    git clone https://github.com/ramirezfernando/turn-based-rpg.git
     ```
 2. Download Homebrew
     ```sh
