@@ -1,43 +1,25 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <unistd.h> // sleep function
-
-using namespace std;
-
 #pragma once
 
-struct CharacterInfo 
-{
-    string characterChosen;
-    string userName;
-    int _level;
-    int _health;
-    int _energy;
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <unistd.h>
+#include <fstream>
+#include <iostream>
+#include <string>
+
+class Game {
+ public:
+  ~Game();
+  void Init(const char* title, int x_pos, int y_pos, int width, int height);
+  void Update();
+  void Render();
+  void HandleEvents();
+  void SetIsRunning(bool is_running) { is_running_ = is_running; }
+  bool IsRunning() { return is_running_; }
+  static SDL_Renderer* renderer_;
+  static SDL_Event event_;
+
+ private:
+  SDL_Window* window_;
+  bool is_running_;
 };
-
-
-#ifndef GAME_H
-#define GAME_H
-class Game
-{
-public: 
-    CharacterInfo* Menu();
-    void RenderHPBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor, SDL_Renderer* renderer);
-    void Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen); // initialize window to display the game
-    void HandleEvents();
-    void Update();
-    void Render(); 
-    void Clean(); // destroys SDL_Window
-    bool Running(); // game loop variable
-    void SetRunning(bool run); // set game loop variable
-    static SDL_Renderer* renderer; // static renderer without the need of having multiple renderers
-    static SDL_Event event; 
-private:
-    bool isRunning;
-    SDL_Window *window;
-};
-
-#endif

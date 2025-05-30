@@ -1,4 +1,4 @@
-#include "FireKnight.h"
+#include "fire_knight.h"
 
 
 FireKnight::FireKnight()
@@ -199,14 +199,4 @@ void FireKnight::PrintStats()
         <<  "> Level: " << level << endl
         <<  "> Health: " << health << endl
         <<  "> Stamina: " << stamina << endl;
-}
-void FireKnight::SaveProgress(string characterType)
-{
-    ofstream fout("saved-data/save.txt");
-    
-    fout << characterType << endl;
-    fout << name << endl;
-    fout << level << endl;
-    fout << health << endl;
-    fout << stamina << endl;
 }

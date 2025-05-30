@@ -1,12 +1,13 @@
-#include "Character.h"
+#pragma once
 
-class GroundMonk : public Character
+#include "character.h"
+
+class FireKnight : public Character
 {
     public:
-        // Constructor
-        GroundMonk();
-        GroundMonk(bool isEnemy, string name);
-        GroundMonk(bool isEnemy, string name, int level, int health, int _chakra);
+        FireKnight();
+        FireKnight(bool isEnemy, string name);
+        FireKnight(bool isEnemy, string name, int level, int health, int _stamina);
 
         // Actions
         void Attack1() override;
@@ -22,7 +23,8 @@ class GroundMonk : public Character
         int GetEnergy() override;
 
         void PrintStats() override;
-        void SaveProgress(string characterType) override;
+
+        
     private:
-        int chakra;
+        int stamina;
 };

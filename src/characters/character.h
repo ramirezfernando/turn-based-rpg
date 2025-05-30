@@ -1,10 +1,9 @@
-#include "Game.h"
+#pragma once
+
+#include "game.h"
 #include <string>
 
 using namespace std;
-
-#ifndef CHARACTER_H
-#define CHARACTER_H
 
 class Character
 {
@@ -65,8 +64,6 @@ public:
     virtual void TakeDamage(int damage) = 0;
 
     virtual void PrintStats() = 0;
-    virtual void SaveProgress(string characterType) = 0; // file output
-    CharacterInfo LoadProgress(string file); // file input
 
 
 protected:
@@ -81,6 +78,8 @@ protected:
     int frames;
     int speed;
     int count;
+    Uint32 last_frame_time_ = 0;
+    int delay_ = 70;
 
     // game variables
     string name;
@@ -89,5 +88,3 @@ protected:
     string characterType;
     bool enemy = false;
 };
-
-#endif

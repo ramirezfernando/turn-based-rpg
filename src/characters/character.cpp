@@ -1,5 +1,5 @@
-#include "Character.h"
-#include "Textures.h"
+#include "character.h"
+#include "utils/util.h"
 
 void Character::Update() 
 {
@@ -16,22 +16,18 @@ void Character::Update()
     destRect.w = srcRect.w * 2;
 
     // implement movement animation
-    if (count <= frames ) {
-        // Ex: path = "assests/FireKnight/1_atk" then filename would be "assests/FireKnight/1_atk/(count).png"
-        string filename = path+"/"+ to_string(count) + ".png";
-        const char* file = filename.c_str();
-        characterTexture = Textures::LoadTexture(file);
-        SDL_Delay(70); // inplace of SDL_Delay(speed) for now
-        count++;
-    } 
-    // this is to keep animation running infinitely
-    else {
-        // count = 1 because all my file names start at 1
-        if (path == "assets/FireKnight/idle" || path == "assets/WaterPriestess/idle" || path == "assets/GroundMonk/idle") {
-            count = 1;
+    Uint32 current_time = SDL_GetTicks();
+    if (current_time > last_frame_time_ + delay_) {
+        if (count < frames) {
+          string filename = path+"/"+ to_string(count) + ".png";
+          const char* file = filename.c_str();
+          characterTexture = Util::LoadTexture(file);
+          count++;
+        } else {
+          count = 1;
         }
+        last_frame_time_ = current_time;
     }
-    
 }
 
 
@@ -39,10 +35,10 @@ void Character::Render()
 {
     // if enemy then the image needs to be inverted to face the other player
     if (enemy) {
-        Textures::RenderInvertedTexture(characterTexture, srcRect, destRect, SDL_FLIP_HORIZONTAL);
+        Util::RenderInvertedTexture(characterTexture, srcRect, destRect, SDL_FLIP_HORIZONTAL);
     }
     else {
-        SDL_RenderCopy(Game::renderer, characterTexture, &srcRect, &destRect);
+        SDL_RenderCopy(Game::renderer_, characterTexture, &srcRect, &destRect);
     }
     
 }
@@ -54,7 +50,7 @@ void Character::Clean()
 // Setters 
 void Character::SetTexture(const char* texture)
 {
-    characterTexture = Textures::LoadTexture(texture);
+    characterTexture = Util::LoadTexture(texture);
 }
 void Character::SetSourceRect(SDL_Rect src)
 {
@@ -153,26 +149,4 @@ string Character::getCharacterType()
 bool Character::GetEnemy()
 {
     return enemy;
-}
-// Load data 
-CharacterInfo Character::LoadProgress(string file)
-{
-    CharacterInfo info;
-    //string character, name, level, health, energy, combinedString;
-    ifstream fin("saved-data/"+file);
-    if (!fin.is_open()) {
-        throw invalid_argument("No such file name.");
-   }
-
-    while(!fin.eof()) {
-        fin >> info.characterChosen;
-        fin >> info.userName;
-        fin >> info._level;
-        fin >> info._health;
-        fin >> info._energy;
-    }
-    
-    //combinedString = character + " " + name + " " + level + " " + health + " " + energy; 
-    fin.close();
-    return info;
 }
