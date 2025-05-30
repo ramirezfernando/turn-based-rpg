@@ -6,24 +6,24 @@
 
 SDL_Renderer* Game::renderer_ = nullptr;
 SDL_Event Game::event_;
-
-Background* forest;
-Background* textBox;
-Character* player;
-Character* enemy;
+std::unique_ptr<Background> forest;
+std::unique_ptr<Background> textBox;
+std::unique_ptr<Character> player;
+std::unique_ptr<Character> enemy;
 bool isPlayer1Turn = true;
 bool isPlayer2Turn = false;
 
 // Helper functions to handle events based on the text box that is displayed
-void handleMenuEvents(SDL_Event& event, Background* textBox);
-void handleAttackEvents(SDL_Event& event, Background* textBox,
-                        Character* player, Character* enemy);
-void handleStatsEvents(SDL_Event& event, Background* textBox,
-                       Character* player);
-void handleRunEvents(SDL_Event& event, Background* textBox, Game* game);
+void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox);
+void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                        std::unique_ptr<Character>& player,
+                        std::unique_ptr<Character>& enemy);
+void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                       std::unique_ptr<Character>& player);
+void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                     Game* game);
 
 Game::~Game() {
-  // Cleans up SDL
   SDL_DestroyWindow(window_);
   SDL_DestroyRenderer(renderer_);
   SDL_Quit();
@@ -33,7 +33,6 @@ Game::~Game() {
 
 void Game::Init(const char* title, int x_pos, int y_pos, int width,
                 int height) {
-  // Initializing SDL2 window
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     window_ = SDL_CreateWindow(title, x_pos, y_pos, width, height, 0);
     if (window_) {
@@ -49,11 +48,25 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     is_running_ = false;
   }
 
-  // Setup stuff
-  player = new FireKnight(false, "Player");
-  enemy = new FireKnight(true, "Bot");
-  forest = new Background("assets/Backgrounds/forest.png", 0, 0);
-  textBox = new Background("assets/TextBoxes/Main.png", 40, 490);
+  forest = std::unique_ptr<Background>(
+      new Background("assets/Backgrounds/forest.png", 0, 0));
+  if (forest) {
+    std::cout << "Forest created" << std::endl;
+  }
+  textBox = std::unique_ptr<Background>(
+      new Background("assets/TextBoxes/Main.png", 40, 490));
+  if (textBox) {
+    std::cout << "Text box created" << std::endl;
+  }
+  player =
+      std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/false, "Player"));
+  if (player) {
+    std::cout << "Character created" << std::endl;
+  }
+  enemy = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true, "Bot"));
+  if (enemy) {
+    std::cout << "Enemy created" << std::endl;
+  }
 }
 
 void Game::Update() {
@@ -132,7 +145,7 @@ void Game::HandleEvents() {
   }
 }
 
-void handleMenuEvents(SDL_Event& event, Background* textBox) {
+void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
       textBox->SetImageFilePath("assets/TextBoxes/Attack.png");
@@ -152,8 +165,9 @@ void handleMenuEvents(SDL_Event& event, Background* textBox) {
   }
 }
 
-void handleAttackEvents(SDL_Event& event, Background* textBox,
-                        Character* player, Character* enemy) {
+void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                        std::unique_ptr<Character>& player,
+                        std::unique_ptr<Character>& enemy) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
       player->Attack1();
@@ -205,8 +219,8 @@ void handleAttackEvents(SDL_Event& event, Background* textBox,
       break;
   }
 }
-void handleStatsEvents(SDL_Event& event, Background* textBox,
-                       Character* player) {
+void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                       std::unique_ptr<Character>& player) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
       player->PrintStats();
@@ -216,7 +230,8 @@ void handleStatsEvents(SDL_Event& event, Background* textBox,
       break;
   }
 }
-void handleRunEvents(SDL_Event& event, Background* textBox, Game* game) {
+void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+                     Game* game) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
       game->SetIsRunning(false);
