@@ -1,90 +1,58 @@
 #pragma once
 
-#include "game.h"
 #include <string>
+#include "game.h"
+#include "utils/util.h"
 
-using namespace std;
+class Character {
+ public:
+  virtual ~Character();
+  void Update();
+  void Render();
 
-class Character
-{
-public:
-    void Update(); // This is what allows the images to change which creates the animation
-    void Render();
-    void Clean();
+  void SetTexture(const char* character_texture) {
+    character_texture_ = Util::LoadTexture(character_texture);
+  }
+  void SetXPos(int x_pos) { x_pos_ = x_pos; }
+  void SetYPos(int y_pos) { y_pos_ = y_pos; }
+  void SetPath(std::string folder_path) { folder_path_ = folder_path; }
+  void SetFrames(int frames) { frames_ = frames; }
+  void SetSpeed(int speed) { speed_ = speed; }
+  void SetCount(int count) { count_ = count; }
+  void SetName(std::string name) { name_ = name; }
+  void SetLevel(int level) { level_ = level; }
+  void SetHealth(int health) { health_ = (health <= 0) ? 0 : health; }
+  void SetEnemy(bool is_enemy) { is_enemy_ = is_enemy; }
+  virtual void SetEnergy(int) = 0;
 
-    void SetTexture(const char *);
-    void SetSourceRect(SDL_Rect);
-    void SetDestinationRect(SDL_Rect);
-    void SetXPos(int);
-    void SetYPos(int);
+  SDL_Texture* GetTexture() { return character_texture_; }
+  int GetXPos() { return x_pos_; }
+  int GetYPos() { return y_pos_; }
+  std::string GetPath() { return folder_path_; }
+  int GetFrames() { return frames_; }
+  int GetSpeed() { return speed_; }
+  int GetCount() { return count_; }
+  std::string GetName() { return name_; }
+  int GetLevel() { return level_; }
+  int GetHealth() { return health_; }
+  bool GetEnemy() { return is_enemy_; }
+  virtual int GetEnergy() = 0;
 
-    void SetPath(string);
-    void SetFrames(int);
-    void SetSpeed(int);
-    void SetCount(int);
+  virtual void Attack1() = 0;
+  virtual void Attack2() = 0;
+  virtual void Attack3() = 0;
+  virtual void Attack4() = 0;
+  virtual void Death() = 0;
+  virtual void Defend() = 0;
+  virtual void Idle() = 0;
+  virtual void TakeDamage(int damage) = 0;
+  virtual void PrintStats() = 0;
 
-    void SetName(string);
-    void SetLevel(int);
-    void SetHealth(int);
-    void setCharacterType(string); // either FireKnight, WaterPriestess, or GroundMonk
-    virtual void SetEnergy(int) = 0; // either stamina, chakra, or mana
-    void SetEnemy(bool);
-
-    SDL_Texture* GetTexture();
-    SDL_Rect GetSourceRect();
-    SDL_Rect GetDestinationRect();
-    int GetXPos();
-    int GetYPos();
-
-    string GetPath();
-    int GetFrames();
-    int GetSpeed();
-    int GetCount();
-
-    string GetName();
-    int GetLevel();
-    int GetHealth();
-    string getCharacterType();
-    virtual int GetEnergy() = 0;
-    bool GetEnemy();
-    // Actions every character that inherits does
-    /*
-    Yes we can create a pointer to an abstract class, 
-    which could be actually pointing to the objects of its derived classes. 
-    In this way, a container of base class pointers can be 
-    created which can also store derived class objects.
-    */
-    virtual void Attack1() = 0;
-    virtual void Attack2() = 0;
-    virtual void Attack3() = 0;
-    virtual void Attack4() = 0;
-    virtual void Death() = 0;
-    virtual void Defend() = 0;
-    virtual void Idle() = 0;
-    virtual void TakeDamage(int damage) = 0;
-
-    virtual void PrintStats() = 0;
-
-
-protected:
-    // image/sprite variables
-    SDL_Texture* characterTexture;
-    SDL_Rect srcRect, destRect;
-    int xpos;
-    int ypos;
-
-    // variables for animation
-    string path;
-    int frames;
-    int speed;
-    int count;
-    Uint32 last_frame_time_ = 0;
-    int delay_ = 70;
-
-    // game variables
-    string name;
-    int level;
-    int health;
-    string characterType;
-    bool enemy = false;
+ protected:
+  SDL_Texture* character_texture_;
+  SDL_Rect src_rect_, dest_rect_;
+  int x_pos_, y_pos_, frames_, speed_, count_, level_, health_, delay_ = 70;
+  std::string folder_path_, name_;
+  Uint32 last_frame_time_ = 0;
+  bool is_enemy_ = false;
 };
