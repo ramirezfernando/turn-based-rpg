@@ -81,7 +81,6 @@ void Game::HandleEvents() {
     case SDL_KEYDOWN:
       switch (event_.key.keysym.sym) {
         case SDL_KEYDOWN:
-          return;
           if (isPlayer1Turn) {
             if (textBox->GetImageFilePath() == "assets/TextBoxes/Main.png") {
               handleMenuEvents(event_, textBox);
