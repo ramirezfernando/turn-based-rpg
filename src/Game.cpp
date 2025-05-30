@@ -50,8 +50,8 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   // Setup stuff
   player = new FireKnight(false, "Player");
   enemy = new FireKnight(true, "Bot");
-  forest = new Background("assets/Backgrounds/forest.png", 0, 0, false);
-  textBox = new Background("assets/TextBoxes/Main.png", 40, 490, true);
+  forest = new Background("assets/Backgrounds/forest.png", 0, 0);
+  textBox = new Background("assets/TextBoxes/Main.png", 40, 490);
 }
 
 void Game::Update() {
@@ -82,23 +82,23 @@ void Game::HandleEvents() {
           return;
             if (isPlayer1Turn) {
                 cout << "It's Player 1's turn" << endl;
-                if (textBox->GetPath() == "assets/TextBoxes/Main.png") {
+                if (textBox->GetImageFilePath() == "assets/TextBoxes/Main.png") {
                     handleMenuEvents(event_, textBox);
                     player->Idle();
                     enemy->Idle();
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Attack.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Attack.png") {
                     handleAttackEvents(event_, textBox, player, enemy);
                     isPlayer1Turn = false;
                     isPlayer2Turn = true;
-                    textBox->SetPath("None");
+                    textBox->SetImageFilePath("None");
                     // TODO: add delay before text box is displayed
-                    textBox->SetPath("assets/TextBoxes/Main.png");
+                    textBox->SetImageFilePath("assets/TextBoxes/Main.png");
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Stats.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Stats.png") {
                     handleStatsEvents(event_, textBox, player);
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Run.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Run.png") {
                     handleRunEvents(event_, textBox, this);
                 }
                 
@@ -106,23 +106,23 @@ void Game::HandleEvents() {
             
             else if (isPlayer2Turn) {
                 cout << "It's Player 2's turn" << endl;
-                if (textBox->GetPath() == "assets/TextBoxes/Main.png") {
+                if (textBox->GetImageFilePath() == "assets/TextBoxes/Main.png") {
                     handleMenuEvents(event_, textBox);
                     player->Idle();
                     enemy->Idle();
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Attack.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Attack.png") {
                     handleAttackEvents(event_, textBox, enemy, player);
                     isPlayer1Turn = true;
                     isPlayer2Turn = false;
-                    textBox->SetPath("None");
+                    textBox->SetImageFilePath("None");
                     // TODO: add delay before text box is displayed
-                    textBox->SetPath("assets/TextBoxes/Main.png");
+                    textBox->SetImageFilePath("assets/TextBoxes/Main.png");
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Stats.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Stats.png") {
                     handleStatsEvents(event_, textBox, enemy);
                 }
-                else if(textBox->GetPath() == "assets/TextBoxes/Run.png") {
+                else if(textBox->GetImageFilePath() == "assets/TextBoxes/Run.png") {
                     handleRunEvents(event_, textBox, this);
                 }
             }
@@ -137,19 +137,19 @@ void handleMenuEvents(SDL_Event &event, Background *textBox)
 {
     switch(event.key.keysym.sym){
         case SDLK_1:
-            textBox->SetPath("assets/TextBoxes/Attack.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Attack.png");
             break;
         case SDLK_2:
-            textBox->SetPath("assets/TextBoxes/Stats.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Stats.png");
             break;
         case SDLK_3:
-            textBox->SetPath("assets/TextBoxes/Run.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Run.png");
             break;
         case SDLK_4:
-            textBox->SetPath("assets/TextBoxes/Save.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Save.png");
             break;
         default:
-            textBox->SetPath("assets/TextBoxes/Main.png"); 
+            textBox->SetImageFilePath("assets/TextBoxes/Main.png"); 
             break;
     }
 }
@@ -165,7 +165,7 @@ void handleAttackEvents(SDL_Event &event, Background *textBox, Character *player
                 enemy->Death(); 
             }
             player->SetLevel(player->GetLevel() + 1);
-            textBox->SetPath("None");
+            textBox->SetImageFilePath("None");
 
             // Wait for attack and take damage animations to finish before going back to idle
             break;
@@ -177,7 +177,7 @@ void handleAttackEvents(SDL_Event &event, Background *textBox, Character *player
                 enemy->Death(); 
             }
             player->SetLevel(player->GetLevel() + 1);
-            textBox->SetPath("None");
+            textBox->SetImageFilePath("None");
             break;
         case SDLK_3:
             player->Attack3();
@@ -188,7 +188,7 @@ void handleAttackEvents(SDL_Event &event, Background *textBox, Character *player
             }
             player->SetLevel(player->GetLevel() + 2);
             player->SetEnergy(player->GetEnergy() - 4);
-            textBox->SetPath("None");
+            textBox->SetImageFilePath("None");
             break;
         case SDLK_4:
             player->Attack4();
@@ -199,10 +199,10 @@ void handleAttackEvents(SDL_Event &event, Background *textBox, Character *player
             }
             player->SetLevel(player->GetLevel() + 3);
             player->SetEnergy(player->GetEnergy() - 8);
-            textBox->SetPath("None");
+            textBox->SetImageFilePath("None");
             break;
         default:
-            textBox->SetPath("assets/TextBoxes/Main.png"); // if you press any key it will go back to the main text box
+            textBox->SetImageFilePath("assets/TextBoxes/Main.png"); // if you press any key it will go back to the main text box
             break;
     }
 }
@@ -213,7 +213,7 @@ void handleStatsEvents(SDL_Event &event, Background *textBox, Character *player)
             player->PrintStats();
             break;
         default:
-            textBox->SetPath("assets/TextBoxes/Main.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Main.png");
             break;
     }
 }
@@ -224,10 +224,10 @@ void handleRunEvents(SDL_Event &event, Background *textBox, Game *game)
             game->SetIsRunning(false);
             break;
         case SDLK_2:
-            textBox->SetPath("assets/TextBoxes/Main.png");
+            textBox->SetImageFilePath("assets/TextBoxes/Main.png");
             break;
         default:
-            textBox->SetPath("assets/TextBoxes/Main.png"); // if you press any key it will go back to the main text box
+            textBox->SetImageFilePath("assets/TextBoxes/Main.png"); // if you press any key it will go back to the main text box
             break;
     }
 }

@@ -9,8 +9,8 @@ class Background {
   void Update();
   void Render();
 
-  void SetFilePath(std::string file_path) { file_path_ = file_path; }
-  std::string GetFilePath() { return file_path_; }
+  void SetImageFilePath(std::string file_path) { file_path_ = file_path; }
+  std::string GetImageFilePath() { return file_path_; }
 
  private:
   SDL_Texture* background_texture_;
