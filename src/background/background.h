@@ -4,20 +4,17 @@
 
 class Background {
  public:
- Background(const char* background, int xpos, int ypos, bool text);
- ~Background();
+  Background(const char* file_path, int x_pos, int y_pos);
+  ~Background();
   void Update();
   void Render();
 
-  void SetPath(std::string );
-  std::string GetPath();
+  void SetFilePath(std::string file_path) { file_path_ = file_path; }
+  std::string GetFilePath() { return file_path_; }
 
  private:
- SDL_Texture* backgroundTexture;
- SDL_Rect src_rect_, dest_rect_;
- int xpos;
- int ypos;
- bool text;
- std::string path;
-
+  SDL_Texture* background_texture_;
+  SDL_Rect src_rect_, dest_rect_;
+  int x_pos_, y_pos_;
+  std::string file_path_;
 };

@@ -2,18 +2,15 @@
 #include "constants/game_constants.h"
 #include "utils/util.h"
 
-Background::Background(const char* background, int x, int y, bool _text)
-{
-    // Loads texture with the help of the Textures class
-    backgroundTexture = Util::LoadTexture(background);
-    xpos = x;
-    ypos = y;
-    text = _text;
-    path = std::string(background);
+Background::Background(const char* file_path, int x_pos, int y_pos) {
+  background_texture_ = Util::LoadTexture(file_path);
+  file_path_ = std::string(file_path);
+  x_pos_ = x_pos;
+  y_pos_ = y_pos;
 }
 
 Background::~Background() {
-  SDL_DestroyTexture(backgroundTexture);
+  SDL_DestroyTexture(background_texture_);
   std::cout << "Background destroyed" << std::endl;
 }
 
@@ -24,19 +21,10 @@ void Background::Update() {
   src_rect_.y = 0;
   dest_rect_.h = src_rect_.h;
   dest_rect_.w = src_rect_.w;
-  dest_rect_.x = xpos;
-  dest_rect_.y = ypos;
+  dest_rect_.x = x_pos_;
+  dest_rect_.y = y_pos_;
 }
 
 void Background::Render() {
-  SDL_RenderCopy(Game::renderer_, backgroundTexture, &src_rect_, &dest_rect_);
-}
-
-void Background::SetPath(std::string _path)
-{
-    path = _path;
-}
-std::string Background::GetPath()
-{
-    return path;
+  SDL_RenderCopy(Game::renderer_, background_texture_, &src_rect_, &dest_rect_);
 }
