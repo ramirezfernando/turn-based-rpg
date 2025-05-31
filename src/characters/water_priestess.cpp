@@ -1,13 +1,12 @@
 #include "water_priestess.h"
+#include "constants/asset_constants.h"
 
 WaterPriestess::WaterPriestess() {
-  std::string path = "assets/WaterPriestess/idle";
-  const char* file = path.c_str();
-  SetTexture(file);
+  SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
   SetXPos(-80);
   SetYPos(20);
 
-  SetPath(path);
+  SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
   SetFrames(8);
   SetSpeed(100);
   SetCount(1);
@@ -21,12 +20,11 @@ WaterPriestess::WaterPriestess() {
 WaterPriestess::WaterPriestess(bool isEnemy, std::string name) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/WaterPriestess/idle";
-    SetTexture(file);
+    SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/WaterPriestess/idle");
+    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -37,7 +35,7 @@ WaterPriestess::WaterPriestess(bool isEnemy, std::string name) {
 
     mana_ = 100;
   } else {
-    SetPath("assets/WaterPriestess/idle");
+    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -59,12 +57,11 @@ WaterPriestess::WaterPriestess(bool isEnemy, std::string name, int level,
                                int health, int mana) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/WaterPriestess/idle";
-    SetTexture(file);
+    SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/WaterPriestess/idle");
+    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -74,7 +71,7 @@ WaterPriestess::WaterPriestess(bool isEnemy, std::string name, int level,
     SetHealth(health);
     mana_ = mana;
   } else {
-    SetPath("assets/WaterPriestess/idle");
+    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -93,77 +90,61 @@ WaterPriestess::WaterPriestess(bool isEnemy, std::string name, int level,
 }
 
 void WaterPriestess::Attack1() {
-  std::string filename = "assets/WaterPriestess/1_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/1_atk");
+  SetTexture(constants::WATER_PRIESTESS_ATTACK_1_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_1_FOLDER_PATH));
   SetFrames(7);
   SetCount(1);
   SetSpeed(100);
 }
 
 void WaterPriestess::Attack2() {
-  std::string filename = "assets/WaterPriestess/2_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/2_atk");
+  SetTexture(constants::WATER_PRIESTESS_ATTACK_2_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_2_FOLDER_PATH));
   SetFrames(21);
   SetCount(1);
   SetSpeed(100);
 }
 
 void WaterPriestess::Attack3() {
-  std::string filename = "assets/WaterPriestess/3_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/3_atk");
+  SetTexture(constants::WATER_PRIESTESS_ATTACK_3_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_3_FOLDER_PATH));
   SetFrames(28);
   SetCount(1);
   SetSpeed(100);
 }
 
 void WaterPriestess::Attack4() {
-  std::string filename = "assets/WaterPriestess/4_sp_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/4_sp_atk");
+  SetTexture(constants::WATER_PRIESTESS_ATTACK_4_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_4_FOLDER_PATH));
   SetFrames(33);
   SetCount(1);
   SetSpeed(100);
 }
 
 void WaterPriestess::Death() {
-  std::string filename = "assets/WaterPriestess/death";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/death");
+  SetTexture(constants::WATER_PRIESTESS_DEATH_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_DEATH_FOLDER_PATH));
   SetFrames(16);
   SetCount(1);
   SetSpeed(100);
 }
 void WaterPriestess::Defend() {
-  std::string filename = "assets/WaterPriestess/defend";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/defend");
+  SetTexture(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH));
   SetFrames(12);
   SetCount(1);
   SetSpeed(100);
 }
 void WaterPriestess::Idle() {
-  std::string filename = "assets/WaterPriestess/idle";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/idle");
+  SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
   SetFrames(8);
   SetCount(1);
   SetSpeed(100);
 }
 void WaterPriestess::TakeDamage(int damage) {
-  std::string filename = "assets/WaterPriestess/take_hit";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/WaterPriestess/take_hit");
+  SetTexture(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH);
+  SetPath(std::string(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH));
   SetFrames(7);
   SetCount(1);
   SetSpeed(100);

@@ -1,7 +1,8 @@
 #include "fire_knight.h"
+#include "constants/asset_constants.h"
 
 FireKnight::FireKnight() {
-  const char* file = "assets/FireKnight/idle";
+  const char* file = constants::FIRE_KNIGHT_IDLE_FOLDER_PATH;
   SetTexture(file);
   SetXPos(-80);
   SetYPos(20);
@@ -21,12 +22,12 @@ FireKnight::FireKnight() {
 FireKnight::FireKnight(bool isEnemy, std::string name) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/FireKnight/idle";
+    const char* file = constants::FIRE_KNIGHT_IDLE_FOLDER_PATH;
     SetTexture(file);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/FireKnight/idle");
+    SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -37,7 +38,7 @@ FireKnight::FireKnight(bool isEnemy, std::string name) {
 
     stamina_ = 100;
   } else {
-    SetPath("assets/FireKnight/idle");
+    SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -58,12 +59,12 @@ FireKnight::FireKnight(bool isEnemy, std::string name, int level, int health,
                        int stamina) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/FireKnight/idle";
+    const char* file = constants::FIRE_KNIGHT_IDLE_FOLDER_PATH;
     SetTexture(file);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/FireKnight/idle");
+    SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -73,7 +74,7 @@ FireKnight::FireKnight(bool isEnemy, std::string name, int level, int health,
     SetHealth(health);
     stamina_ = stamina;
   } else {
-    SetPath("assets/FireKnight/idle");
+    SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
     SetFrames(8);
     SetSpeed(100);
     SetCount(1);
@@ -92,77 +93,61 @@ FireKnight::FireKnight(bool isEnemy, std::string name, int level, int health,
 }
 
 void FireKnight::Attack1() {
-  std::string filename = "assets/FireKnight/1_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/1_atk");
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH));
   SetFrames(11);
   SetCount(1);
   SetSpeed(100);
 }
 
 void FireKnight::Attack2() {
-  std::string filename = "assets/FireKnight/2_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/2_atk");
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH));
   SetFrames(19);
   SetCount(1);
   SetSpeed(100);
 }
 
 void FireKnight::Attack3() {
-  std::string filename = "assets/FireKnight/3_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/3_atk");
-  SetFrames(29);  // added image 29 from idle (1)
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH));
+  SetFrames(29);
   SetCount(1);
   SetSpeed(100);
 }
 
 void FireKnight::Attack4() {
-  std::string filename = "assets/FireKnight/4_sp_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/4_sp_atk");
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH));
   SetFrames(18);
   SetCount(1);
   SetSpeed(100);
 }
 
 void FireKnight::Death() {
-  std::string filename = "assets/FireKnight/death";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/death");
+  SetTexture(constants::FIRE_KNIGHT_DEATH_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_DEATH_FOLDER_PATH));
   SetFrames(13);
   SetCount(1);
   SetSpeed(100);
 }
 void FireKnight::Defend() {
-  std::string filename = "assets/FireKnight/defend";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/defend");
+  SetTexture(constants::FIRE_KNIGHT_DEFEND_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_DEFEND_FOLDER_PATH));
   SetFrames(10);
   SetCount(1);
   SetSpeed(100);
 }
 void FireKnight::Idle() {
-  std::string filename = "assets/FireKnight/idle";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/idle");
+  SetTexture(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
   SetFrames(8);
   SetCount(1);
   SetSpeed(100);
 }
 void FireKnight::TakeDamage(int damage) {
-  std::string filename = "assets/FireKnight/take_hit";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/FireKnight/take_hit");
+  SetTexture(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH));
   SetFrames(6);
   SetCount(1);
   SetSpeed(100);

@@ -1,13 +1,12 @@
 #include "ground_monk.h"
+#include "constants/asset_constants.h"
 
 GroundMonk::GroundMonk() {
-  std::string path = "assets/GroundMonk/idle";
-  const char* file = path.c_str();
-  SetTexture(file);
+  SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
   SetXPos(-80);
   SetYPos(20);
 
-  SetPath(path);
+  SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
   SetFrames(6);
   SetSpeed(100);
   SetCount(1);
@@ -21,12 +20,11 @@ GroundMonk::GroundMonk() {
 GroundMonk::GroundMonk(bool isEnemy, std::string name) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/GroundMonk/idle";
-    SetTexture(file);
+    SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/GroundMonk/idle");
+    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
     SetFrames(6);
     SetSpeed(100);
     SetCount(1);
@@ -37,7 +35,7 @@ GroundMonk::GroundMonk(bool isEnemy, std::string name) {
 
     chakra_ = 100;
   } else {
-    SetPath("assets/GroundMonk/idle");
+    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
     SetFrames(6);
     SetSpeed(100);
     SetCount(1);
@@ -58,12 +56,11 @@ GroundMonk::GroundMonk(bool isEnemy, std::string name, int level, int health,
                        int chakra) {
   if (isEnemy) {
     SetEnemy(isEnemy);
-    const char* file = "assets/GroundMonk/idle";
-    SetTexture(file);
+    SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
     SetXPos(200);
     SetYPos(20);
 
-    SetPath("assets/GroundMonk/idle");
+    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
     SetFrames(6);
     SetSpeed(100);
     SetCount(1);
@@ -73,7 +70,7 @@ GroundMonk::GroundMonk(bool isEnemy, std::string name, int level, int health,
     SetHealth(health);
     chakra_ = chakra;
   } else {
-    SetPath("assets/GroundMonk/idle");
+    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
     SetFrames(6);
     SetSpeed(100);
     SetCount(1);
@@ -92,77 +89,61 @@ GroundMonk::GroundMonk(bool isEnemy, std::string name, int level, int health,
 }
 
 void GroundMonk::Attack1() {
-  std::string filename = "assets/GroundMonk/1_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/1_atk");
+  SetTexture(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH));
   SetFrames(6);
   SetCount(1);
   SetSpeed(100);
 }
 
 void GroundMonk::Attack2() {
-  std::string filename = "assets/GroundMonk/2_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/2_atk");
+  SetTexture(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH));
   SetFrames(12);
   SetCount(1);
   SetSpeed(100);
 }
 
 void GroundMonk::Attack3() {
-  std::string filename = "assets/GroundMonk/3_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/3_atk");
+  SetTexture(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH));
   SetFrames(24);
   SetCount(1);
   SetSpeed(100);
 }
 
 void GroundMonk::Attack4() {
-  std::string filename = "assets/GroundMonk/4_sp_atk";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/4_sp_atk");
+  SetTexture(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH));
   SetFrames(25);
   SetCount(1);
   SetSpeed(100);
 }
 
 void GroundMonk::Death() {
-  std::string filename = "assets/GroundMonk/death";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/death");
+  SetTexture(constants::GROUND_MONK_DEATH_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_DEATH_FOLDER_PATH));
   SetFrames(18);
   SetCount(1);
   SetSpeed(100);
 }
 void GroundMonk::Defend() {
-  std::string filename = "assets/GroundMonk/defend";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/defend");
+  SetTexture(constants::GROUND_MONK_DEFEND_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_DEFEND_FOLDER_PATH));
   SetFrames(13);
   SetCount(1);
   SetSpeed(100);
 }
 void GroundMonk::Idle() {
-  std::string filename = "assets/GroundMonk/idle";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/idle");
+  SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
   SetFrames(6);
   SetCount(1);
   SetSpeed(100);
 }
 void GroundMonk::TakeDamage(int damage) {
-  std::string filename = "assets/GroundMonk/take_hit";
-  const char* file = filename.c_str();
-  SetTexture(file);
-  SetPath("assets/GroundMonk/take_hit");
+  SetTexture(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH));
   SetFrames(6);
   SetCount(1);
   SetSpeed(100);

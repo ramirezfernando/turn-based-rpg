@@ -22,4 +22,5 @@ class Game {
  private:
   SDL_Window* window_;
   bool is_running_;
+  bool player_turn_ = true;
 };

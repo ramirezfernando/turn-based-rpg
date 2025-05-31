@@ -2,6 +2,7 @@
 #include "background/background.h"
 #include "characters/character.h"
 #include "characters/fire_knight.h"
+#include "constants/asset_constants.h"
 #include "constants/game_constants.h"
 
 SDL_Renderer* Game::renderer_ = nullptr;
@@ -10,8 +11,6 @@ std::unique_ptr<Background> forest;
 std::unique_ptr<Background> textBox;
 std::unique_ptr<Character> player;
 std::unique_ptr<Character> enemy;
-bool isPlayer1Turn = true;
-bool isPlayer2Turn = false;
 
 // Helper functions to handle events based on the text box that is displayed
 void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox);
@@ -49,12 +48,12 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   }
 
   forest = std::unique_ptr<Background>(
-      new Background("assets/Backgrounds/forest.png", 0, 0));
+      new Background(constants::FOREST_BACKGROUND_FILE_PATH, 0, 0));
   if (forest) {
     std::cout << "Forest created" << std::endl;
   }
   textBox = std::unique_ptr<Background>(
-      new Background("assets/TextBoxes/Main.png", 40, 490));
+      new Background(constants::TEXT_BOX_MAIN_FILE_PATH, 40, 490));
   if (textBox) {
     std::cout << "Text box created" << std::endl;
   }
@@ -93,51 +92,50 @@ void Game::HandleEvents() {
       break;
     case SDL_KEYDOWN:
       switch (event_.key.keysym.sym) {
-        case SDL_KEYDOWN:
-          if (isPlayer1Turn) {
-            if (textBox->GetImageFilePath() == "assets/TextBoxes/Main.png") {
-              handleMenuEvents(event_, textBox);
-              player->Idle();
-              enemy->Idle();
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Attack.png") {
-              handleAttackEvents(event_, textBox, player, enemy);
-              isPlayer1Turn = false;
-              isPlayer2Turn = true;
-              textBox->SetImageFilePath("None");
-              // TODO: add delay before text box is displayed
-              textBox->SetImageFilePath("assets/TextBoxes/Main.png");
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Stats.png") {
-              handleStatsEvents(event_, textBox, player);
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Run.png") {
-              handleRunEvents(event_, textBox, this);
-            }
-
+        if (player_turn_) {
+          if (textBox->GetImageFilePath() ==
+              constants::TEXT_BOX_MAIN_FILE_PATH) {
+            handleMenuEvents(event_, textBox);
+            player->Idle();
+            enemy->Idle();
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_ATTACK_FILE_PATH) {
+            handleAttackEvents(event_, textBox, player, enemy);
+            player_turn_ = false;
+            textBox->SetImageFilePath("None");
+            // TODO: add delay before text box is displayed
+            textBox->SetImageFilePath(
+                std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_STATS_FILE_PATH) {
+            handleStatsEvents(event_, textBox, player);
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_RUN_FILE_PATH) {
+            handleRunEvents(event_, textBox, this);
           }
 
-          else if (isPlayer2Turn) {
-            if (textBox->GetImageFilePath() == "assets/TextBoxes/Main.png") {
-              handleMenuEvents(event_, textBox);
-              player->Idle();
-              enemy->Idle();
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Attack.png") {
-              handleAttackEvents(event_, textBox, enemy, player);
-              isPlayer1Turn = true;
-              isPlayer2Turn = false;
-              textBox->SetImageFilePath("None");
-              // TODO: add delay before text box is displayed
-              textBox->SetImageFilePath("assets/TextBoxes/Main.png");
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Stats.png") {
-              handleStatsEvents(event_, textBox, enemy);
-            } else if (textBox->GetImageFilePath() ==
-                       "assets/TextBoxes/Run.png") {
-              handleRunEvents(event_, textBox, this);
-            }
+        } else {
+          if (textBox->GetImageFilePath() ==
+              constants::TEXT_BOX_MAIN_FILE_PATH) {
+            handleMenuEvents(event_, textBox);
+            player->Idle();
+            enemy->Idle();
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_ATTACK_FILE_PATH) {
+            handleAttackEvents(event_, textBox, enemy, player);
+            player_turn_ = true;
+            textBox->SetImageFilePath("None");
+            // TODO: add delay before text box is displayed
+            textBox->SetImageFilePath(
+                std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_STATS_FILE_PATH) {
+            handleStatsEvents(event_, textBox, enemy);
+          } else if (textBox->GetImageFilePath() ==
+                     constants::TEXT_BOX_RUN_FILE_PATH) {
+            handleRunEvents(event_, textBox, this);
           }
+        }
         default:
           break;
       }
@@ -148,19 +146,22 @@ void Game::HandleEvents() {
 void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
-      textBox->SetImageFilePath("assets/TextBoxes/Attack.png");
+      textBox->SetImageFilePath(
+          std::string(constants::TEXT_BOX_ATTACK_FILE_PATH));
       break;
     case SDLK_2:
-      textBox->SetImageFilePath("assets/TextBoxes/Stats.png");
+      textBox->SetImageFilePath(
+          std::string(constants::TEXT_BOX_STATS_FILE_PATH));
       break;
     case SDLK_3:
-      textBox->SetImageFilePath("assets/TextBoxes/Run.png");
+      textBox->SetImageFilePath(std::string(constants::TEXT_BOX_RUN_FILE_PATH));
       break;
     case SDLK_4:
-      textBox->SetImageFilePath("assets/TextBoxes/Save.png");
+      textBox->SetImageFilePath(
+          std::string(constants::TEXT_BOX_SAVE_FILE_PATH));
       break;
     default:
-      textBox->SetImageFilePath("assets/TextBoxes/Main.png");
+      textBox->SetImageFilePath(constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
   }
 }
@@ -214,8 +215,9 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       textBox->SetImageFilePath("None");
       break;
     default:
-      textBox->SetImageFilePath(
-          "assets/TextBoxes/Main.png");  // if you press any key it will go back to the main text box
+      textBox->SetImageFilePath(std::string(
+          constants::
+              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
       break;
   }
 }
@@ -226,7 +228,9 @@ void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       player->PrintStats();
       break;
     default:
-      textBox->SetImageFilePath("assets/TextBoxes/Main.png");
+      textBox->SetImageFilePath(std::string(
+          constants::
+              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
       break;
   }
 }
@@ -237,11 +241,14 @@ void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       game->SetIsRunning(false);
       break;
     case SDLK_2:
-      textBox->SetImageFilePath("assets/TextBoxes/Main.png");
+      textBox->SetImageFilePath(std::string(
+          constants::
+              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
       break;
     default:
-      textBox->SetImageFilePath(
-          "assets/TextBoxes/Main.png");  // if you press any key it will go back to the main text box
+      textBox->SetImageFilePath(std::string(
+          constants::
+              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
       break;
   }
 }
