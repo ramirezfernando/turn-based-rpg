@@ -48,12 +48,13 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   }
 
   forest = std::unique_ptr<Background>(
-      new Background(constants::FOREST_BACKGROUND_FILE_PATH, 0, 0));
+      new Background(constants::FOREST_BACKGROUND_FILE_PATH, 0, 0,
+                     /*is_text_box=*/false));
   if (forest) {
     std::cout << "Forest created" << std::endl;
   }
   textBox = std::unique_ptr<Background>(
-      new Background(constants::TEXT_BOX_MAIN_FILE_PATH, 40, 490));
+      new Background(constants::TEXT_BOX_MAIN_FILE_PATH, 100, 607, /*is_text_box=*/true));
   if (textBox) {
     std::cout << "Text box created" << std::endl;
   }

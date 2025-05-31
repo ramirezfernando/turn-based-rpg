@@ -2,6 +2,8 @@
 
 namespace Constants {
 extern const int WINDOW_SIZE;
+extern const int TEXT_BOX_WIDTH;
+extern const int TEXT_BOX_HEIGHT;
 extern const int FRAME_DELAY;
 extern const int CHARACTER_SIZE;
 extern const int CHARACTER_MOVEMENT_GAP;

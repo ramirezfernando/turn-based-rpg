@@ -4,7 +4,7 @@
 
 class Background {
  public:
-  Background(const char* file_path, int x_pos, int y_pos);
+  Background(const char* file_path, int x_pos, int y_pos, bool is_text_box);
   ~Background();
   void Update();
   void Render();
@@ -17,4 +17,5 @@ class Background {
   SDL_Rect src_rect_, dest_rect_;
   int x_pos_, y_pos_;
   std::string file_path_;
+  bool is_text_box_;
 };
