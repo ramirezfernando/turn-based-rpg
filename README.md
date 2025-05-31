@@ -20,7 +20,7 @@ Players can choose between three different characters to fight against each othe
 
 | Fire Knight 🔥       | Water Priestess 🌊      | Ground Monk 🪨         |
 |--------------------|-----------------------|----------------------|
-| ![Fire Knight](./assets/FireKnight/fire_knight.png) | ![Water Priestess](./assets/WaterPriestess/water_priestess.png) | ![Ground Monk](./assets/GroundMonk/ground_monk.png) |
+| ![Fire Knight](./assets/characters/fire_knight/fire_knight.png) | ![Water Priestess](./assets/characters/water_priestess/water_priestess.png) | ![Ground Monk](./assets/characters/ground_monk/ground_monk.png) |
 
 After choosing your character, you will be prompted to enter your username. The game will begin once both players have chosen their characters and entered their usernames.
 
