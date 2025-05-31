@@ -1,8 +1,8 @@
 #include "game_constants.h"
 
 namespace Constants {
-const int WINDOW_SIZE = 736;  // The size of the GUI window (736 x 736)
-const int TEXT_BOX_WIDTH = 640;  // The width of the text box (640 pixels)
+const int WINDOW_SIZE = 736;      // The size of the GUI window (736 x 736)
+const int TEXT_BOX_WIDTH = 640;   // The width of the text box (640 pixels)
 const int TEXT_BOX_HEIGHT = 128;  // The height of the text box (128 pixels)
 const int FRAME_DELAY =
     1000 / 30;  // The number of milliseconds in a second divided by FPS

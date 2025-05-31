@@ -53,8 +53,8 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   if (forest) {
     std::cout << "Forest created" << std::endl;
   }
-  textBox = std::unique_ptr<Background>(
-      new Background(constants::TEXT_BOX_MAIN_FILE_PATH, 100, 607, /*is_text_box=*/true));
+  textBox = std::unique_ptr<Background>(new Background(
+      constants::TEXT_BOX_MAIN_FILE_PATH, 100, 607, /*is_text_box=*/true));
   if (textBox) {
     std::cout << "Text box created" << std::endl;
   }
@@ -92,53 +92,38 @@ void Game::HandleEvents() {
       is_running_ = false;
       break;
     case SDL_KEYDOWN:
-      switch (event_.key.keysym.sym) {
-        if (player_turn_) {
-          if (textBox->GetImageFilePath() ==
-              constants::TEXT_BOX_MAIN_FILE_PATH) {
-            handleMenuEvents(event_, textBox);
-            player->Idle();
-            enemy->Idle();
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_ATTACK_FILE_PATH) {
-            handleAttackEvents(event_, textBox, player, enemy);
-            player_turn_ = false;
-            textBox->SetImageFilePath("None");
-            // TODO: add delay before text box is displayed
-            textBox->SetImageFilePath(
-                std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_STATS_FILE_PATH) {
-            handleStatsEvents(event_, textBox, player);
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_RUN_FILE_PATH) {
-            handleRunEvents(event_, textBox, this);
-          }
-
-        } else {
-          if (textBox->GetImageFilePath() ==
-              constants::TEXT_BOX_MAIN_FILE_PATH) {
-            handleMenuEvents(event_, textBox);
-            player->Idle();
-            enemy->Idle();
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_ATTACK_FILE_PATH) {
-            handleAttackEvents(event_, textBox, enemy, player);
-            player_turn_ = true;
-            textBox->SetImageFilePath("None");
-            // TODO: add delay before text box is displayed
-            textBox->SetImageFilePath(
-                std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_STATS_FILE_PATH) {
-            handleStatsEvents(event_, textBox, enemy);
-          } else if (textBox->GetImageFilePath() ==
-                     constants::TEXT_BOX_RUN_FILE_PATH) {
-            handleRunEvents(event_, textBox, this);
-          }
+      if (player_turn_) {
+        if (textBox->GetImageFilePath() == constants::TEXT_BOX_MAIN_FILE_PATH) {
+          handleMenuEvents(event_, textBox);
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
+          handleAttackEvents(event_, textBox, player, enemy);
+          player_turn_ = false;
+          textBox->SetImageFilePath(
+              std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_STATS_FILE_PATH) {
+          handleStatsEvents(event_, textBox, player);
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_RUN_FILE_PATH) {
+          handleRunEvents(event_, textBox, this);
         }
-        default:
-          break;
+      } else {
+        if (textBox->GetImageFilePath() == constants::TEXT_BOX_MAIN_FILE_PATH) {
+          handleMenuEvents(event_, textBox);
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
+          handleAttackEvents(event_, textBox, enemy, player);
+          player_turn_ = true;
+          textBox->SetImageFilePath(
+              std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_STATS_FILE_PATH) {
+          handleStatsEvents(event_, textBox, enemy);
+        } else if (textBox->GetImageFilePath() ==
+                   constants::TEXT_BOX_RUN_FILE_PATH) {
+          handleRunEvents(event_, textBox, this);
+        }
       }
       break;
   }
@@ -179,7 +164,6 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
         enemy->Death();
       }
       player->SetLevel(player->GetLevel() + 1);
-      textBox->SetImageFilePath("None");
 
       // Wait for attack and take damage animations to finish before going back to idle
       break;
@@ -191,7 +175,6 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
         enemy->Death();
       }
       player->SetLevel(player->GetLevel() + 1);
-      textBox->SetImageFilePath("None");
       break;
     case SDLK_3:
       player->Attack3();
@@ -202,7 +185,6 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       }
       player->SetLevel(player->GetLevel() + 2);
       player->SetEnergy(player->GetEnergy() - 4);
-      textBox->SetImageFilePath("None");
       break;
     case SDLK_4:
       player->Attack4();
@@ -213,7 +195,6 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       }
       player->SetLevel(player->GetLevel() + 3);
       player->SetEnergy(player->GetEnergy() - 8);
-      textBox->SetImageFilePath("None");
       break;
     default:
       textBox->SetImageFilePath(std::string(

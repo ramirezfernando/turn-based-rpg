@@ -148,7 +148,7 @@ void FireKnight::Idle() {
 void FireKnight::TakeDamage(int damage) {
   SetTexture(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH));
-  SetFrames(6);
+  SetFrames(7);
   SetCount(1);
   SetSpeed(100);
   SetHealth(health_ - damage);

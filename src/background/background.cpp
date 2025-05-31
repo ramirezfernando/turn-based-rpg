@@ -2,7 +2,8 @@
 #include "constants/game_constants.h"
 #include "utils/util.h"
 
-Background::Background(const char* file_path, int x_pos, int y_pos, bool is_text_box) {
+Background::Background(const char* file_path, int x_pos, int y_pos,
+                       bool is_text_box) {
   background_texture_ = Util::LoadTexture(file_path);
   file_path_ = std::string(file_path);
   x_pos_ = x_pos;

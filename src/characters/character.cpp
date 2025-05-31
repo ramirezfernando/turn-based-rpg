@@ -1,4 +1,5 @@
 #include "character.h"
+#include "constants/asset_constants.h"
 
 Character::~Character() {
   SDL_DestroyTexture(character_texture_);
@@ -6,8 +7,8 @@ Character::~Character() {
 }
 
 void Character::Update() {
-  src_rect_.h = 220;  //200
-  src_rect_.w = 320;  //300
+  src_rect_.h = 220;
+  src_rect_.w = 320;
   src_rect_.x = 0;
   src_rect_.y = 0;
   dest_rect_.x = x_pos_;
@@ -24,7 +25,10 @@ void Character::Update() {
       character_texture_ = Util::LoadTexture(file);
       count_++;
     } else {
-      count_ = 1;
+        count_ = 1;
+        // This ensures that the character returns to idle state after
+        // performing an action exactly once.
+        this->Idle();
     }
     last_frame_time_ = current_time;
   }
