@@ -10,8 +10,12 @@ const int TEXT_BOX_X_POS = 20;    // The x position of the text box (20 pixels)
 const int TEXT_BOX_Y_POS = 550;   // The y position of the text box (550 pixels)
 const int CHARACTER_WIDTH = 320;  // The width of the character (320 pixels)
 const int CHARACTER_HEIGHT = 220;  // The height of the character (220 pixels)
-const int CHARACTER_PLAYER_X_POS = -80;  // The x position of the character (100 pixels)
-const int CHARACTER_PLAYER_Y_POS = 50;   // The y position of the character (20 pixels)
-const int CHARACTER_ENEMY_X_POS = 200;  // The x position of the enemy character (200 pixels)
-const int CHARACTER_ENEMY_Y_POS = 50;   // The y position of the enemy character (20 pixels)
+const int CHARACTER_PLAYER_X_POS =
+    -80;  // The x position of the character (100 pixels)
+const int CHARACTER_PLAYER_Y_POS =
+    50;  // The y position of the character (20 pixels)
+const int CHARACTER_ENEMY_X_POS =
+    200;  // The x position of the enemy character (200 pixels)
+const int CHARACTER_ENEMY_Y_POS =
+    50;  // The y position of the enemy character (20 pixels)
 }  // namespace constants

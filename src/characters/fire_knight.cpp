@@ -29,6 +29,7 @@ void FireKnight::Attack1() {
   SetFrames(11);
   SetCount(1);
   SetSpeed(100);
+  SetAttacking(true);
 }
 
 void FireKnight::Attack2() {
@@ -37,6 +38,7 @@ void FireKnight::Attack2() {
   SetFrames(19);
   SetCount(1);
   SetSpeed(100);
+  SetAttacking(true);
 }
 
 void FireKnight::Attack3() {
@@ -45,6 +47,7 @@ void FireKnight::Attack3() {
   SetFrames(29);
   SetCount(1);
   SetSpeed(100);
+  SetAttacking(true);
 }
 
 void FireKnight::Attack4() {
@@ -53,6 +56,7 @@ void FireKnight::Attack4() {
   SetFrames(18);
   SetCount(1);
   SetSpeed(100);
+  SetAttacking(true);
 }
 
 void FireKnight::Death() {

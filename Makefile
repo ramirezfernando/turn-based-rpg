@@ -1,6 +1,6 @@
 CXX = clang++
 CXXFLAGS = -std=c++11 $(shell pkg-config --cflags sdl2) -Isrc
-LDFLAGS = $(shell pkg-config --libs sdl2) $(shell pkg-config --libs sdl2_image)
+LDFLAGS = $(shell pkg-config --libs sdl2) $(shell pkg-config --libs sdl2_image) $(shell pkg-config --libs nlohmann_json) -lcurl
 SRCS = $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
 HDRS = $(wildcard src/*.h) $(wildcard src/*/*.h)
 OBJS = $(SRCS:.cpp=.o)

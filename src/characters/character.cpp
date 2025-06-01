@@ -1,4 +1,7 @@
 #include "character.h"
+#include <curl/curl.h>
+#include <iostream>
+#include <nlohmann/json.hpp>
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
 
@@ -35,6 +38,10 @@ void Character::Update() {
         this->Idle();
         this->Update();
       }
+      // Animation is complete
+      if (is_attacking_) {
+        is_attacking_ = false;  // Reset attack state
+      }
     }
     last_frame_time_ = current_time;
   }
@@ -48,4 +55,56 @@ void Character::Render() {
     SDL_RenderCopy(Game::renderer_, character_texture_, &src_rect_,
                    &dest_rect_);
   }
+}
+
+std::string Character::GetAiDecision() {
+  return "attack";
+  CURL* curl = curl_easy_init();
+  std::string response_data;
+  if (curl) {
+    std::string api_key = "Bearer ";
+    std::string prompt = "Enemy is level " + std::to_string(level_) +
+                         " and has " + std::to_string(health_) + " HP and " +
+                         std::to_string(energy_) +
+                         " energy. "
+                         "Choose an action: 'attack', 'defend', or 'heal'.";
+    nlohmann::json body = {
+        {"model", "gpt-3.5-turbo"},
+        {"messages", {{{"role", "user"}, {"content", prompt}}}}};
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, ("Authorization: " + api_key).c_str());
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+
+    std::string body_str = body.dump();
+    curl_easy_setopt(curl, CURLOPT_URL,
+                     "https://api.openai.com/v1/chat/completions");
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body_str.c_str());
+
+    curl_easy_setopt(
+        curl, CURLOPT_WRITEFUNCTION,
+        +[](char* ptr, size_t size, size_t nmemb, std::string* data) {
+          data->append(ptr, size * nmemb);
+          return size * nmemb;
+        });
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_data);
+
+    curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(headers);
+  }
+  // std::cout << response_data << std::endl;
+  // return "attack";
+
+  // // Parse OpenAI response
+  // auto json = nlohmann::json::parse(response_data, nullptr, false);
+  // if (json.is_discarded())
+  //   return "attack";  // fallback
+
+  // try {
+  //   return json["choices"][0]["message"]["content"].get<std::string>();
+  // } catch (const std::exception& e) {
+  //   std::cout << "Error parsing OpenAI response: " << e.what() << std::endl;
+  // }
 }

@@ -18,7 +18,7 @@ std::unique_ptr<Character> enemy;
 void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
 void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
-                        std::unique_ptr<Character>& enemy);
+                        std::unique_ptr<Character>& enemy, bool& player_turn);
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game);
 void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
@@ -60,8 +60,8 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   if (text_box) {
     std::cout << "Text box created" << std::endl;
   }
-  player =
-      std::unique_ptr<Character>(new WaterPriestess("Player", /*is_enemy=*/false));
+  player = std::unique_ptr<Character>(
+      new WaterPriestess("Player", /*is_enemy=*/false));
   if (player) {
     std::cout << "Character created" << std::endl;
   }
@@ -75,6 +75,19 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
 void Game::Update() {
   player->Update();
   enemy->Update();
+
+  // Check if player just finished attacking
+  if (!player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
+      player->IsAnimationComplete()) {
+    std::string ai_decision = enemy->GetAiDecision();
+    if (ai_decision == "attack") {
+      //enemy->Attack1();
+      enemy->Attack2();
+    } else if (ai_decision == "defend") {
+      enemy->Defend();
+    }
+    player_turn_ = true;
+  }
 }
 
 void Game::Render() {
@@ -93,20 +106,22 @@ void Game::HandleEvents() {
       is_running_ = false;
       break;
     case SDL_KEYDOWN:
-      std::string current_text_box_file_path = text_box->GetImageFilePath();
-      if (current_text_box_file_path == constants::TEXT_BOX_MAIN_FILE_PATH) {
-        handleMenuEvents(event_, text_box);
-      } else if (current_text_box_file_path ==
-                 constants::TEXT_BOX_ATTACK_FILE_PATH) {
-        handleAttackEvents(event_, text_box, player, enemy);
-        text_box->SetImageFilePathAndLoadTexture(
-            constants::TEXT_BOX_MAIN_FILE_PATH);
-      } else if (current_text_box_file_path ==
-                 constants::TEXT_BOX_RUN_FILE_PATH) {
-        handleRunEvents(event_, text_box, this);
-      } else if (current_text_box_file_path ==
-                 constants::TEXT_BOX_SAVE_FILE_PATH) {
-        handleSaveEvents(event_, text_box);
+      if (player_turn_) {
+        std::string current_text_box_file_path = text_box->GetImageFilePath();
+        if (current_text_box_file_path == constants::TEXT_BOX_MAIN_FILE_PATH) {
+          handleMenuEvents(event_, text_box);
+        } else if (current_text_box_file_path ==
+                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
+          handleAttackEvents(event_, text_box, player, enemy, player_turn_);
+          text_box->SetImageFilePathAndLoadTexture(
+              constants::TEXT_BOX_MAIN_FILE_PATH);
+        } else if (current_text_box_file_path ==
+                   constants::TEXT_BOX_RUN_FILE_PATH) {
+          handleRunEvents(event_, text_box, this);
+        } else if (current_text_box_file_path ==
+                   constants::TEXT_BOX_SAVE_FILE_PATH) {
+          handleSaveEvents(event_, text_box);
+        }
       }
       break;
   }
@@ -139,47 +154,33 @@ void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box) {
 
 void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
-                        std::unique_ptr<Character>& enemy) {
+                        std::unique_ptr<Character>& enemy, bool& player_turn) {
+  // If player is still attacking, don't accept new input
+  if (player->IsAttacking()) {
+    return;
+  }
+
+  // If enemy is still attacking, don't accept new input
+  if (enemy->IsAttacking()) {
+    return;
+  }
+
   switch (event.key.keysym.sym) {
     case SDLK_1:
       player->Attack1();
-      enemy->TakeDamage(2 * player->GetLevel());
-
-      if (enemy->GetHealth() <= 0) {
-        enemy->Death();
-      }
-      player->SetLevel(player->GetLevel() + 1);
-
-      // Wait for attack and take damage animations to finish before going back to idle
+      player_turn = false;
       break;
     case SDLK_2:
       player->Attack2();
-      enemy->TakeDamage(4 * player->GetLevel());
-
-      if (enemy->GetHealth() <= 0) {
-        enemy->Death();
-      }
-      player->SetLevel(player->GetLevel() + 1);
+      player_turn = false;
       break;
     case SDLK_3:
       player->Attack3();
-      enemy->TakeDamage(8 * player->GetLevel());
-
-      if (enemy->GetHealth() <= 0) {
-        enemy->Death();
-      }
-      player->SetLevel(player->GetLevel() + 2);
-      player->SetEnergy(player->GetEnergy() - 4);
+      player_turn = false;
       break;
     case SDLK_4:
       player->Attack4();
-      enemy->TakeDamage(10 * player->GetLevel());
-
-      if (enemy->GetHealth() <= 0) {
-        enemy->Death();
-      }
-      player->SetLevel(player->GetLevel() + 3);
-      player->SetEnergy(player->GetEnergy() - 8);
+      player_turn = false;
       break;
     default:
       text_box->SetImageFilePathAndLoadTexture(

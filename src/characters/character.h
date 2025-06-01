@@ -38,6 +38,10 @@ class Character {
   int GetEnergy() { return energy_; }
   bool GetEnemy() { return is_enemy_; }
 
+  bool IsAnimationComplete() const { return count_ >= frames_; }
+  bool IsAttacking() const { return is_attacking_; }
+  void SetAttacking(bool attacking) { is_attacking_ = attacking; }
+
   virtual void Attack1() = 0;
   virtual void Attack2() = 0;
   virtual void Attack3() = 0;
@@ -47,6 +51,8 @@ class Character {
   virtual void Idle() = 0;
   virtual void TakeDamage(int damage) = 0;
 
+  std::string GetAiDecision();
+
  protected:
   SDL_Texture* character_texture_;
   SDL_Rect src_rect_, dest_rect_;
@@ -55,4 +61,5 @@ class Character {
   std::string folder_path_, username_;
   Uint32 last_frame_time_ = 0;
   bool is_enemy_ = false;
+  bool is_attacking_ = false;
 };
