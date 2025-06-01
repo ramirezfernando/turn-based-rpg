@@ -18,7 +18,8 @@ std::unique_ptr<Character> enemy;
 void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
 void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
-                        std::unique_ptr<Character>& enemy, bool& player_turn);
+                        std::unique_ptr<Character>& enemy, bool& player_turn,
+                        bool& is_in_battle);
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game);
 void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
@@ -76,17 +77,25 @@ void Game::Update() {
   player->Update();
   enemy->Update();
 
-  // Check if player just finished attacking
-  if (!player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
-      player->IsAnimationComplete()) {
-    std::string ai_decision = enemy->GetAiDecision();
-    if (ai_decision == "attack") {
-      //enemy->Attack1();
-      enemy->Attack2();
-    } else if (ai_decision == "defend") {
-      enemy->Defend();
+  if (is_in_battle_) {
+    // Check if player just finished attacking.
+    if (!player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
+        player->IsAnimationComplete()) {
+      std::string ai_decision = enemy->GetAiDecision();
+      if (ai_decision == "attack") {
+        enemy->Attack2();
+      } else if (ai_decision == "defend") {
+        enemy->Defend();
+      }
+      player_turn_ = true;
     }
-    player_turn_ = true;
+    // Check if enemy just finished attacking.
+    if (player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
+        enemy->IsAnimationComplete()) {
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
+      is_in_battle_ = false;
+    }
   }
 }
 
@@ -96,7 +105,8 @@ void Game::Render() {
   text_box->Render();
   player->Render();
   enemy->Render();
-  SDL_RenderPresent(renderer_);  // Double buffering
+  // Double buffering.
+  SDL_RenderPresent(renderer_);
 }
 
 void Game::HandleEvents() {
@@ -112,9 +122,8 @@ void Game::HandleEvents() {
           handleMenuEvents(event_, text_box);
         } else if (current_text_box_file_path ==
                    constants::TEXT_BOX_ATTACK_FILE_PATH) {
-          handleAttackEvents(event_, text_box, player, enemy, player_turn_);
-          text_box->SetImageFilePathAndLoadTexture(
-              constants::TEXT_BOX_MAIN_FILE_PATH);
+          handleAttackEvents(event_, text_box, player, enemy, player_turn_,
+                             is_in_battle_);
         } else if (current_text_box_file_path ==
                    constants::TEXT_BOX_RUN_FILE_PATH) {
           handleRunEvents(event_, text_box, this);
@@ -154,33 +163,40 @@ void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box) {
 
 void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
-                        std::unique_ptr<Character>& enemy, bool& player_turn) {
-  // If player is still attacking, don't accept new input
-  if (player->IsAttacking()) {
-    return;
-  }
-
-  // If enemy is still attacking, don't accept new input
-  if (enemy->IsAttacking()) {
-    return;
-  }
-
+                        std::unique_ptr<Character>& enemy, bool& player_turn,
+                        bool& is_in_battle) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
+      // This ensures that the text box is not visible when the player attacks.
+      // The text box is re-enabled after the enemy's animation is complete.
+      text_box->SetImageFilePathAndLoadTexture("");
       player->Attack1();
       player_turn = false;
+      is_in_battle = true;
       break;
     case SDLK_2:
+      // This ensures that the text box is not visible when the player attacks.
+      // The text box is re-enabled after the enemy's animation is complete.
+      text_box->SetImageFilePathAndLoadTexture("");
       player->Attack2();
       player_turn = false;
+      is_in_battle = true;
       break;
     case SDLK_3:
+      // This ensures that the text box is not visible when the player attacks.
+      // The text box is re-enabled after the enemy's animation is complete.
+      text_box->SetImageFilePathAndLoadTexture("");
       player->Attack3();
       player_turn = false;
+      is_in_battle = true;
       break;
     case SDLK_4:
+      // This ensures that the text box is not visible when the player attacks.
+      // The text box is re-enabled after the enemy's animation is complete.
+      text_box->SetImageFilePathAndLoadTexture("");
       player->Attack4();
       player_turn = false;
+      is_in_battle = true;
       break;
     default:
       text_box->SetImageFilePathAndLoadTexture(
