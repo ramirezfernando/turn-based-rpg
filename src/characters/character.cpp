@@ -25,10 +25,11 @@ void Character::Update() {
       character_texture_ = Util::LoadTexture(file);
       count_++;
     } else {
-        count_ = 1;
-        // This ensures that the character returns to idle state after
-        // performing an action exactly once.
-        this->Idle();
+      // This ensures that the character returns to an idle state after
+      // performing an action (attack, defend, etc.) and that the idle animation
+      // is played only once after the action is completed.
+      this->Idle();
+      this->Update();
     }
     last_frame_time_ = current_time;
   }
