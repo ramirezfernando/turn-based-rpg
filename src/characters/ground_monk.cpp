@@ -1,5 +1,6 @@
 #include "ground_monk.h"
 #include "constants/asset_constants.h"
+#include "constants/game_constants.h"
 
 GroundMonk::GroundMonk(std::string username, bool is_enemy) {
   SetUsername(username);
@@ -14,11 +15,11 @@ GroundMonk::GroundMonk(std::string username, bool is_enemy) {
 
   if (is_enemy) {
     SetEnemy(is_enemy);
-    SetXPos(200);
-    SetYPos(20);
+    SetXPos(constants::CHARACTER_ENEMY_X_POS);
+    SetYPos(constants::CHARACTER_ENEMY_Y_POS);
   } else {
-    SetXPos(-80);
-    SetYPos(20);
+    SetXPos(constants::CHARACTER_PLAYER_X_POS);
+    SetYPos(constants::CHARACTER_PLAYER_Y_POS);
   }
 }
 

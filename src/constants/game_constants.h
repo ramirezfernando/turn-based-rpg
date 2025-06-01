@@ -9,4 +9,8 @@ extern const int TEXT_BOX_X_POS;
 extern const int TEXT_BOX_Y_POS;
 extern const int CHARACTER_WIDTH;
 extern const int CHARACTER_HEIGHT;
+extern const int CHARACTER_PLAYER_X_POS;
+extern const int CHARACTER_PLAYER_Y_POS;
+extern const int CHARACTER_ENEMY_X_POS;
+extern const int CHARACTER_ENEMY_Y_POS;
 }  // namespace constants

@@ -2,6 +2,8 @@
 #include "background/background.h"
 #include "characters/character.h"
 #include "characters/fire_knight.h"
+#include "characters/ground_monk.h"
+#include "characters/water_priestess.h"
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
 
@@ -59,7 +61,7 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Text box created" << std::endl;
   }
   player =
-      std::unique_ptr<Character>(new FireKnight("Player", /*is_enemy=*/false));
+      std::unique_ptr<Character>(new WaterPriestess("Player", /*is_enemy=*/false));
   if (player) {
     std::cout << "Character created" << std::endl;
   }
