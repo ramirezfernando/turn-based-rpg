@@ -1,91 +1,24 @@
 #include "water_priestess.h"
 #include "constants/asset_constants.h"
 
-WaterPriestess::WaterPriestess() {
+WaterPriestess::WaterPriestess(std::string username, bool is_enemy) {
+  SetUsername(username);
   SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
-  SetXPos(-80);
-  SetYPos(20);
-
   SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
   SetFrames(8);
   SetSpeed(100);
   SetCount(1);
-
-  SetName("Unknown");
   SetLevel(1);
   SetHealth(100);
+  SetEnergy(100);
 
-  mana_ = 100;
-}
-WaterPriestess::WaterPriestess(bool isEnemy, std::string name) {
-  if (isEnemy) {
-    SetEnemy(isEnemy);
-    SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
+  if (is_enemy) {
+    SetEnemy(is_enemy);
     SetXPos(200);
     SetYPos(20);
-
-    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-    SetFrames(8);
-    SetSpeed(100);
-    SetCount(1);
-
-    SetName(name);
-    SetLevel(1);
-    SetHealth(100);
-
-    mana_ = 100;
   } else {
-    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-    SetFrames(8);
-    SetSpeed(100);
-    SetCount(1);
     SetXPos(-80);
     SetYPos(20);
-
-    SetName(name);
-    SetLevel(1);
-    SetHealth(100);
-    mana_ = 100;
-
-    std::string filename = folder_path_ + "/" + "1.png";
-    const char* file = filename.c_str();
-    SetTexture(file);
-  }
-}
-
-WaterPriestess::WaterPriestess(bool isEnemy, std::string name, int level,
-                               int health, int mana) {
-  if (isEnemy) {
-    SetEnemy(isEnemy);
-    SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
-    SetXPos(200);
-    SetYPos(20);
-
-    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-    SetFrames(8);
-    SetSpeed(100);
-    SetCount(1);
-
-    SetName(name);
-    SetLevel(level);
-    SetHealth(health);
-    mana_ = mana;
-  } else {
-    SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-    SetFrames(8);
-    SetSpeed(100);
-    SetCount(1);
-    SetXPos(-80);
-    SetYPos(20);
-
-    SetName(name);
-    SetLevel(level);
-    SetHealth(health);
-    mana_ = mana;
-
-    std::string filename = folder_path_ + "/" + "1.png";
-    const char* file = filename.c_str();
-    SetTexture(file);
   }
 }
 
@@ -128,6 +61,7 @@ void WaterPriestess::Death() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void WaterPriestess::Defend() {
   SetTexture(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH));
@@ -135,6 +69,7 @@ void WaterPriestess::Defend() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void WaterPriestess::Idle() {
   SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
@@ -142,6 +77,7 @@ void WaterPriestess::Idle() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void WaterPriestess::TakeDamage(int damage) {
   SetTexture(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH));
@@ -150,17 +86,4 @@ void WaterPriestess::TakeDamage(int damage) {
   SetSpeed(100);
 
   SetHealth(health_ - damage);
-}
-void WaterPriestess::SetEnergy(int energy) {
-  mana_ = energy;
-}
-int WaterPriestess::GetEnergy() {
-  return mana_;
-}
-void WaterPriestess::PrintStats() {
-  std::cout << "Character Stats:" << std::endl
-            << "> Name: " << name_ << std::endl
-            << "> Level: " << level_ << std::endl
-            << "> Health: " << health_ << std::endl
-            << "> Mana: " << mana_ << std::endl;
 }

@@ -17,8 +17,6 @@ void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox);
 void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
                         std::unique_ptr<Character>& player,
                         std::unique_ptr<Character>& enemy);
-void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
-                       std::unique_ptr<Character>& player);
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
                      Game* game);
 
@@ -60,11 +58,12 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Text box created" << std::endl;
   }
   player =
-      std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/false, "Player"));
+      std::unique_ptr<Character>(new FireKnight("Player", /*is_enemy=*/false));
   if (player) {
     std::cout << "Character created" << std::endl;
   }
-  enemy = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true, "Bot"));
+  enemy =
+      std::unique_ptr<Character>(new FireKnight("Enemy", /*is_enemy=*/true));
   if (enemy) {
     std::cout << "Enemy created" << std::endl;
   }
@@ -103,9 +102,6 @@ void Game::HandleEvents() {
           textBox->SetImageFilePath(
               std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
         } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_STATS_FILE_PATH) {
-          handleStatsEvents(event_, textBox, player);
-        } else if (textBox->GetImageFilePath() ==
                    constants::TEXT_BOX_RUN_FILE_PATH) {
           handleRunEvents(event_, textBox, this);
         }
@@ -118,9 +114,6 @@ void Game::HandleEvents() {
           player_turn_ = true;
           textBox->SetImageFilePath(
               std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
-        } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_STATS_FILE_PATH) {
-          handleStatsEvents(event_, textBox, enemy);
         } else if (textBox->GetImageFilePath() ==
                    constants::TEXT_BOX_RUN_FILE_PATH) {
           handleRunEvents(event_, textBox, this);
@@ -204,19 +197,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       break;
   }
 }
-void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
-                       std::unique_ptr<Character>& player) {
-  switch (event.key.keysym.sym) {
-    case SDLK_1:
-      player->PrintStats();
-      break;
-    default:
-      textBox->SetImageFilePath(std::string(
-          constants::
-              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
-      break;
-  }
-}
+
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
                      Game* game) {
   switch (event.key.keysym.sym) {

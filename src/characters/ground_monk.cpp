@@ -1,90 +1,24 @@
 #include "ground_monk.h"
 #include "constants/asset_constants.h"
 
-GroundMonk::GroundMonk() {
+GroundMonk::GroundMonk(std::string username, bool is_enemy) {
+  SetUsername(username);
   SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
-  SetXPos(-80);
-  SetYPos(20);
-
   SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
   SetFrames(6);
   SetSpeed(100);
   SetCount(1);
-
-  SetName("Unknown");
   SetLevel(1);
   SetHealth(100);
+  SetEnergy(100);
 
-  chakra_ = 100;
-}
-GroundMonk::GroundMonk(bool isEnemy, std::string name) {
-  if (isEnemy) {
-    SetEnemy(isEnemy);
-    SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
+  if (is_enemy) {
+    SetEnemy(is_enemy);
     SetXPos(200);
     SetYPos(20);
-
-    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-    SetFrames(6);
-    SetSpeed(100);
-    SetCount(1);
-
-    SetName(name);
-    SetLevel(1);
-    SetHealth(100);
-
-    chakra_ = 100;
   } else {
-    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-    SetFrames(6);
-    SetSpeed(100);
-    SetCount(1);
     SetXPos(-80);
     SetYPos(20);
-
-    SetName(name);
-    SetLevel(1);
-    SetHealth(100);
-    chakra_ = 100;
-
-    std::string filename = folder_path_ + "/" + "1.png";
-    const char* file = filename.c_str();
-    SetTexture(file);
-  }
-}
-GroundMonk::GroundMonk(bool isEnemy, std::string name, int level, int health,
-                       int chakra) {
-  if (isEnemy) {
-    SetEnemy(isEnemy);
-    SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
-    SetXPos(200);
-    SetYPos(20);
-
-    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-    SetFrames(6);
-    SetSpeed(100);
-    SetCount(1);
-
-    SetName(name);
-    SetLevel(level);
-    SetHealth(health);
-    chakra_ = chakra;
-  } else {
-    SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-    SetFrames(6);
-    SetSpeed(100);
-    SetCount(1);
-    SetXPos(-80);
-    SetYPos(20);
-
-    SetName(name);
-    SetLevel(level);
-    SetHealth(health);
-    chakra_ = chakra;
-
-    std::string filename = folder_path_ + "/" + "1.png";
-    const char* file = filename.c_str();
-    SetTexture(file);
   }
 }
 
@@ -127,6 +61,7 @@ void GroundMonk::Death() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void GroundMonk::Defend() {
   SetTexture(constants::GROUND_MONK_DEFEND_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_DEFEND_FOLDER_PATH));
@@ -134,6 +69,7 @@ void GroundMonk::Defend() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void GroundMonk::Idle() {
   SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
@@ -141,6 +77,7 @@ void GroundMonk::Idle() {
   SetCount(1);
   SetSpeed(100);
 }
+
 void GroundMonk::TakeDamage(int damage) {
   SetTexture(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH));
@@ -149,17 +86,4 @@ void GroundMonk::TakeDamage(int damage) {
   SetSpeed(100);
 
   SetHealth(health_ - damage);
-}
-void GroundMonk::SetEnergy(int energy) {
-  chakra_ = energy;
-}
-int GroundMonk::GetEnergy() {
-  return chakra_;
-}
-void GroundMonk::PrintStats() {
-  std::cout << "Character Stats:" << std::endl
-            << "> Name: " << name_ << std::endl
-            << "> Level: " << level_ << std::endl
-            << "> Health: " << health_ << std::endl
-            << "> Chakra: " << chakra_ << std::endl;
 }

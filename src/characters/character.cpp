@@ -1,5 +1,6 @@
 #include "character.h"
 #include "constants/asset_constants.h"
+#include "constants/game_constants.h"
 
 Character::~Character() {
   SDL_DestroyTexture(character_texture_);
@@ -7,8 +8,8 @@ Character::~Character() {
 }
 
 void Character::Update() {
-  src_rect_.h = 220;
-  src_rect_.w = 320;
+  src_rect_.h = constants::CHARACTER_HEIGHT;
+  src_rect_.w = constants::CHARACTER_WIDTH;
   src_rect_.x = 0;
   src_rect_.y = 0;
   dest_rect_.x = x_pos_;
