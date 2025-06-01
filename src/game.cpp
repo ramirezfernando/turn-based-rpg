@@ -8,17 +8,18 @@
 SDL_Renderer* Game::renderer_ = nullptr;
 SDL_Event Game::event_;
 std::unique_ptr<Background> forest;
-std::unique_ptr<Background> textBox;
+std::unique_ptr<Background> text_box;
 std::unique_ptr<Character> player;
 std::unique_ptr<Character> enemy;
 
-// Helper functions to handle events based on the text box that is displayed
-void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox);
-void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+// Helper functions to handle events based on the current text box displayed.
+void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
+void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
                         std::unique_ptr<Character>& enemy);
-void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game);
+void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
 
 Game::~Game() {
   SDL_DestroyWindow(window_);
@@ -51,10 +52,10 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   if (forest) {
     std::cout << "Forest created" << std::endl;
   }
-  textBox = std::unique_ptr<Background>(new Background(
+  text_box = std::unique_ptr<Background>(new Background(
       constants::TEXT_BOX_MAIN_FILE_PATH, constants::TEXT_BOX_X_POS,
       constants::TEXT_BOX_Y_POS, /*is_text_box=*/true));
-  if (textBox) {
+  if (text_box) {
     std::cout << "Text box created" << std::endl;
   }
   player =
@@ -70,8 +71,6 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
 }
 
 void Game::Update() {
-  forest->Update();
-  textBox->Update();
   player->Update();
   enemy->Update();
 }
@@ -79,7 +78,7 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   forest->Render();
-  textBox->Render();
+  text_box->Render();
   player->Render();
   enemy->Render();
   SDL_RenderPresent(renderer_);  // Double buffering
@@ -92,61 +91,51 @@ void Game::HandleEvents() {
       is_running_ = false;
       break;
     case SDL_KEYDOWN:
-      if (player_turn_) {
-        if (textBox->GetImageFilePath() == constants::TEXT_BOX_MAIN_FILE_PATH) {
-          handleMenuEvents(event_, textBox);
-        } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
-          handleAttackEvents(event_, textBox, player, enemy);
-          player_turn_ = false;
-          textBox->SetImageFilePath(
-              std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
-        } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_RUN_FILE_PATH) {
-          handleRunEvents(event_, textBox, this);
-        }
-      } else {
-        if (textBox->GetImageFilePath() == constants::TEXT_BOX_MAIN_FILE_PATH) {
-          handleMenuEvents(event_, textBox);
-        } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
-          handleAttackEvents(event_, textBox, enemy, player);
-          player_turn_ = true;
-          textBox->SetImageFilePath(
-              std::string(constants::TEXT_BOX_MAIN_FILE_PATH));
-        } else if (textBox->GetImageFilePath() ==
-                   constants::TEXT_BOX_RUN_FILE_PATH) {
-          handleRunEvents(event_, textBox, this);
-        }
+      std::string current_text_box_file_path = text_box->GetImageFilePath();
+      if (current_text_box_file_path == constants::TEXT_BOX_MAIN_FILE_PATH) {
+        handleMenuEvents(event_, text_box);
+      } else if (current_text_box_file_path ==
+                 constants::TEXT_BOX_ATTACK_FILE_PATH) {
+        handleAttackEvents(event_, text_box, player, enemy);
+        text_box->SetImageFilePathAndLoadTexture(
+            constants::TEXT_BOX_MAIN_FILE_PATH);
+      } else if (current_text_box_file_path ==
+                 constants::TEXT_BOX_RUN_FILE_PATH) {
+        handleRunEvents(event_, text_box, this);
+      } else if (current_text_box_file_path ==
+                 constants::TEXT_BOX_SAVE_FILE_PATH) {
+        handleSaveEvents(event_, text_box);
       }
       break;
   }
 }
 
-void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& textBox) {
+void handleMenuEvents(SDL_Event& event, std::unique_ptr<Background>& text_box) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
-      textBox->SetImageFilePath(
-          std::string(constants::TEXT_BOX_ATTACK_FILE_PATH));
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_ATTACK_FILE_PATH);
       break;
     case SDLK_2:
-      textBox->SetImageFilePath(
-          std::string(constants::TEXT_BOX_STATS_FILE_PATH));
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_STATS_FILE_PATH);
       break;
     case SDLK_3:
-      textBox->SetImageFilePath(std::string(constants::TEXT_BOX_RUN_FILE_PATH));
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_RUN_FILE_PATH);
       break;
     case SDLK_4:
-      textBox->SetImageFilePath(
-          std::string(constants::TEXT_BOX_SAVE_FILE_PATH));
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_SAVE_FILE_PATH);
       break;
     default:
-      textBox->SetImageFilePath(constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
   }
 }
 
-void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
                         std::unique_ptr<Character>& enemy) {
   switch (event.key.keysym.sym) {
@@ -191,28 +180,40 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
       player->SetEnergy(player->GetEnergy() - 8);
       break;
     default:
-      textBox->SetImageFilePath(std::string(
-          constants::
-              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
   }
 }
 
-void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& textBox,
+void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game) {
   switch (event.key.keysym.sym) {
     case SDLK_1:
       game->SetIsRunning(false);
       break;
     case SDLK_2:
-      textBox->SetImageFilePath(std::string(
-          constants::
-              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
     default:
-      textBox->SetImageFilePath(std::string(
-          constants::
-              TEXT_BOX_MAIN_FILE_PATH));  // if you press any key it will go back to the main text box
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
+      break;
+  }
+}
+
+void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box) {
+  switch (event.key.keysym.sym) {
+    case SDLK_1:
+      // Implement save functionality here
+      std::cout << "Game saved!" << std::endl;
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
+      break;
+    default:
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
   }
 }

@@ -6,10 +6,9 @@ class Background {
  public:
   Background(const char* file_path, int x_pos, int y_pos, bool is_text_box);
   ~Background();
-  void Update();
   void Render();
 
-  void SetImageFilePath(std::string file_path) { file_path_ = file_path; }
+  void SetImageFilePathAndLoadTexture(const char* file_path);
   std::string GetImageFilePath() { return file_path_; }
 
  private:

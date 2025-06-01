@@ -9,14 +9,6 @@ Background::Background(const char* file_path, int x_pos, int y_pos,
   x_pos_ = x_pos;
   y_pos_ = y_pos;
   is_text_box_ = is_text_box;
-}
-
-Background::~Background() {
-  SDL_DestroyTexture(background_texture_);
-  std::cout << "Background destroyed" << std::endl;
-}
-
-void Background::Update() {
   if (is_text_box_) {
     src_rect_.h = constants::TEXT_BOX_HEIGHT;
     src_rect_.w = constants::TEXT_BOX_WIDTH;
@@ -32,6 +24,16 @@ void Background::Update() {
   dest_rect_.y = y_pos_;
 }
 
+Background::~Background() {
+  SDL_DestroyTexture(background_texture_);
+  std::cout << "Background destroyed" << std::endl;
+}
+
 void Background::Render() {
   SDL_RenderCopy(Game::renderer_, background_texture_, &src_rect_, &dest_rect_);
+}
+
+void Background::SetImageFilePathAndLoadTexture(const char* file_path) {
+  file_path_ = std::string(file_path);
+  background_texture_ = Util::LoadTexture(file_path);
 }
