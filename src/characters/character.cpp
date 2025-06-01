@@ -28,9 +28,13 @@ void Character::Update() {
     } else {
       // This ensures that the character returns to an idle state after
       // performing an action (attack, defend, etc.) and that the idle animation
-      // is played only once after the action is completed.
-      this->Idle();
-      this->Update();
+      // is played only once after the action is completed. The only exception
+      // is when the character is dead, in which case the death animation is
+      // kept.
+      if (health_ > 0) {
+        this->Idle();
+        this->Update();
+      }
     }
     last_frame_time_ = current_time;
   }
