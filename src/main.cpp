@@ -12,7 +12,7 @@ int main() {
 
   // Create the window
   game->Init("TURN-BASED-RPG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-             Constants::WINDOW_SIZE, Constants::WINDOW_SIZE);
+             constants::WINDOW_SIZE, constants::WINDOW_SIZE);
 
   // Game loop
   while (game->IsRunning()) {
@@ -23,8 +23,8 @@ int main() {
 
     // Handles frame rate
     frame_time = SDL_GetTicks() - frame_start;
-    if (Constants::FRAME_DELAY > frame_time) {
-      SDL_Delay(Constants::FRAME_DELAY - frame_time);
+    if (constants::FRAME_DELAY > frame_time) {
+      SDL_Delay(constants::FRAME_DELAY - frame_time);
     }
   }
   return 0;

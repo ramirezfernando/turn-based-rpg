@@ -18,11 +18,11 @@ Background::~Background() {
 
 void Background::Update() {
   if (is_text_box_) {
-    src_rect_.h = Constants::TEXT_BOX_HEIGHT;
-    src_rect_.w = Constants::TEXT_BOX_WIDTH;
+    src_rect_.h = constants::TEXT_BOX_HEIGHT;
+    src_rect_.w = constants::TEXT_BOX_WIDTH;
   } else {
-    src_rect_.h = Constants::WINDOW_SIZE;
-    src_rect_.w = Constants::WINDOW_SIZE;
+    src_rect_.h = constants::WINDOW_SIZE;
+    src_rect_.w = constants::WINDOW_SIZE;
   }
   src_rect_.x = 0;
   src_rect_.y = 0;
