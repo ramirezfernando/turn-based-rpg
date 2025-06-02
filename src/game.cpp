@@ -20,6 +20,9 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                         std::unique_ptr<Character>& player,
                         std::unique_ptr<Character>& enemy, bool& player_turn,
                         bool& is_in_battle);
+void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
+                       std::unique_ptr<Character>& player,
+                       std::unique_ptr<Character>& enemy);
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game);
 void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
@@ -127,6 +130,9 @@ void Game::HandleEvents() {
           handleAttackEvents(event_, text_box, player, enemy, player_turn_,
                              is_in_battle_);
         } else if (current_text_box_file_path ==
+                   constants::TEXT_BOX_STATS_FILE_PATH) {
+          handleStatsEvents(event_, text_box, player, enemy);
+        } else if (current_text_box_file_path ==
                    constants::TEXT_BOX_RUN_FILE_PATH) {
           handleRunEvents(event_, text_box, this);
         } else if (current_text_box_file_path ==
@@ -203,6 +209,32 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       enemy->TakeDamage(player->GetAttack4Damage());
       player_turn = false;
       is_in_battle = true;
+      break;
+    default:
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_MAIN_FILE_PATH);
+      break;
+  }
+}
+
+void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
+                       std::unique_ptr<Character>& player,
+                       std::unique_ptr<Character>& enemy) {
+  switch (event.key.keysym.sym) {
+    case SDLK_1:
+      text_box->SetImageFilePathAndLoadTexture(
+          constants::TEXT_BOX_STATS_FILE_PATH);
+      std::cout << "Stats" << std::endl;
+      std::cout << "--------------------------------" << std::endl;
+      std::cout << "Player: " << player->GetUsername() << std::endl;
+      std::cout << "Level: " << player->GetLevel() << std::endl;
+      std::cout << "Health: " << player->GetHealth() << std::endl;
+      std::cout << "Energy: " << player->GetEnergy() << std::endl;
+      std::cout << "--------------------------------" << std::endl;
+      std::cout << "Enemy: " << enemy->GetUsername() << std::endl;
+      std::cout << "Level: " << enemy->GetLevel() << std::endl;
+      std::cout << "Health: " << enemy->GetHealth() << std::endl;
+      std::cout << "Energy: " << enemy->GetEnergy() << std::endl;
       break;
     default:
       text_box->SetImageFilePathAndLoadTexture(
