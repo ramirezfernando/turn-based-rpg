@@ -14,6 +14,13 @@ extern const int CHARACTER_PLAYER_Y_POS;
 extern const int CHARACTER_ENEMY_X_POS;
 extern const int CHARACTER_ENEMY_Y_POS;
 
+enum class AttackType {
+  ATTACK1,
+  ATTACK2,
+  ATTACK3,
+  ATTACK4,
+};
+
 // Base attack damage values
 extern const int BASE_ATTACK1_DAMAGE;
 extern const int BASE_ATTACK2_DAMAGE;

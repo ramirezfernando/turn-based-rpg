@@ -39,15 +39,13 @@ FireKnight::FireKnight(std::string username, bool is_enemy) {
 }
 
 void FireKnight::Attack1() {
-  if (energy_ >= base_attack1_energy_cost_) {
-    SetTexture(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH);
-    SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH));
-    SetFrames(11);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack1_energy_cost_;
-  }
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH));
+  SetFrames(11);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack1_energy_cost_;
 }
 
 int FireKnight::GetAttack1Damage() const {
@@ -56,15 +54,13 @@ int FireKnight::GetAttack1Damage() const {
 }
 
 void FireKnight::Attack2() {
-  if (energy_ >= base_attack2_energy_cost_) {
-    SetTexture(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH);
-    SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH));
-    SetFrames(19);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack2_energy_cost_;
-  }
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH));
+  SetFrames(19);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack2_energy_cost_;
 }
 
 int FireKnight::GetAttack2Damage() const {
@@ -73,15 +69,13 @@ int FireKnight::GetAttack2Damage() const {
 }
 
 void FireKnight::Attack3() {
-  if (energy_ >= base_attack3_energy_cost_) {
-    SetTexture(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH);
-    SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH));
-    SetFrames(29);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack3_energy_cost_;
-  }
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH));
+  SetFrames(29);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack3_energy_cost_;
 }
 
 int FireKnight::GetAttack3Damage() const {
@@ -90,15 +84,13 @@ int FireKnight::GetAttack3Damage() const {
 }
 
 void FireKnight::Attack4() {
-  if (energy_ >= base_attack4_energy_cost_) {
-    SetTexture(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH);
-    SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH));
-    SetFrames(18);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack4_energy_cost_;
-  }
+  SetTexture(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH);
+  SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH));
+  SetFrames(18);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack4_energy_cost_;
 }
 
 int FireKnight::GetAttack4Damage() const {

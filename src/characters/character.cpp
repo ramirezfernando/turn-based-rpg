@@ -37,6 +37,8 @@ void Character::Update() {
       if (health_ > 0) {
         this->Idle();
         this->Update();
+      } else {
+        this->Death();
       }
       // Animation is complete
       if (is_attacking_) {
@@ -57,8 +59,8 @@ void Character::Render() {
   }
 }
 
-std::string Character::GetAiDecision() {
-  return "attack";
+constants::AttackType Character::GetAiDecision() {
+  return constants::AttackType::ATTACK1;
   CURL* curl = curl_easy_init();
   std::string response_data;
   if (curl) {

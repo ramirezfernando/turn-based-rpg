@@ -39,15 +39,13 @@ GroundMonk::GroundMonk(std::string username, bool is_enemy) {
 }
 
 void GroundMonk::Attack1() {
-  if (energy_ >= base_attack1_energy_cost_) {
-    SetTexture(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH);
-    SetPath(std::string(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH));
-    SetFrames(6);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack1_energy_cost_;
-  }
+  SetTexture(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH));
+  SetFrames(6);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack1_energy_cost_;
 }
 
 int GroundMonk::GetAttack1Damage() const {
@@ -56,15 +54,13 @@ int GroundMonk::GetAttack1Damage() const {
 }
 
 void GroundMonk::Attack2() {
-  if (energy_ >= base_attack2_energy_cost_) {
-    SetTexture(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH);
-    SetPath(std::string(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH));
-    SetFrames(12);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack2_energy_cost_;
-  }
+  SetTexture(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH));
+  SetFrames(12);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack2_energy_cost_;
 }
 
 int GroundMonk::GetAttack2Damage() const {
@@ -73,15 +69,13 @@ int GroundMonk::GetAttack2Damage() const {
 }
 
 void GroundMonk::Attack3() {
-  if (energy_ >= base_attack3_energy_cost_) {
-    SetTexture(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH);
-    SetPath(std::string(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH));
-    SetFrames(24);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack3_energy_cost_;
-  }
+  SetTexture(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH));
+  SetFrames(24);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack3_energy_cost_;
 }
 
 int GroundMonk::GetAttack3Damage() const {
@@ -90,15 +84,13 @@ int GroundMonk::GetAttack3Damage() const {
 }
 
 void GroundMonk::Attack4() {
-  if (energy_ >= base_attack4_energy_cost_) {
-    SetTexture(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH);
-    SetPath(std::string(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH));
-    SetFrames(25);
-    SetCount(1);
-    SetSpeed(100);
-    SetAttacking(true);
-    energy_ -= base_attack4_energy_cost_;
-  }
+  SetTexture(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH);
+  SetPath(std::string(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH));
+  SetFrames(25);
+  SetCount(1);
+  SetSpeed(100);
+  SetAttacking(true);
+  energy_ -= base_attack4_energy_cost_;
 }
 
 int GroundMonk::GetAttack4Damage() const {
@@ -136,6 +128,5 @@ void GroundMonk::TakeDamage(int damage) {
   SetFrames(6);
   SetCount(1);
   SetSpeed(100);
-
   SetHealth(health_ - damage);
 }

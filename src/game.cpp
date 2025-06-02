@@ -23,6 +23,8 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
 void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                        std::unique_ptr<Character>& player,
                        std::unique_ptr<Character>& enemy);
+void printStats(std::unique_ptr<Character>& player,
+                std::unique_ptr<Character>& enemy);
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
                      Game* game);
 void handleSaveEvents(SDL_Event& event, std::unique_ptr<Background>& text_box);
@@ -84,22 +86,45 @@ void Game::Update() {
     // Check if player just finished attacking.
     if (!player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
         player->IsAnimationComplete()) {
-      std::string ai_decision = enemy->GetAiDecision();
-      if (ai_decision == "attack") {
-        // TODO: Add attack logic to handle different attacks.
-        enemy->Attack2();
-        player->TakeDamage(enemy->GetAttack2Damage());
-      } else if (ai_decision == "defend") {
-        enemy->Defend();
+      constants::AttackType ai_decision = enemy->GetAiDecision();
+      switch (ai_decision) {
+        case constants::AttackType::ATTACK1:
+          enemy->Attack1();
+          player->TakeDamage(enemy->GetAttack1Damage());
+          break;
+        case constants::AttackType::ATTACK2:
+          enemy->Attack2();
+          player->TakeDamage(enemy->GetAttack2Damage());
+          break;
+        case constants::AttackType::ATTACK3:
+          enemy->Attack3();
+          player->TakeDamage(enemy->GetAttack3Damage());
+          break;
+        case constants::AttackType::ATTACK4:
+          enemy->Attack4();
+          player->TakeDamage(enemy->GetAttack4Damage());
+          break;
       }
-      player_turn_ = true;
+      if (player->GetHealth() <= 0 || player->GetEnergy() <= 0) {
+        player->Death();
+        is_running_ = false;
+        printStats(player, enemy);
+      } else {
+        player_turn_ = true;
+      }
     }
     // Check if enemy just finished attacking.
     if (player_turn_ && !player->IsAttacking() && !enemy->IsAttacking() &&
         enemy->IsAnimationComplete()) {
-      text_box->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
-      is_in_battle_ = false;
+      if (enemy->GetHealth() <= 0 || enemy->GetEnergy() <= 0) {
+        enemy->Death();
+        printStats(player, enemy);
+        is_running_ = false;
+      } else {
+        text_box->SetImageFilePathAndLoadTexture(
+            constants::TEXT_BOX_MAIN_FILE_PATH);
+        is_in_battle_ = false;
+      }
     }
   }
 }
@@ -224,23 +249,28 @@ void handleStatsEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
     case SDLK_1:
       text_box->SetImageFilePathAndLoadTexture(
           constants::TEXT_BOX_STATS_FILE_PATH);
-      std::cout << "Stats" << std::endl;
-      std::cout << "--------------------------------" << std::endl;
-      std::cout << "Player: " << player->GetUsername() << std::endl;
-      std::cout << "Level: " << player->GetLevel() << std::endl;
-      std::cout << "Health: " << player->GetHealth() << std::endl;
-      std::cout << "Energy: " << player->GetEnergy() << std::endl;
-      std::cout << "--------------------------------" << std::endl;
-      std::cout << "Enemy: " << enemy->GetUsername() << std::endl;
-      std::cout << "Level: " << enemy->GetLevel() << std::endl;
-      std::cout << "Health: " << enemy->GetHealth() << std::endl;
-      std::cout << "Energy: " << enemy->GetEnergy() << std::endl;
+      printStats(player, enemy);
       break;
     default:
       text_box->SetImageFilePathAndLoadTexture(
           constants::TEXT_BOX_MAIN_FILE_PATH);
       break;
   }
+}
+
+void printStats(std::unique_ptr<Character>& player,
+                std::unique_ptr<Character>& enemy) {
+  std::cout << "--------------------------------" << std::endl;
+  std::cout << "Player: " << player->GetUsername() << std::endl;
+  std::cout << "Level: " << player->GetLevel() << std::endl;
+  std::cout << "Health: " << player->GetHealth() << std::endl;
+  std::cout << "Energy: " << player->GetEnergy() << std::endl;
+  std::cout << "--------------------------------" << std::endl;
+  std::cout << "Enemy: " << enemy->GetUsername() << std::endl;
+  std::cout << "Level: " << enemy->GetLevel() << std::endl;
+  std::cout << "Health: " << enemy->GetHealth() << std::endl;
+  std::cout << "Energy: " << enemy->GetEnergy() << std::endl;
+  std::cout << "--------------------------------" << std::endl;
 }
 
 void handleRunEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,

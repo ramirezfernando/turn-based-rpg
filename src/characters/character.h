@@ -56,7 +56,7 @@ class Character {
   virtual void Idle() = 0;
   virtual void TakeDamage(int damage) = 0;
 
-  std::string GetAiDecision();
+  constants::AttackType GetAiDecision();
 
  protected:
   SDL_Texture* character_texture_;
