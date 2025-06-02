@@ -1,5 +1,5 @@
-# Turn-Based RPG
-A 2D, 2-player local co-op turn-based battle game developed using C++ and SDL2.
+# Turn-Based RPG 
+A 2D, turn-based RPG developed using C++ and SDL2.
 
 ![fernhelm gif](https://github.com/ramirezfernando/fernhelm/assets/91701930/bc2a694d-81aa-49db-82b4-314f83566f76)
 
@@ -13,16 +13,13 @@ A 2D, 2-player local co-op turn-based battle game developed using C++ and SDL2.
   - [Executing program](#executing-program)
 - [Acknowledgments](#acknowledgments)
 
-
 ## How to Play <a name="how-to-play"></a>
 ### Gameplay <a name="gameplay"></a>
-Players can choose between three different characters to fight against each other. The game ends when a player has reached 0 health. The game begins in the terminal where players can choose their characters or load a saved game (saved games must be inside the `saved-data` folder). Players can choose between:
+Players can choose between three different characters to fight against each other. The game ends when a player has reached 0 health. Players can choose between:
 
 | Fire Knight 🔥       | Water Priestess 🌊      | Ground Monk 🪨         |
 |--------------------|-----------------------|----------------------|
 | ![Fire Knight](./assets/characters/fire_knight/fire_knight.png) | ![Water Priestess](./assets/characters/water_priestess/water_priestess.png) | ![Ground Monk](./assets/characters/ground_monk/ground_monk.png) |
-
-After choosing your character, you will be prompted to enter your username. The game will begin once both players have chosen their characters and entered their usernames.
 
 ### Controls <a name="controls"></a>
 
