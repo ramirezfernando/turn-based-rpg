@@ -90,18 +90,22 @@ void Game::Update() {
       switch (ai_decision) {
         case constants::AttackType::ATTACK1:
           enemy->Attack1();
+          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 1" << std::endl;
           player->TakeDamage(enemy->GetAttack1Damage());
           break;
         case constants::AttackType::ATTACK2:
           enemy->Attack2();
+          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 2" << std::endl;
           player->TakeDamage(enemy->GetAttack2Damage());
           break;
         case constants::AttackType::ATTACK3:
           enemy->Attack3();
+          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 3" << std::endl;
           player->TakeDamage(enemy->GetAttack3Damage());
           break;
         case constants::AttackType::ATTACK4:
           enemy->Attack4();
+          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 4" << std::endl;
           player->TakeDamage(enemy->GetAttack4Damage());
           break;
       }
@@ -204,6 +208,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack1();
+        std::cout << "Player choice (me): Attack 1" << std::endl;
       enemy->TakeDamage(player->GetAttack1Damage());
       player_turn = false;
       is_in_battle = true;
@@ -213,6 +218,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack2();
+      std::cout << "Player choice (me): Attack 2" << std::endl;
       enemy->TakeDamage(player->GetAttack2Damage());
       player_turn = false;
       is_in_battle = true;
@@ -222,6 +228,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack3();
+      std::cout << "Player choice (me): Attack 3" << std::endl;
       enemy->TakeDamage(player->GetAttack3Damage());
       player_turn = false;
       is_in_battle = true;
@@ -231,6 +238,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack4();
+      std::cout << "Player choice (me): Attack 4" << std::endl;
       enemy->TakeDamage(player->GetAttack4Damage());
       player_turn = false;
       is_in_battle = true;

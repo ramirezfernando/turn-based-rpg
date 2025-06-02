@@ -150,7 +150,6 @@ constants::AttackType Character::GetAiDecision() {
       auto json = nlohmann::json::parse(response_data);
       std::string choice =
           json["choices"][0]["message"]["content"].get<std::string>();
-      std::cout << "Choice (gpt-3.5-turbo): " << choice << std::endl;
       // Parse the response and return appropriate attack type.
       if (choice.find("1") != std::string::npos) {
         return constants::AttackType::ATTACK1;
