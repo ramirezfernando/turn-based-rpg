@@ -83,7 +83,9 @@ void Game::Update() {
         player->IsAnimationComplete()) {
       std::string ai_decision = enemy->GetAiDecision();
       if (ai_decision == "attack") {
+        // TODO: Add attack logic to handle different attacks.
         enemy->Attack2();
+        player->TakeDamage(enemy->GetAttack2Damage());
       } else if (ai_decision == "defend") {
         enemy->Defend();
       }
@@ -171,6 +173,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack1();
+      enemy->TakeDamage(player->GetAttack1Damage());
       player_turn = false;
       is_in_battle = true;
       break;
@@ -179,6 +182,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack2();
+      enemy->TakeDamage(player->GetAttack2Damage());
       player_turn = false;
       is_in_battle = true;
       break;
@@ -187,6 +191,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack3();
+      enemy->TakeDamage(player->GetAttack3Damage());
       player_turn = false;
       is_in_battle = true;
       break;
@@ -195,6 +200,7 @@ void handleAttackEvents(SDL_Event& event, std::unique_ptr<Background>& text_box,
       // The text box is re-enabled after the enemy's animation is complete.
       text_box->SetImageFilePathAndLoadTexture("");
       player->Attack4();
+      enemy->TakeDamage(player->GetAttack4Damage());
       player_turn = false;
       is_in_battle = true;
       break;

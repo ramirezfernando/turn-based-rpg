@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "constants/game_constants.h"
 #include "game.h"
 #include "utils/util.h"
 
@@ -43,9 +44,13 @@ class Character {
   void SetAttacking(bool attacking) { is_attacking_ = attacking; }
 
   virtual void Attack1() = 0;
+  virtual int GetAttack1Damage() const = 0;
   virtual void Attack2() = 0;
+  virtual int GetAttack2Damage() const = 0;
   virtual void Attack3() = 0;
+  virtual int GetAttack3Damage() const = 0;
   virtual void Attack4() = 0;
+  virtual int GetAttack4Damage() const = 0;
   virtual void Death() = 0;
   virtual void Defend() = 0;
   virtual void Idle() = 0;
@@ -62,4 +67,21 @@ class Character {
   Uint32 last_frame_time_ = 0;
   bool is_enemy_ = false;
   bool is_attacking_ = false;
+
+  // Base damage values for attacks - initialized from constants
+  int base_attack1_damage_ = constants::BASE_ATTACK1_DAMAGE;
+  int base_attack2_damage_ = constants::BASE_ATTACK2_DAMAGE;
+  int base_attack3_damage_ = constants::BASE_ATTACK3_DAMAGE;
+  int base_attack4_damage_ = constants::BASE_ATTACK4_DAMAGE;
+
+  // Base energy costs for attacks - initialized from constants
+  int base_attack1_energy_cost_ = constants::BASE_ATTACK1_ENERGY_COST;
+  int base_attack2_energy_cost_ = constants::BASE_ATTACK2_ENERGY_COST;
+  int base_attack3_energy_cost_ = constants::BASE_ATTACK3_ENERGY_COST;
+  int base_attack4_energy_cost_ = constants::BASE_ATTACK4_ENERGY_COST;
+
+  // Level scaling factors - initialized from constants
+  float damage_scaling_ = constants::BASE_DAMAGE_SCALING;
+  float health_scaling_ = constants::BASE_HEALTH_SCALING;
+  float energy_scaling_ = constants::BASE_ENERGY_SCALING;
 };
