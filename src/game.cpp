@@ -67,12 +67,12 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Text box created" << std::endl;
   }
   player = std::unique_ptr<Character>(
-      new WaterPriestess("Player", /*is_enemy=*/false));
+      new WaterPriestess("Water Priestess", /*is_enemy=*/false));
   if (player) {
     std::cout << "Character created" << std::endl;
   }
-  enemy =
-      std::unique_ptr<Character>(new FireKnight("Enemy", /*is_enemy=*/true));
+  enemy = std::unique_ptr<Character>(
+      new FireKnight("Fire Knight", /*is_enemy=*/true));
   if (enemy) {
     std::cout << "Enemy created" << std::endl;
   }

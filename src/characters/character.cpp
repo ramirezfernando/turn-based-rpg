@@ -59,17 +59,67 @@ void Character::Render() {
   }
 }
 
+// TODO: Keep track of all decisions made by player and enemy and feed that
+// information to the AI on how to get better at the game xD
 constants::AttackType Character::GetAiDecision() {
-  return constants::AttackType::ATTACK1;
   CURL* curl = curl_easy_init();
   std::string response_data;
   if (curl) {
-    std::string api_key = "Bearer ";
-    std::string prompt = "Enemy is level " + std::to_string(level_) +
-                         " and has " + std::to_string(health_) + " HP and " +
-                         std::to_string(energy_) +
-                         " energy. "
-                         "Choose an action: 'attack', 'defend', or 'heal'.";
+    std::string api_key = "Bearer " + Util::GetApiKey();
+
+    // Create a detailed prompt that considers character attributes and state
+    std::string prompt =
+        "You are an AI controlling a character in a turn-based RPG battle. "
+        "Make a strategic decision based on the following state:\n\n";
+
+    // Add character state
+    prompt += "Your character:\n";
+    prompt += "- Level: " + std::to_string(level_) + "\n";
+    prompt += "- Health: " + std::to_string(health_) + "\n";
+    prompt += "- Energy: " + std::to_string(energy_) + "\n";
+
+    // Add character type specific context
+    if (username_.find("Fire Knight") != std::string::npos) {
+      prompt += "You are a Fire Knight:\n";
+      prompt += "- High damage dealer (30% more base damage)\n";
+      prompt += "- High energy cost (20% more energy cost)\n";
+      prompt += "- Better damage scaling with level\n";
+      prompt += "- Lower health and energy scaling\n";
+      prompt += "- Best suited for aggressive play and high damage output\n";
+    } else if (username_.find("Ground Monk") != std::string::npos) {
+      prompt += "You are a Ground Monk:\n";
+      prompt += "- Balanced character (10% more base damage)\n";
+      prompt += "- Standard energy costs\n";
+      prompt += "- Standard scaling in all attributes\n";
+      prompt += "- Well-rounded and adaptable\n";
+    } else if (username_.find("Water Priestess") != std::string::npos) {
+      prompt += "You are a Water Priestess:\n";
+      prompt += "- Lower base damage (10% less)\n";
+      prompt += "- Efficient energy usage (20% less energy cost)\n";
+      prompt += "- Better energy scaling\n";
+      prompt += "- Standard health scaling\n";
+      prompt += "- Excels at sustained combat\n";
+    }
+
+    // Add attack information
+    prompt += "\nAvailable attacks:\n";
+    prompt += "1. Basic Attack: " + std::to_string(base_attack1_damage_) +
+              " damage, costs " + std::to_string(base_attack1_energy_cost_) +
+              " energy\n";
+    prompt += "2. Medium Attack: " + std::to_string(base_attack2_damage_) +
+              " damage, costs " + std::to_string(base_attack2_energy_cost_) +
+              " energy\n";
+    prompt += "3. Heavy Attack: " + std::to_string(base_attack3_damage_) +
+              " damage, costs " + std::to_string(base_attack3_energy_cost_) +
+              " energy\n";
+    prompt += "4. Ultimate Attack: " + std::to_string(base_attack4_damage_) +
+              " damage, costs " + std::to_string(base_attack4_energy_cost_) +
+              " energy\n";
+
+    prompt +=
+        "\nBased on your character type, current state, and available attacks, "
+        "choose the most strategic attack (respond with only the number 1-4).";
+
     nlohmann::json body = {
         {"model", "gpt-3.5-turbo"},
         {"messages", {{{"role", "user"}, {"content", prompt}}}}};
@@ -95,18 +145,34 @@ constants::AttackType Character::GetAiDecision() {
     curl_easy_perform(curl);
     curl_easy_cleanup(curl);
     curl_slist_free_all(headers);
+
+    try {
+      auto json = nlohmann::json::parse(response_data);
+      std::string choice =
+          json["choices"][0]["message"]["content"].get<std::string>();
+      std::cout << "Choice (gpt-3.5-turbo): " << choice << std::endl;
+      // Parse the response and return appropriate attack type.
+      if (choice.find("1") != std::string::npos) {
+        return constants::AttackType::ATTACK1;
+      } else if (choice.find("2") != std::string::npos) {
+        return constants::AttackType::ATTACK2;
+      } else if (choice.find("3") != std::string::npos) {
+        return constants::AttackType::ATTACK3;
+      } else if (choice.find("4") != std::string::npos) {
+        return constants::AttackType::ATTACK4;
+      }
+    } catch (const std::exception& e) {
+      std::cout << "Error parsing OpenAI response: " << e.what() << std::endl;
+    }
   }
-  // std::cout << response_data << std::endl;
-  // return "attack";
 
-  // // Parse OpenAI response
-  // auto json = nlohmann::json::parse(response_data, nullptr, false);
-  // if (json.is_discarded())
-  //   return "attack";  // fallback
-
-  // try {
-  //   return json["choices"][0]["message"]["content"].get<std::string>();
-  // } catch (const std::exception& e) {
-  //   std::cout << "Error parsing OpenAI response: " << e.what() << std::endl;
-  // }
+  // Fallback strategy based on energy levels.
+  if (energy_ >= base_attack4_energy_cost_) {
+    return constants::AttackType::ATTACK4;
+  } else if (energy_ >= base_attack3_energy_cost_) {
+    return constants::AttackType::ATTACK3;
+  } else if (energy_ >= base_attack2_energy_cost_) {
+    return constants::AttackType::ATTACK2;
+  }
+  return constants::AttackType::ATTACK1;
 }
