@@ -1,7 +1,7 @@
 # Turn-Based RPG 
 A 2D, turn-based RPG developed using C++ and SDL2.
 
-![fernhelm gif](https://github.com/ramirezfernando/fernhelm/assets/91701930/bc2a694d-81aa-49db-82b4-314f83566f76)
+![turn-based-rpg](https://github.com/user-attachments/assets/01d9c749-29c3-46ab-a5e0-525c7e57c60c)
 
 ## Table of Contents
 - [How to Play](#how-to-play)
