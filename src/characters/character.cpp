@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
+#include "game.h"
 
 Character::~Character() {
   SDL_DestroyTexture(character_texture_);

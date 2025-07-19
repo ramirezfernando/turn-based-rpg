@@ -1,5 +1,6 @@
 #include "util.h"
 #include <fstream>
+#include "game.h"
 
 namespace Util {
 std::string GetApiKey() {

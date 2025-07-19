@@ -1,4 +1,5 @@
 #include "background.h"
+#include <game.h>
 #include "constants/game_constants.h"
 #include "utils/util.h"
 

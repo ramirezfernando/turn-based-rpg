@@ -1,6 +1,8 @@
 #pragma once
 
-#include "game.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <string>
 
 namespace Util {
 std::string GetApiKey();

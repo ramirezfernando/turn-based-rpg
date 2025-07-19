@@ -2,7 +2,6 @@
 
 #include <string>
 #include "constants/game_constants.h"
-#include "game.h"
 #include "utils/util.h"
 
 class Character {
