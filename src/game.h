@@ -13,6 +13,7 @@
 #include "characters/water_priestess.h"
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
+#include "text_box/text_box.h"
 
 class Game {
  public:
@@ -33,9 +34,9 @@ class Game {
 
  private:
   SDL_Window* window_;
-  std::unique_ptr<Background> forest_ = nullptr;
-  std::unique_ptr<Background> text_box_ = nullptr;
-  std::unique_ptr<Character> player_ = nullptr;
-  std::unique_ptr<Character> enemy_ = nullptr;
+  std::unique_ptr<Background> background_;
+  std::unique_ptr<TextBox> text_box_;
+  std::unique_ptr<Character> player_;
+  std::unique_ptr<Character> enemy_;
   bool is_running_, player_turn_ = true, is_in_battle_ = false;
 };

@@ -28,15 +28,11 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     is_running_ = false;
   }
 
-  forest_ = std::unique_ptr<Background>(
-      new Background(constants::FOREST_BACKGROUND_FILE_PATH, 0, 0,
-                     /*is_text_box=*/false));
-  if (forest_) {
-    std::cout << "Forest created" << std::endl;
+  background_ = std::unique_ptr<Background>(new Background());
+  if (background_) {
+    std::cout << "Background created" << std::endl;
   }
-  text_box_ = std::unique_ptr<Background>(new Background(
-      constants::TEXT_BOX_MAIN_FILE_PATH, constants::TEXT_BOX_X_POS,
-      constants::TEXT_BOX_Y_POS, /*is_text_box=*/true));
+  text_box_ = std::unique_ptr<TextBox>(new TextBox());
   if (text_box_) {
     std::cout << "Text box created" << std::endl;
   }
@@ -107,7 +103,7 @@ void Game::Update() {
 
 void Game::Render() {
   SDL_RenderClear(renderer_);
-  forest_->Render();
+  background_->Render();
   text_box_->Render();
   player_->Render();
   enemy_->Render();
