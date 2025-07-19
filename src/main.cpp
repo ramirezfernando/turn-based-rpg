@@ -7,14 +7,10 @@
 int main() {
   Uint32 frame_start;
   int frame_time;
-  // Once out of scope, the destructor will be called since it is a `unique_ptr`
   std::unique_ptr<Game> game(new Game());
-
-  // Create the window
   game->Init("TURN-BASED-RPG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
              constants::WINDOW_SIZE, constants::WINDOW_SIZE);
 
-  // Game loop
   while (game->IsRunning()) {
     frame_start = SDL_GetTicks();
     game->Update();
