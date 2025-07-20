@@ -62,6 +62,7 @@ class Character {
   bool is_enemy_ = false;
   bool is_attacking_ = false;
 
+  // TODO: Remove base values and use constants directly in derived classes.
   // Base damage values for attacks - initialized from constants
   int base_attack1_damage_ = constants::BASE_ATTACK1_DAMAGE;
   int base_attack2_damage_ = constants::BASE_ATTACK2_DAMAGE;
