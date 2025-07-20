@@ -80,20 +80,23 @@ constants::AttackType Character::GetAiDecision() {
     prompt += "- Energy: " + std::to_string(energy_) + "\n";
 
     // Add character type specific context
-    if (username_.find("Fire Knight") != std::string::npos) {
+    if (dynamic_cast<FireKnight*>(this)) {
+      std::cout << "Enemy Type: Fire Knight\n";
       prompt += "You are a Fire Knight:\n";
       prompt += "- High damage dealer (30% more base damage)\n";
       prompt += "- High energy cost (20% more energy cost)\n";
       prompt += "- Better damage scaling with level\n";
       prompt += "- Lower health and energy scaling\n";
       prompt += "- Best suited for aggressive play and high damage output\n";
-    } else if (username_.find("Ground Monk") != std::string::npos) {
+    } else if (dynamic_cast<GroundMonk*>(this)) {
+      std::cout << "Enemy Type: Ground Monk\n";
       prompt += "You are a Ground Monk:\n";
       prompt += "- Balanced character (10% more base damage)\n";
       prompt += "- Standard energy costs\n";
       prompt += "- Standard scaling in all attributes\n";
       prompt += "- Well-rounded and adaptable\n";
-    } else if (username_.find("Water Priestess") != std::string::npos) {
+    } else if (dynamic_cast<WaterPriestess*>(this)) {
+      std::cout << "Enemy Type: Water Priestess\n";
       prompt += "You are a Water Priestess:\n";
       prompt += "- Lower base damage (10% less)\n";
       prompt += "- Efficient energy usage (20% less energy cost)\n";

@@ -2,8 +2,7 @@
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
 
-FireKnight::FireKnight(std::string username, bool is_enemy) {
-  SetUsername(username);
+FireKnight::FireKnight(bool is_enemy) {
   SetTexture(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
   SetFrames(constants::FIRE_KNIGHT_IDLE_NUM_FRAMES);

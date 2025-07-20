@@ -43,14 +43,12 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Text box created" << std::endl;
   }
 
-  player_ = std::unique_ptr<Character>(
-      new WaterPriestess("Water Priestess", /*is_enemy=*/false));
+  player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
   if (player_) {
     std::cout << "Character created" << std::endl;
   }
 
-  enemy_ = std::unique_ptr<Character>(
-      new FireKnight("Fire Knight", /*is_enemy=*/true));
+  enemy_ = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true));
   if (enemy_) {
     std::cout << "Enemy created" << std::endl;
   }
@@ -230,13 +228,11 @@ void Game::HandleStatsEvents() {
     case SDLK_1:
       text_box_->SetImageFilePathAndLoadTexture(
           constants::TEXT_BOX_STATS_FILE_PATH);
-      std::cout << "--------------------------------" << std::endl;
-      std::cout << "Player: " << player_->GetUsername() << std::endl;
+      std::cout << "Player --------------------------------" << std::endl;
       std::cout << "Level: " << player_->GetLevel() << std::endl;
       std::cout << "Health: " << player_->GetHealth() << std::endl;
       std::cout << "Energy: " << player_->GetEnergy() << std::endl;
-      std::cout << "--------------------------------" << std::endl;
-      std::cout << "Enemy: " << enemy_->GetUsername() << std::endl;
+      std::cout << "Enemy --------------------------------" << std::endl;
       std::cout << "Level: " << enemy_->GetLevel() << std::endl;
       std::cout << "Health: " << enemy_->GetHealth() << std::endl;
       std::cout << "Energy: " << enemy_->GetEnergy() << std::endl;

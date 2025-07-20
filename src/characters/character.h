@@ -18,7 +18,6 @@ class Character {
   void SetPath(std::string folder_path) { folder_path_ = folder_path; }
   void SetFrames(int frames) { frames_ = frames; }
   void SetCount(int count) { count_ = count; }
-  void SetUsername(std::string username) { username_ = username; }
   void SetLevel(int level) { level_ = level; }
   void SetHealth(int health) { health_ = (health <= 0) ? 0 : health; }
   void SetEnergy(int energy) { energy_ = (energy <= 0) ? 0 : energy; }
@@ -30,7 +29,6 @@ class Character {
   std::string GetPath() { return folder_path_; }
   int GetFrames() { return frames_; }
   int GetCount() { return count_; }
-  std::string GetUsername() { return username_; }
   int GetLevel() { return level_; }
   int GetHealth() { return health_; }
   int GetEnergy() { return energy_; }
@@ -59,7 +57,7 @@ class Character {
   SDL_Texture* character_texture_;
   SDL_Rect src_rect_, dest_rect_;
   int x_pos_, y_pos_, frames_, count_, level_, health_, energy_, delay_ = 70;
-  std::string folder_path_, username_;
+  std::string folder_path_;
   Uint32 last_frame_time_ = 0;
   bool is_enemy_ = false;
   bool is_attacking_ = false;

@@ -4,7 +4,7 @@
 
 class FireKnight : public Character {
  public:
-  FireKnight(std::string username, bool is_enemy);
+  FireKnight(bool is_enemy);
   void Attack1() override;
   int GetAttack1Damage() const override;
   void Attack2() override;
