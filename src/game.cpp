@@ -54,6 +54,9 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   if (enemy_) {
     std::cout << "Enemy created" << std::endl;
   }
+
+  is_player_turn_ = true;
+  is_in_battle_ = false;
 }
 
 void Game::Update() {
@@ -62,7 +65,7 @@ void Game::Update() {
 
   if (is_in_battle_) {
     // Check if player just finished attacking.
-    if (!player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
+    if (!is_player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
         player_->IsAnimationComplete()) {
       constants::AttackType ai_decision = enemy_->GetAiDecision();
       switch (ai_decision) {
@@ -91,11 +94,11 @@ void Game::Update() {
         player_->Death();
         is_running_ = false;
       } else {
-        player_turn_ = true;
+        is_player_turn_ = true;
       }
     }
     // Check if enemy just finished attacking.
-    if (player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
+    if (is_player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
         enemy_->IsAnimationComplete()) {
       if (enemy_->GetHealth() <= 0 || enemy_->GetEnergy() <= 0) {
         enemy_->Death();
@@ -126,7 +129,7 @@ void Game::HandleEvents() {
       is_running_ = false;
       break;
     case SDL_KEYDOWN:
-      if (player_turn_) {
+      if (is_player_turn_) {
         std::string current_text_box_file_path = text_box_->GetImageFilePath();
         if (current_text_box_file_path == constants::TEXT_BOX_MAIN_FILE_PATH) {
           HandleMenuEvents();
@@ -182,7 +185,7 @@ void Game::HandleAttackEvents() {
       player_->Attack1();
       std::cout << "Player choice (me): Attack 1" << std::endl;
       enemy_->TakeDamage(player_->GetAttack1Damage());
-      player_turn_ = false;
+      is_player_turn_ = false;
       is_in_battle_ = true;
       break;
     case SDLK_2:
@@ -192,7 +195,7 @@ void Game::HandleAttackEvents() {
       player_->Attack2();
       std::cout << "Player choice (me): Attack 2" << std::endl;
       enemy_->TakeDamage(player_->GetAttack2Damage());
-      player_turn_ = false;
+      is_player_turn_ = false;
       is_in_battle_ = true;
       break;
     case SDLK_3:
@@ -202,7 +205,7 @@ void Game::HandleAttackEvents() {
       player_->Attack3();
       std::cout << "Player choice (me): Attack 3" << std::endl;
       enemy_->TakeDamage(player_->GetAttack3Damage());
-      player_turn_ = false;
+      is_player_turn_ = false;
       is_in_battle_ = true;
       break;
     case SDLK_4:
@@ -212,7 +215,7 @@ void Game::HandleAttackEvents() {
       player_->Attack4();
       std::cout << "Player choice (me): Attack 4" << std::endl;
       enemy_->TakeDamage(player_->GetAttack4Damage());
-      player_turn_ = false;
+      is_player_turn_ = false;
       is_in_battle_ = true;
       break;
     default:
