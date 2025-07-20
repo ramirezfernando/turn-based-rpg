@@ -177,8 +177,6 @@ void Game::HandleMenuEvents() {
 void Game::HandleAttackEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      // This ensures that the text box is not visible when the player attacks.
-      // The text box is re-enabled after the enemy's animation is complete.
       text_box_->SetImageFilePathAndLoadTexture("");
       player_->Attack1();
       std::cout << "Player choice (me): Attack 1" << std::endl;
@@ -187,8 +185,6 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_2:
-      // This ensures that the text box is not visible when the player attacks.
-      // The text box is re-enabled after the enemy's animation is complete.
       text_box_->SetImageFilePathAndLoadTexture("");
       player_->Attack2();
       std::cout << "Player choice (me): Attack 2" << std::endl;
@@ -197,8 +193,6 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_3:
-      // This ensures that the text box is not visible when the player attacks.
-      // The text box is re-enabled after the enemy's animation is complete.
       text_box_->SetImageFilePathAndLoadTexture("");
       player_->Attack3();
       std::cout << "Player choice (me): Attack 3" << std::endl;
@@ -207,8 +201,6 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_4:
-      // This ensures that the text box is not visible when the player attacks.
-      // The text box is re-enabled after the enemy's animation is complete.
       text_box_->SetImageFilePathAndLoadTexture("");
       player_->Attack4();
       std::cout << "Player choice (me): Attack 4" << std::endl;
@@ -264,7 +256,7 @@ void Game::HandleRunEvents() {
 void Game::HandleSaveEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      // Implement save functionality here
+      // TODO: Implement save functionality here using SQLite.
       std::cout << "Game saved!" << std::endl;
       text_box_->SetImageFilePathAndLoadTexture(
           constants::TEXT_BOX_MAIN_FILE_PATH);
