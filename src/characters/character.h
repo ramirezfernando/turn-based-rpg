@@ -17,7 +17,6 @@ class Character {
   void SetYPos(int y_pos) { y_pos_ = y_pos; }
   void SetPath(std::string folder_path) { folder_path_ = folder_path; }
   void SetFrames(int frames) { frames_ = frames; }
-  void SetSpeed(int speed) { speed_ = speed; }
   void SetCount(int count) { count_ = count; }
   void SetUsername(std::string username) { username_ = username; }
   void SetLevel(int level) { level_ = level; }
@@ -30,7 +29,6 @@ class Character {
   int GetYPos() { return y_pos_; }
   std::string GetPath() { return folder_path_; }
   int GetFrames() { return frames_; }
-  int GetSpeed() { return speed_; }
   int GetCount() { return count_; }
   std::string GetUsername() { return username_; }
   int GetLevel() { return level_; }
@@ -60,8 +58,7 @@ class Character {
  protected:
   SDL_Texture* character_texture_;
   SDL_Rect src_rect_, dest_rect_;
-  int x_pos_, y_pos_, frames_, speed_, count_, level_, health_, energy_,
-      delay_ = 70;
+  int x_pos_, y_pos_, frames_, count_, level_, health_, energy_, delay_ = 70;
   std::string folder_path_, username_;
   Uint32 last_frame_time_ = 0;
   bool is_enemy_ = false;

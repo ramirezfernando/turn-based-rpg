@@ -6,8 +6,7 @@ GroundMonk::GroundMonk(std::string username, bool is_enemy) {
   SetUsername(username);
   SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-  SetFrames(6);
-  SetSpeed(100);
+  SetFrames(constants::GROUND_MONK_IDLE_NUM_FRAMES);
   SetCount(1);
   SetLevel(1);
   SetHealth(100);
@@ -41,9 +40,8 @@ GroundMonk::GroundMonk(std::string username, bool is_enemy) {
 void GroundMonk::Attack1() {
   SetTexture(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_ATTACK_1_FOLDER_PATH));
-  SetFrames(6);
+  SetFrames(constants::GROUND_MONK_ATTACK_1_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack1_energy_cost_;
 }
@@ -56,9 +54,8 @@ int GroundMonk::GetAttack1Damage() const {
 void GroundMonk::Attack2() {
   SetTexture(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_ATTACK_2_FOLDER_PATH));
-  SetFrames(12);
+  SetFrames(constants::GROUND_MONK_ATTACK_2_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack2_energy_cost_;
 }
@@ -71,9 +68,8 @@ int GroundMonk::GetAttack2Damage() const {
 void GroundMonk::Attack3() {
   SetTexture(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_ATTACK_3_FOLDER_PATH));
-  SetFrames(24);
+  SetFrames(constants::GROUND_MONK_ATTACK_3_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack3_energy_cost_;
 }
@@ -86,9 +82,8 @@ int GroundMonk::GetAttack3Damage() const {
 void GroundMonk::Attack4() {
   SetTexture(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_ATTACK_4_FOLDER_PATH));
-  SetFrames(25);
+  SetFrames(constants::GROUND_MONK_ATTACK_4_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack4_energy_cost_;
 }
@@ -101,32 +96,28 @@ int GroundMonk::GetAttack4Damage() const {
 void GroundMonk::Death() {
   SetTexture(constants::GROUND_MONK_DEATH_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_DEATH_FOLDER_PATH));
-  SetFrames(18);
+  SetFrames(constants::GROUND_MONK_DEATH_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void GroundMonk::Defend() {
   SetTexture(constants::GROUND_MONK_DEFEND_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_DEFEND_FOLDER_PATH));
-  SetFrames(13);
+  SetFrames(constants::GROUND_MONK_DEFEND_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void GroundMonk::Idle() {
   SetTexture(constants::GROUND_MONK_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_IDLE_FOLDER_PATH));
-  SetFrames(6);
+  SetFrames(constants::GROUND_MONK_IDLE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void GroundMonk::TakeDamage(int damage) {
   SetTexture(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::GROUND_MONK_TAKE_DAMAGE_FOLDER_PATH));
-  SetFrames(6);
+  SetFrames(constants::GROUND_MONK_TAKE_DAMAGE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetHealth(health_ - damage);
 }

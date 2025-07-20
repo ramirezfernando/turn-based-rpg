@@ -6,8 +6,7 @@ FireKnight::FireKnight(std::string username, bool is_enemy) {
   SetUsername(username);
   SetTexture(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
-  SetFrames(8);
-  SetSpeed(100);
+  SetFrames(constants::FIRE_KNIGHT_IDLE_NUM_FRAMES);
   SetCount(1);
   SetLevel(1);
   SetHealth(100);
@@ -41,9 +40,8 @@ FireKnight::FireKnight(std::string username, bool is_enemy) {
 void FireKnight::Attack1() {
   SetTexture(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_1_FOLDER_PATH));
-  SetFrames(11);
+  SetFrames(constants::FIRE_KNIGHT_ATTACK_1_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack1_energy_cost_;
 }
@@ -56,9 +54,8 @@ int FireKnight::GetAttack1Damage() const {
 void FireKnight::Attack2() {
   SetTexture(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_2_FOLDER_PATH));
-  SetFrames(19);
+  SetFrames(constants::FIRE_KNIGHT_ATTACK_2_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack2_energy_cost_;
 }
@@ -71,9 +68,8 @@ int FireKnight::GetAttack2Damage() const {
 void FireKnight::Attack3() {
   SetTexture(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_3_FOLDER_PATH));
-  SetFrames(29);
+  SetFrames(constants::FIRE_KNIGHT_ATTACK_3_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack3_energy_cost_;
 }
@@ -86,9 +82,8 @@ int FireKnight::GetAttack3Damage() const {
 void FireKnight::Attack4() {
   SetTexture(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_ATTACK_4_FOLDER_PATH));
-  SetFrames(18);
+  SetFrames(constants::FIRE_KNIGHT_ATTACK_4_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack4_energy_cost_;
 }
@@ -101,32 +96,28 @@ int FireKnight::GetAttack4Damage() const {
 void FireKnight::Death() {
   SetTexture(constants::FIRE_KNIGHT_DEATH_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_DEATH_FOLDER_PATH));
-  SetFrames(13);
+  SetFrames(constants::FIRE_KNIGHT_DEATH_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void FireKnight::Defend() {
   SetTexture(constants::FIRE_KNIGHT_DEFEND_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_DEFEND_FOLDER_PATH));
-  SetFrames(10);
+  SetFrames(constants::FIRE_KNIGHT_DEFEND_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void FireKnight::Idle() {
   SetTexture(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_IDLE_FOLDER_PATH));
-  SetFrames(8);
+  SetFrames(constants::FIRE_KNIGHT_IDLE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void FireKnight::TakeDamage(int damage) {
   SetTexture(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::FIRE_KNIGHT_TAKE_DAMAGE_FOLDER_PATH));
-  SetFrames(7);
+  SetFrames(constants::FIRE_KNIGHT_TAKE_DAMAGE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetHealth(health_ - damage);
 }

@@ -6,8 +6,7 @@ WaterPriestess::WaterPriestess(std::string username, bool is_enemy) {
   SetUsername(username);
   SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-  SetFrames(8);
-  SetSpeed(100);
+  SetFrames(constants::WATER_PRIESTESS_IDLE_NUM_FRAMES);
   SetCount(1);
   SetLevel(1);
   SetHealth(100);
@@ -41,9 +40,8 @@ WaterPriestess::WaterPriestess(std::string username, bool is_enemy) {
 void WaterPriestess::Attack1() {
   SetTexture(constants::WATER_PRIESTESS_ATTACK_1_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_1_FOLDER_PATH));
-  SetFrames(7);
+  SetFrames(constants::WATER_PRIESTESS_ATTACK_1_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack1_energy_cost_;
 }
@@ -56,9 +54,8 @@ int WaterPriestess::GetAttack1Damage() const {
 void WaterPriestess::Attack2() {
   SetTexture(constants::WATER_PRIESTESS_ATTACK_2_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_2_FOLDER_PATH));
-  SetFrames(21);
+  SetFrames(constants::WATER_PRIESTESS_ATTACK_2_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack2_energy_cost_;
 }
@@ -71,9 +68,8 @@ int WaterPriestess::GetAttack2Damage() const {
 void WaterPriestess::Attack3() {
   SetTexture(constants::WATER_PRIESTESS_ATTACK_3_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_3_FOLDER_PATH));
-  SetFrames(28);
+  SetFrames(constants::WATER_PRIESTESS_ATTACK_3_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack3_energy_cost_;
 }
@@ -86,9 +82,8 @@ int WaterPriestess::GetAttack3Damage() const {
 void WaterPriestess::Attack4() {
   SetTexture(constants::WATER_PRIESTESS_ATTACK_4_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_ATTACK_4_FOLDER_PATH));
-  SetFrames(33);
+  SetFrames(constants::WATER_PRIESTESS_ATTACK_4_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetAttacking(true);
   energy_ -= base_attack4_energy_cost_;
 }
@@ -101,32 +96,28 @@ int WaterPriestess::GetAttack4Damage() const {
 void WaterPriestess::Death() {
   SetTexture(constants::WATER_PRIESTESS_DEATH_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_DEATH_FOLDER_PATH));
-  SetFrames(16);
+  SetFrames(constants::WATER_PRIESTESS_DEATH_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void WaterPriestess::Defend() {
   SetTexture(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_DEFEND_FOLDER_PATH));
-  SetFrames(12);
+  SetFrames(constants::WATER_PRIESTESS_DEFEND_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void WaterPriestess::Idle() {
   SetTexture(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_IDLE_FOLDER_PATH));
-  SetFrames(8);
+  SetFrames(constants::WATER_PRIESTESS_IDLE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
 }
 
 void WaterPriestess::TakeDamage(int damage) {
   SetTexture(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH);
   SetPath(std::string(constants::WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH));
-  SetFrames(7);
+  SetFrames(constants::WATER_PRIESTESS_TAKE_DAMAGE_NUM_FRAMES);
   SetCount(1);
-  SetSpeed(100);
   SetHealth(health_ - damage);
 }
