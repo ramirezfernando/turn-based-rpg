@@ -3,13 +3,14 @@
 #include "constants/game_constants.h"
 #include "utils/util.h"
 
-TextBox::TextBox() {
-  text_box_texture_ = Util::LoadTexture(constants::TEXT_BOX_MAIN_FILE_PATH);
-  file_path_ = std::string(constants::TEXT_BOX_MAIN_FILE_PATH);
-  x_pos_ = constants::TEXT_BOX_X_POS;
-  y_pos_ = constants::TEXT_BOX_Y_POS;
-  src_rect_.h = constants::TEXT_BOX_HEIGHT;
-  src_rect_.w = constants::TEXT_BOX_WIDTH;
+TextBox::TextBox(const char* file_path, int width, int height, int x_pos,
+                 int y_pos) {
+  text_box_texture_ = Util::LoadTexture(file_path);
+  file_path_ = std::string(file_path);
+  x_pos_ = x_pos;
+  y_pos_ = y_pos;
+  src_rect_.h = height;
+  src_rect_.w = width;
   src_rect_.x = 0;
   src_rect_.y = 0;
   dest_rect_.h = src_rect_.h;

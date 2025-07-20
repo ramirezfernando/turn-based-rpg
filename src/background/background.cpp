@@ -3,14 +3,13 @@
 #include "constants/game_constants.h"
 #include "utils/util.h"
 
-Background::Background() {
-  background_texture_ =
-      Util::LoadTexture(constants::FOREST_BACKGROUND_FILE_PATH);
-  file_path_ = std::string(constants::FOREST_BACKGROUND_FILE_PATH);
+Background::Background(const char* file_path, int width, int height) {
+  background_texture_ = Util::LoadTexture(file_path);
+  file_path_ = std::string(file_path);
   x_pos_ = 0;
   y_pos_ = 0;
-  src_rect_.h = constants::WINDOW_SIZE;
-  src_rect_.w = constants::WINDOW_SIZE;
+  src_rect_.h = width;
+  src_rect_.w = height;
   src_rect_.x = 0;
   src_rect_.y = 0;
   dest_rect_.h = src_rect_.h;

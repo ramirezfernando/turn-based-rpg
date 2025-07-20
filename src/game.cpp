@@ -28,19 +28,27 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     is_running_ = false;
   }
 
-  background_ = std::unique_ptr<Background>(new Background());
+  background_ = std::unique_ptr<Background>(
+      new Background(constants::FOREST_BACKGROUND_FILE_PATH,
+                     constants::WINDOW_SIZE, constants::WINDOW_SIZE));
   if (background_) {
     std::cout << "Background created" << std::endl;
   }
-  text_box_ = std::unique_ptr<TextBox>(new TextBox());
+
+  text_box_ = std::unique_ptr<TextBox>(
+      new TextBox(constants::TEXT_BOX_MAIN_FILE_PATH, constants::TEXT_BOX_WIDTH,
+                  constants::TEXT_BOX_HEIGHT, constants::TEXT_BOX_X_POS,
+                  constants::TEXT_BOX_Y_POS));
   if (text_box_) {
     std::cout << "Text box created" << std::endl;
   }
+
   player_ = std::unique_ptr<Character>(
       new WaterPriestess("Water Priestess", /*is_enemy=*/false));
   if (player_) {
     std::cout << "Character created" << std::endl;
   }
+
   enemy_ = std::unique_ptr<Character>(
       new FireKnight("Fire Knight", /*is_enemy=*/true));
   if (enemy_) {

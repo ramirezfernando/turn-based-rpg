@@ -7,7 +7,7 @@
 
 class Background {
  public:
-  Background();
+  Background(const char* file_path, int width, int height);
   ~Background();
   void Render();
   void SetImageFilePathAndLoadTexture(const char* file_path);

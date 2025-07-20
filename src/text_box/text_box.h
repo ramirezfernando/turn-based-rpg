@@ -7,7 +7,7 @@
 
 class TextBox {
  public:
-  TextBox();
+  TextBox(const char* file_path, int width, int height, int x_pos, int y_pos);
   ~TextBox();
   void Render();
   void SetImageFilePathAndLoadTexture(const char* file_path);
