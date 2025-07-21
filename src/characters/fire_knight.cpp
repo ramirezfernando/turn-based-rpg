@@ -10,21 +10,14 @@ FireKnight::FireKnight(bool is_enemy) {
   SetLevel(1);
   SetHealth(100);
   SetEnergy(100);
-
-  // Fire Knight specific stat modifications
-  base_attack1_damage_ *= constants::FIRE_KNIGHT_DAMAGE_MOD;
-  base_attack2_damage_ *= constants::FIRE_KNIGHT_DAMAGE_MOD;
-  base_attack3_damage_ *= constants::FIRE_KNIGHT_DAMAGE_MOD;
-  base_attack4_damage_ *= constants::FIRE_KNIGHT_DAMAGE_MOD;
-
-  base_attack1_energy_cost_ *= constants::FIRE_KNIGHT_ENERGY_COST_MOD;
-  base_attack2_energy_cost_ *= constants::FIRE_KNIGHT_ENERGY_COST_MOD;
-  base_attack3_energy_cost_ *= constants::FIRE_KNIGHT_ENERGY_COST_MOD;
-  base_attack4_energy_cost_ *= constants::FIRE_KNIGHT_ENERGY_COST_MOD;
-
-  damage_scaling_ = constants::FIRE_KNIGHT_DAMAGE_SCALING;
-  health_scaling_ = constants::FIRE_KNIGHT_HEALTH_SCALING;
-  energy_scaling_ = constants::FIRE_KNIGHT_ENERGY_SCALING;
+  SetAttack1Damage(constants::FIRE_KNIGHT_ATTACK_1_DAMAGE);
+  SetAttack2Damage(constants::FIRE_KNIGHT_ATTACK_2_DAMAGE);
+  SetAttack3Damage(constants::FIRE_KNIGHT_ATTACK_3_DAMAGE);
+  SetAttack4Damage(constants::FIRE_KNIGHT_ATTACK_4_DAMAGE);
+  SetAttack1EnergyCost(constants::FIRE_KNIGHT_ATTACK_1_ENERGY_COST);
+  SetAttack2EnergyCost(constants::FIRE_KNIGHT_ATTACK_2_ENERGY_COST);
+  SetAttack3EnergyCost(constants::FIRE_KNIGHT_ATTACK_3_ENERGY_COST);
+  SetAttack4EnergyCost(constants::FIRE_KNIGHT_ATTACK_4_ENERGY_COST);
 
   if (is_enemy) {
     SetEnemy(is_enemy);
@@ -42,12 +35,7 @@ void FireKnight::Attack1() {
   SetFrames(constants::FIRE_KNIGHT_ATTACK_1_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack1_energy_cost_;
-}
-
-int FireKnight::GetAttack1Damage() const {
-  return static_cast<int>(base_attack1_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack1_energy_cost_;
 }
 
 void FireKnight::Attack2() {
@@ -56,12 +44,7 @@ void FireKnight::Attack2() {
   SetFrames(constants::FIRE_KNIGHT_ATTACK_2_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack2_energy_cost_;
-}
-
-int FireKnight::GetAttack2Damage() const {
-  return static_cast<int>(base_attack2_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack2_energy_cost_;
 }
 
 void FireKnight::Attack3() {
@@ -70,12 +53,7 @@ void FireKnight::Attack3() {
   SetFrames(constants::FIRE_KNIGHT_ATTACK_3_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack3_energy_cost_;
-}
-
-int FireKnight::GetAttack3Damage() const {
-  return static_cast<int>(base_attack3_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack3_energy_cost_;
 }
 
 void FireKnight::Attack4() {
@@ -84,12 +62,7 @@ void FireKnight::Attack4() {
   SetFrames(constants::FIRE_KNIGHT_ATTACK_4_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack4_energy_cost_;
-}
-
-int FireKnight::GetAttack4Damage() const {
-  return static_cast<int>(base_attack4_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack4_energy_cost_;
 }
 
 void FireKnight::Death() {

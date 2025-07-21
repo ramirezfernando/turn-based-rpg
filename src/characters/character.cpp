@@ -61,7 +61,7 @@ void Character::Render() {
 }
 
 // TODO: Keep track of all decisions made by player and enemy and feed that
-// information to the AI on how to get better at the game xD
+// information to the AI on how to get better at the game
 constants::AttackType Character::GetAiDecision() {
   CURL* curl = curl_easy_init();
   std::string response_data;
@@ -81,25 +81,22 @@ constants::AttackType Character::GetAiDecision() {
 
     // Add character type specific context
     if (dynamic_cast<FireKnight*>(this)) {
-      std::cout << "Enemy Type: Fire Knight\n";
       prompt += "You are a Fire Knight:\n";
-      prompt += "- High damage dealer (30% more base damage)\n";
-      prompt += "- High energy cost (20% more energy cost)\n";
+      prompt += "- High damage dealer\n";
+      prompt += "- High energy cost\n";
       prompt += "- Better damage scaling with level\n";
       prompt += "- Lower health and energy scaling\n";
       prompt += "- Best suited for aggressive play and high damage output\n";
     } else if (dynamic_cast<GroundMonk*>(this)) {
-      std::cout << "Enemy Type: Ground Monk\n";
       prompt += "You are a Ground Monk:\n";
-      prompt += "- Balanced character (10% more base damage)\n";
+      prompt += "- Balanced character\n";
       prompt += "- Standard energy costs\n";
       prompt += "- Standard scaling in all attributes\n";
       prompt += "- Well-rounded and adaptable\n";
     } else if (dynamic_cast<WaterPriestess*>(this)) {
-      std::cout << "Enemy Type: Water Priestess\n";
       prompt += "You are a Water Priestess:\n";
-      prompt += "- Lower base damage (10% less)\n";
-      prompt += "- Efficient energy usage (20% less energy cost)\n";
+      prompt += "- Lower base damage\n";
+      prompt += "- Efficient energy usage\n";
       prompt += "- Better energy scaling\n";
       prompt += "- Standard health scaling\n";
       prompt += "- Excels at sustained combat\n";
@@ -107,22 +104,24 @@ constants::AttackType Character::GetAiDecision() {
 
     // Add attack information
     prompt += "\nAvailable attacks:\n";
-    prompt += "1. Basic Attack: " + std::to_string(base_attack1_damage_) +
-              " damage, costs " + std::to_string(base_attack1_energy_cost_) +
+    prompt += "1. Basic Attack: " + std::to_string(attack1_damage_) +
+              " damage, costs " + std::to_string(attack1_energy_cost_) +
               " energy\n";
-    prompt += "2. Medium Attack: " + std::to_string(base_attack2_damage_) +
-              " damage, costs " + std::to_string(base_attack2_energy_cost_) +
+    prompt += "2. Medium Attack: " + std::to_string(attack2_damage_) +
+              " damage, costs " + std::to_string(attack2_energy_cost_) +
               " energy\n";
-    prompt += "3. Heavy Attack: " + std::to_string(base_attack3_damage_) +
-              " damage, costs " + std::to_string(base_attack3_energy_cost_) +
+    prompt += "3. Heavy Attack: " + std::to_string(attack3_damage_) +
+              " damage, costs " + std::to_string(attack3_energy_cost_) +
               " energy\n";
-    prompt += "4. Ultimate Attack: " + std::to_string(base_attack4_damage_) +
-              " damage, costs " + std::to_string(base_attack4_energy_cost_) +
+    prompt += "4. Ultimate Attack: " + std::to_string(attack4_damage_) +
+              " damage, costs " + std::to_string(attack4_energy_cost_) +
               " energy\n";
 
     prompt +=
         "\nBased on your character type, current state, and available attacks, "
         "choose the most strategic attack (respond with only the number 1-4).";
+
+    cout << prompt << endl;
 
     nlohmann::json body = {
         {"model", "gpt-3.5-turbo"},
@@ -170,11 +169,11 @@ constants::AttackType Character::GetAiDecision() {
   }
 
   // Fallback strategy based on energy levels.
-  if (energy_ >= base_attack4_energy_cost_) {
+  if (energy_ >= attack4_energy_cost_) {
     return constants::AttackType::ATTACK4;
-  } else if (energy_ >= base_attack3_energy_cost_) {
+  } else if (energy_ >= attack3_energy_cost_) {
     return constants::AttackType::ATTACK3;
-  } else if (energy_ >= base_attack2_energy_cost_) {
+  } else if (energy_ >= attack2_energy_cost_) {
     return constants::AttackType::ATTACK2;
   }
   return constants::AttackType::ATTACK1;

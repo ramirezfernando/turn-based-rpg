@@ -10,21 +10,14 @@ GroundMonk::GroundMonk(bool is_enemy) {
   SetLevel(1);
   SetHealth(100);
   SetEnergy(100);
-
-  // Ground Monk specific stat modifications
-  base_attack1_damage_ *= constants::GROUND_MONK_DAMAGE_MOD;
-  base_attack2_damage_ *= constants::GROUND_MONK_DAMAGE_MOD;
-  base_attack3_damage_ *= constants::GROUND_MONK_DAMAGE_MOD;
-  base_attack4_damage_ *= constants::GROUND_MONK_DAMAGE_MOD;
-
-  base_attack1_energy_cost_ *= constants::GROUND_MONK_ENERGY_COST_MOD;
-  base_attack2_energy_cost_ *= constants::GROUND_MONK_ENERGY_COST_MOD;
-  base_attack3_energy_cost_ *= constants::GROUND_MONK_ENERGY_COST_MOD;
-  base_attack4_energy_cost_ *= constants::GROUND_MONK_ENERGY_COST_MOD;
-
-  damage_scaling_ = constants::GROUND_MONK_DAMAGE_SCALING;
-  health_scaling_ = constants::GROUND_MONK_HEALTH_SCALING;
-  energy_scaling_ = constants::GROUND_MONK_ENERGY_SCALING;
+  SetAttack1Damage(constants::GROUND_MONK_ATTACK_1_DAMAGE);
+  SetAttack2Damage(constants::GROUND_MONK_ATTACK_2_DAMAGE);
+  SetAttack3Damage(constants::GROUND_MONK_ATTACK_3_DAMAGE);
+  SetAttack4Damage(constants::GROUND_MONK_ATTACK_4_DAMAGE);
+  SetAttack1EnergyCost(constants::GROUND_MONK_ATTACK_1_ENERGY_COST);
+  SetAttack2EnergyCost(constants::GROUND_MONK_ATTACK_2_ENERGY_COST);
+  SetAttack3EnergyCost(constants::GROUND_MONK_ATTACK_3_ENERGY_COST);
+  SetAttack4EnergyCost(constants::GROUND_MONK_ATTACK_4_ENERGY_COST);
 
   if (is_enemy) {
     SetEnemy(is_enemy);
@@ -42,12 +35,7 @@ void GroundMonk::Attack1() {
   SetFrames(constants::GROUND_MONK_ATTACK_1_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack1_energy_cost_;
-}
-
-int GroundMonk::GetAttack1Damage() const {
-  return static_cast<int>(base_attack1_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack1_energy_cost_;
 }
 
 void GroundMonk::Attack2() {
@@ -56,12 +44,7 @@ void GroundMonk::Attack2() {
   SetFrames(constants::GROUND_MONK_ATTACK_2_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack2_energy_cost_;
-}
-
-int GroundMonk::GetAttack2Damage() const {
-  return static_cast<int>(base_attack2_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack2_energy_cost_;
 }
 
 void GroundMonk::Attack3() {
@@ -70,12 +53,7 @@ void GroundMonk::Attack3() {
   SetFrames(constants::GROUND_MONK_ATTACK_3_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack3_energy_cost_;
-}
-
-int GroundMonk::GetAttack3Damage() const {
-  return static_cast<int>(base_attack3_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack3_energy_cost_;
 }
 
 void GroundMonk::Attack4() {
@@ -84,12 +62,7 @@ void GroundMonk::Attack4() {
   SetFrames(constants::GROUND_MONK_ATTACK_4_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack4_energy_cost_;
-}
-
-int GroundMonk::GetAttack4Damage() const {
-  return static_cast<int>(base_attack4_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack4_energy_cost_;
 }
 
 void GroundMonk::Death() {

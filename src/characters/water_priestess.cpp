@@ -10,21 +10,14 @@ WaterPriestess::WaterPriestess(bool is_enemy) {
   SetLevel(1);
   SetHealth(100);
   SetEnergy(100);
-
-  // Water Priestess specific stat modifications
-  base_attack1_damage_ *= constants::WATER_PRIESTESS_DAMAGE_MOD;
-  base_attack2_damage_ *= constants::WATER_PRIESTESS_DAMAGE_MOD;
-  base_attack3_damage_ *= constants::WATER_PRIESTESS_DAMAGE_MOD;
-  base_attack4_damage_ *= constants::WATER_PRIESTESS_DAMAGE_MOD;
-
-  base_attack1_energy_cost_ *= constants::WATER_PRIESTESS_ENERGY_COST_MOD;
-  base_attack2_energy_cost_ *= constants::WATER_PRIESTESS_ENERGY_COST_MOD;
-  base_attack3_energy_cost_ *= constants::WATER_PRIESTESS_ENERGY_COST_MOD;
-  base_attack4_energy_cost_ *= constants::WATER_PRIESTESS_ENERGY_COST_MOD;
-
-  damage_scaling_ = constants::WATER_PRIESTESS_DAMAGE_SCALING;
-  health_scaling_ = constants::WATER_PRIESTESS_HEALTH_SCALING;
-  energy_scaling_ = constants::WATER_PRIESTESS_ENERGY_SCALING;
+  SetAttack1Damage(constants::WATER_PRIESTESS_ATTACK_1_DAMAGE);
+  SetAttack2Damage(constants::WATER_PRIESTESS_ATTACK_2_DAMAGE);
+  SetAttack3Damage(constants::WATER_PRIESTESS_ATTACK_3_DAMAGE);
+  SetAttack4Damage(constants::WATER_PRIESTESS_ATTACK_4_DAMAGE);
+  SetAttack1EnergyCost(constants::WATER_PRIESTESS_ATTACK_1_ENERGY_COST);
+  SetAttack2EnergyCost(constants::WATER_PRIESTESS_ATTACK_2_ENERGY_COST);
+  SetAttack3EnergyCost(constants::WATER_PRIESTESS_ATTACK_3_ENERGY_COST);
+  SetAttack4EnergyCost(constants::WATER_PRIESTESS_ATTACK_4_ENERGY_COST);
 
   if (is_enemy) {
     SetEnemy(is_enemy);
@@ -42,12 +35,7 @@ void WaterPriestess::Attack1() {
   SetFrames(constants::WATER_PRIESTESS_ATTACK_1_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack1_energy_cost_;
-}
-
-int WaterPriestess::GetAttack1Damage() const {
-  return static_cast<int>(base_attack1_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack1_energy_cost_;
 }
 
 void WaterPriestess::Attack2() {
@@ -56,12 +44,7 @@ void WaterPriestess::Attack2() {
   SetFrames(constants::WATER_PRIESTESS_ATTACK_2_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack2_energy_cost_;
-}
-
-int WaterPriestess::GetAttack2Damage() const {
-  return static_cast<int>(base_attack2_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack2_energy_cost_;
 }
 
 void WaterPriestess::Attack3() {
@@ -70,12 +53,7 @@ void WaterPriestess::Attack3() {
   SetFrames(constants::WATER_PRIESTESS_ATTACK_3_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack3_energy_cost_;
-}
-
-int WaterPriestess::GetAttack3Damage() const {
-  return static_cast<int>(base_attack3_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack3_energy_cost_;
 }
 
 void WaterPriestess::Attack4() {
@@ -84,12 +62,7 @@ void WaterPriestess::Attack4() {
   SetFrames(constants::WATER_PRIESTESS_ATTACK_4_NUM_FRAMES);
   SetCount(1);
   SetAttacking(true);
-  energy_ -= base_attack4_energy_cost_;
-}
-
-int WaterPriestess::GetAttack4Damage() const {
-  return static_cast<int>(base_attack4_damage_ *
-                          std::pow(damage_scaling_, level_ - 1));
+  energy_ -= attack4_energy_cost_;
 }
 
 void WaterPriestess::Death() {
