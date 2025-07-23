@@ -15,7 +15,6 @@
 #include "constants/game_constants.h"
 #include "text_box/text_box.h"
 
-// TODO: Add SQLite database for saving/loading game state.
 class Game {
  public:
   ~Game();

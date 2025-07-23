@@ -256,7 +256,7 @@ void Game::HandleRunEvents() {
 void Game::HandleSaveEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      // TODO: Implement save functionality here using SQLite.
+      // TODO: Add SQLite database for saving/loading game state.
       std::cout << "Game saved!" << std::endl;
       text_box_->SetImageFilePathAndLoadTexture(
           constants::TEXT_BOX_MAIN_FILE_PATH);
