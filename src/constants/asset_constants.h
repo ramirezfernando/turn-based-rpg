@@ -69,4 +69,6 @@ extern const char* TEXT_BOX_MAIN_FILE_PATH;
 extern const char* TEXT_BOX_RUN_FILE_PATH;
 extern const char* TEXT_BOX_SAVE_FILE_PATH;
 extern const char* TEXT_BOX_STATS_FILE_PATH;
+extern const char* FONT_FILE_PATH;
+extern const int FONT_SIZE;
 }  // namespace constants

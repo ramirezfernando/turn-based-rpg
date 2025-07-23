@@ -43,6 +43,16 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Text box created" << std::endl;
   }
 
+  text_box_v2_ = std::unique_ptr<TextBoxV2>(
+      new TextBoxV2(constants::FONT_FILE_PATH, constants::FONT_SIZE,
+                    constants::TEXT_BOX_WIDTH, constants::TEXT_BOX_HEIGHT,
+                    constants::TEXT_BOX_X_POS, constants::TEXT_BOX_Y_POS));
+  if (text_box_v2_) {
+    std::cout << "Text box v2 created" << std::endl;
+    text_box_v2_->SetFont(constants::FONT_FILE_PATH, constants::FONT_SIZE);
+    text_box_v2_->SetText("Welcome to the Turn-Based RPG!");
+  }
+
   player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
   if (player_) {
     std::cout << "Character created" << std::endl;
@@ -113,7 +123,8 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   background_->Render();
-  text_box_->Render();
+  //text_box_->Render();
+  text_box_v2_->Render();
   player_->Render();
   enemy_->Render();
   // Double buffering.
