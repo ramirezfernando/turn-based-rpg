@@ -69,7 +69,9 @@ constants::AttackType Character::GetAiDecision() {
     return constants::AttackType::ATTACK1;  // Default fallback
   }
 
-  std::string api_key = Util::GetApiKey();
+  std::string api_key = "";
+  //std::string api_key = Util::GetApiKey();
+
   if (api_key.empty()) {
     std::cerr << "API key is empty. Please set it in api_key.txt." << std::endl;
     return constants::AttackType::ATTACK1;  // Default fallback
