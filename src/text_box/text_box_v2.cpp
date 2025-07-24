@@ -25,6 +25,8 @@ TextBoxV2::TextBoxV2(const char* font_path, const char* background_path,
 TextBoxV2::~TextBoxV2() {
   SDL_DestroyTexture(text_texture_);
   SDL_DestroyTexture(box_texture_);
+  TTF_CloseFont(font_);
+  font_ = nullptr;
   std::cout << "Text Box destroyed" << std::endl;
 }
 
