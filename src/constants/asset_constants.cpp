@@ -110,6 +110,7 @@ const char* TEXT_BOX_MAIN_FILE_PATH = "assets/text_boxes/main.png";
 const char* TEXT_BOX_RUN_FILE_PATH = "assets/text_boxes/run.png";
 const char* TEXT_BOX_SAVE_FILE_PATH = "assets/text_boxes/save.png";
 const char* TEXT_BOX_STATS_FILE_PATH = "assets/text_boxes/stats.png";
+const char* TEXT_BOX_BACKGROUND_FILE_PATH = "assets/text_boxes/background.png";
 const char* FONT_FILE_PATH = "assets/text_boxes/ttf/hack-regular.ttf";
 const int FONT_SIZE = 10;
 
