@@ -6,7 +6,6 @@ A 2D, turn-based RPG developed using C++ and SDL2.
 ## Table of Contents
 - [How to Play](#how-to-play)
   - [Gameplay](#gameplay)
-  - [Controls](#controls)
 - [Getting Started](#getting-started)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
@@ -20,32 +19,6 @@ Players can choose between three different characters to fight against each othe
 | Fire Knight 🔥       | Water Priestess 🌊      | Ground Monk 🪨         |
 |--------------------|-----------------------|----------------------|
 | ![Fire Knight](./assets/characters/fire_knight/fire_knight.png) | ![Water Priestess](./assets/characters/water_priestess/water_priestess.png) | ![Ground Monk](./assets/characters/ground_monk/ground_monk.png) |
-
-### Controls <a name="controls"></a>
-
-The game is played using the keyboard. The controls vary depending on the text box that is currently in view. 
-
-The main text box contains the following controls:
-- `1` - View attack text bok
-    - The attack text box contains the following controls:
-        - `1` - Attack 1
-        - `2` - Attack 2
-        - `3` - Special Attack 1
-        - `4` - Special Attack 2
-        - Any other key - Return to the main text box
-- `2` - View stats text box
-    - The stats text box contains the following controls:
-        - `1` - View player stats (displayed on the terminal)
-        - Any other key - Return to the main text box
-- `3` - View run text box
-    - The run text box contains the following controls:
-        - `1` - Run (ends the game)
-        - `2` - Stay
-        - Any other key - Return to the main text box
-- `4` - Saves the game text box (saves the game to a file in the `saved-data` folder)
-    - The save game text box contains the following controls:
-        - `1` - Return to main text box
-        - Any other key - Return to the main text box
         
 ## Getting Started <a name="getting-started"></a>
 
