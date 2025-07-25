@@ -18,7 +18,6 @@ class TextBoxV2 {
   TTF_Font* font_ = nullptr;
   SDL_Texture* text_texture_ = nullptr;
   SDL_Texture* box_texture_ = nullptr;
-  SDL_Rect src_rect_, dest_rect_;
-  int x_pos_, y_pos_;
-  std::string current_text_;
+  SDL_Rect text_src_rect_, text_dest_rect_, box_src_rect_, box_dest_rect_;
+  int text_x_pos_, text_y_pos_, box_x_pos_, box_y_pos_;
 };

@@ -9,17 +9,29 @@ TextBoxV2::TextBoxV2(const char* font_path, const char* background_path,
   TTF_Init();
   font_ = TTF_OpenFont(font_path, font_size);
   box_texture_ = Util::LoadTexture(background_path);
-  text_texture_ = Util::LoadText("Hello, world!", font_, {0, 0, 0, 255});
-  x_pos_ = x_pos;
-  y_pos_ = y_pos;
-  src_rect_.h = height;
-  src_rect_.w = width;
-  src_rect_.x = 0;
-  src_rect_.y = 0;
-  dest_rect_.h = src_rect_.h;
-  dest_rect_.w = src_rect_.w;
-  dest_rect_.x = x_pos_;
-  dest_rect_.y = y_pos_;
+  text_texture_ = Util::LoadText("1. Attack 2. Stats 3. Run 4. Save", font_,
+                                 {0, 0, 0, 255});
+  box_x_pos_ = x_pos;
+  box_y_pos_ = y_pos;
+
+  box_src_rect_.h = height;
+  box_src_rect_.w = width;
+  box_src_rect_.x = 0;
+  box_src_rect_.y = 0;
+  box_dest_rect_.h = box_src_rect_.h;
+  box_dest_rect_.w = box_src_rect_.w;
+  box_dest_rect_.x = box_x_pos_;
+  box_dest_rect_.y = box_y_pos_;
+
+  const int padding = 40;
+  text_src_rect_.h = height - 2 * padding;
+  text_src_rect_.w = width - 2 * padding;
+  text_src_rect_.x = 0;
+  text_src_rect_.y = 0;
+  text_dest_rect_.h = box_src_rect_.h - 2 * padding;
+  text_dest_rect_.w = box_src_rect_.w - 2 * padding;
+  text_dest_rect_.x = box_x_pos_ + padding;
+  text_dest_rect_.y = box_y_pos_ + padding;
 }
 
 TextBoxV2::~TextBoxV2() {
@@ -31,15 +43,10 @@ TextBoxV2::~TextBoxV2() {
 }
 
 void TextBoxV2::Render() {
-  SDL_Rect box_src_rect = {0, 0, src_rect_.w, src_rect_.h};
-  SDL_Rect box_dest_rect = {x_pos_, y_pos_, src_rect_.w, src_rect_.h};
-  SDL_RenderCopy(Game::renderer_, box_texture_, &box_src_rect, &box_dest_rect);
-
-  SDL_Rect text_src_rect = {0, 0, src_rect_.w, src_rect_.h};
-  SDL_Rect text_dest_rect = {x_pos_ + 10, y_pos_ + 10, src_rect_.w - 20,
-                             src_rect_.h - 20};
-  SDL_RenderCopy(Game::renderer_, text_texture_, &text_src_rect,
-                 &text_dest_rect);
+  SDL_RenderCopy(Game::renderer_, box_texture_, &box_src_rect_,
+                 &box_dest_rect_);
+  SDL_RenderCopy(Game::renderer_, text_texture_, &text_src_rect_,
+                 &text_dest_rect_);
 }
 
 void TextBoxV2::SetText(const std::string& text, SDL_Color color) {
