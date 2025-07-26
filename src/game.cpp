@@ -35,21 +35,13 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     std::cout << "Background created" << std::endl;
   }
 
-  text_box_ = std::unique_ptr<TextBox>(
-      new TextBox(constants::TEXT_BOX_MAIN_FILE_PATH, constants::TEXT_BOX_WIDTH,
-                  constants::TEXT_BOX_HEIGHT, constants::TEXT_BOX_X_POS,
-                  constants::TEXT_BOX_Y_POS));
-  if (text_box_) {
-    std::cout << "Text box created" << std::endl;
-  }
-
-  text_box_v2_ = std::unique_ptr<TextBoxV2>(new TextBoxV2(
+  text_box_ = std::unique_ptr<TextBox>(new TextBox(
       constants::FONT_FILE_PATH, constants::TEXT_BOX_BACKGROUND_FILE_PATH,
       constants::FONT_SIZE, constants::TEXT_BOX_WIDTH,
       constants::TEXT_BOX_HEIGHT, constants::TEXT_BOX_X_POS,
       constants::TEXT_BOX_Y_POS));
-  if (text_box_v2_) {
-    std::cout << "Text box v2 created" << std::endl;
+  if (text_box_) {
+    std::cout << "Text box created" << std::endl;
   }
 
   player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
@@ -111,7 +103,7 @@ void Game::Update() {
         enemy_->Death();
         is_running_ = false;
       } else {
-        text_box_v2_->SetMainMenu();
+        text_box_->SetMainMenu();
         is_in_battle_ = false;
       }
     }
@@ -121,8 +113,7 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   background_->Render();
-  //text_box_->Render();
-  text_box_v2_->Render();
+  text_box_->Render();
   player_->Render();
   enemy_->Render();
   // Double buffering.
@@ -138,7 +129,7 @@ void Game::HandleEvents() {
     case SDL_KEYDOWN:
       if (is_player_turn_) {
         constants::TextBoxType current_text_box_type =
-            text_box_v2_->GetTextBoxType();
+            text_box_->GetTextBoxType();
         switch (current_text_box_type) {
           case constants::TextBoxType::MAIN:
             HandleMenuEvents();
@@ -164,19 +155,19 @@ void Game::HandleEvents() {
 void Game::HandleMenuEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_v2_->SetAttackMenu();
+      text_box_->SetAttackMenu();
       break;
     case SDLK_2:
-      text_box_v2_->SetStatsMenu(player_.get());
+      text_box_->SetStatsMenu(player_.get());
       break;
     case SDLK_3:
-      text_box_v2_->SetRunMenu();
+      text_box_->SetRunMenu();
       break;
     case SDLK_4:
-      text_box_v2_->SetSaveMenu();
+      text_box_->SetSaveMenu();
       break;
     default:
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
   }
 }
@@ -216,7 +207,7 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     default:
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
   }
 }
@@ -224,10 +215,10 @@ void Game::HandleAttackEvents() {
 void Game::HandleStatsEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_v2_->SetStatsMenu(player_.get());
+      text_box_->SetStatsMenu(player_.get());
       break;
     default:
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
   }
 }
@@ -238,7 +229,7 @@ void Game::HandleRunEvents() {
       SetIsRunning(false);
       break;
     default:
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
   }
 }
@@ -248,10 +239,10 @@ void Game::HandleSaveEvents() {
     case SDLK_1:
       // TODO: Add SQLite database for saving/loading game state.
       std::cout << "Game saved!" << std::endl;
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
     default:
-      text_box_v2_->SetMainMenu();
+      text_box_->SetMainMenu();
       break;
   }
 }

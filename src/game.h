@@ -14,7 +14,6 @@
 #include "constants/asset_constants.h"
 #include "constants/game_constants.h"
 #include "text_box/text_box.h"
-#include "text_box/text_box_v2.h"
 
 class Game {
  public:
@@ -37,7 +36,6 @@ class Game {
   SDL_Window* window_;
   std::unique_ptr<Background> background_;
   std::unique_ptr<TextBox> text_box_;
-  std::unique_ptr<TextBoxV2> text_box_v2_;
   std::unique_ptr<Character> player_;
   std::unique_ptr<Character> enemy_;
   bool is_running_, is_player_turn_, is_in_battle_;
