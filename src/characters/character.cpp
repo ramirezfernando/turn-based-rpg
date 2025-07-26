@@ -8,7 +8,7 @@
 
 Character::~Character() {
   SDL_DestroyTexture(character_texture_);
-  std::cout << "Character destroyed" << std::endl;
+  std::clog << "Character destroyed" << std::endl;
 }
 
 void Character::Update() {
@@ -125,7 +125,7 @@ constants::AttackType Character::GetAiDecision() {
       "\nBased on your character type, current state, and available attacks, "
       "choose the most strategic attack (respond with only the number 1-4).";
 
-  std::cout << prompt << std::endl;
+  std::clog << prompt << std::endl;
 
   nlohmann::json body = {
       {"model", "gpt-3.5-turbo"},
@@ -169,7 +169,7 @@ constants::AttackType Character::GetAiDecision() {
       return constants::AttackType::ATTACK4;
     }
   } catch (const std::exception& e) {
-    std::cout << "Error parsing OpenAI response: " << e.what() << std::endl;
+    std::cerr << "Error parsing OpenAI response: " << e.what() << std::endl;
   }
 
   // Fallback strategy based on energy levels.

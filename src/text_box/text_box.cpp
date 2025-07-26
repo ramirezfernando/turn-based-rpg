@@ -39,7 +39,7 @@ TextBox::~TextBox() {
   SDL_DestroyTexture(box_texture_);
   TTF_CloseFont(font_);
   font_ = nullptr;
-  std::cout << "Text Box destroyed" << std::endl;
+  std::clog << "Text Box destroyed" << std::endl;
 }
 
 void TextBox::Render() {

@@ -20,7 +20,7 @@ Background::Background(const char* file_path, int width, int height) {
 
 Background::~Background() {
   SDL_DestroyTexture(background_texture_);
-  std::cout << "Background destroyed" << std::endl;
+  std::clog << "Background destroyed" << std::endl;
 }
 
 void Background::Render() {

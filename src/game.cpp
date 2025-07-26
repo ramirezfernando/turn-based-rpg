@@ -8,7 +8,7 @@ Game::~Game() {
   SDL_DestroyRenderer(renderer_);
   SDL_Quit();
   IMG_Quit();
-  std::cout << "Game destroyed" << std::endl;
+  std::clog << "Game destroyed" << std::endl;
 }
 
 void Game::Init(const char* title, int x_pos, int y_pos, int width,
@@ -16,12 +16,12 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     window_ = SDL_CreateWindow(title, x_pos, y_pos, width, height, 0);
     if (window_) {
-      std::cout << "Window created" << std::endl;
+      std::clog << "Window created" << std::endl;
     }
     renderer_ = SDL_CreateRenderer(window_, -1, 0);
     if (renderer_) {
       SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
-      std::cout << "Renderer created" << std::endl;
+      std::clog << "Renderer created" << std::endl;
     }
     is_running_ = true;
   } else {
@@ -32,7 +32,7 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
       new Background(constants::FOREST_BACKGROUND_FILE_PATH,
                      constants::WINDOW_SIZE, constants::WINDOW_SIZE));
   if (background_) {
-    std::cout << "Background created" << std::endl;
+    std::clog << "Background created" << std::endl;
   }
 
   text_box_ = std::unique_ptr<TextBox>(new TextBox(
@@ -41,18 +41,18 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
       constants::TEXT_BOX_HEIGHT, constants::TEXT_BOX_X_POS,
       constants::TEXT_BOX_Y_POS));
   if (text_box_) {
-    std::cout << "Text box created" << std::endl;
+    std::clog << "Text box created" << std::endl;
     should_render_text_box_ = true;
   }
 
   player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
   if (player_) {
-    std::cout << "Character created" << std::endl;
+    std::clog << "Character created" << std::endl;
   }
 
   enemy_ = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true));
   if (enemy_) {
-    std::cout << "Enemy created" << std::endl;
+    std::clog << "Enemy created" << std::endl;
   }
 
   is_player_turn_ = true;
@@ -71,22 +71,18 @@ void Game::Update() {
       switch (ai_decision) {
         case constants::AttackType::ATTACK1:
           enemy_->Attack1();
-          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 1" << std::endl;
           player_->TakeDamage(enemy_->GetAttack1Damage());
           break;
         case constants::AttackType::ATTACK2:
           enemy_->Attack2();
-          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 2" << std::endl;
           player_->TakeDamage(enemy_->GetAttack2Damage());
           break;
         case constants::AttackType::ATTACK3:
           enemy_->Attack3();
-          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 3" << std::endl;
           player_->TakeDamage(enemy_->GetAttack3Damage());
           break;
         case constants::AttackType::ATTACK4:
           enemy_->Attack4();
-          std::cout << "Enemy choice (gpt-3.5-turbo): Attack 4" << std::endl;
           player_->TakeDamage(enemy_->GetAttack4Damage());
           break;
       }
@@ -180,7 +176,6 @@ void Game::HandleAttackEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       player_->Attack1();
-      std::cout << "Player choice (me): Attack 1" << std::endl;
       enemy_->TakeDamage(player_->GetAttack1Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
@@ -188,7 +183,6 @@ void Game::HandleAttackEvents() {
       break;
     case SDLK_2:
       player_->Attack2();
-      std::cout << "Player choice (me): Attack 2" << std::endl;
       enemy_->TakeDamage(player_->GetAttack2Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
@@ -196,7 +190,6 @@ void Game::HandleAttackEvents() {
       break;
     case SDLK_3:
       player_->Attack3();
-      std::cout << "Player choice (me): Attack 3" << std::endl;
       enemy_->TakeDamage(player_->GetAttack3Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
@@ -204,7 +197,6 @@ void Game::HandleAttackEvents() {
       break;
     case SDLK_4:
       player_->Attack4();
-      std::cout << "Player choice (me): Attack 4" << std::endl;
       enemy_->TakeDamage(player_->GetAttack4Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
@@ -242,7 +234,7 @@ void Game::HandleSaveEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       // TODO: Add SQLite database for saving/loading game state.
-      std::cout << "Game saved!" << std::endl;
+      std::clog << "Game saved!" << std::endl;
       text_box_->SetMainMenu();
       break;
     default:
