@@ -5,6 +5,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <string>
+#include "characters/character.h"
+#include "constants/game_constants.h"
 
 class TextBoxV2 {
  public:
@@ -13,8 +15,15 @@ class TextBoxV2 {
   ~TextBoxV2();
   void Render();
   void SetText(const std::string& text, SDL_Color color = {0, 0, 0, 255});
+  void SetMainMenu();
+  void SetAttackMenu();
+  void SetStatsMenu(Character* player);
+  void SetRunMenu();
+  void SetSaveMenu();
+  constants::TextBoxType GetTextBoxType() const { return text_box_type_; }
 
  private:
+  constants::TextBoxType text_box_type_;
   TTF_Font* font_ = nullptr;
   SDL_Texture* text_texture_ = nullptr;
   SDL_Texture* box_texture_ = nullptr;

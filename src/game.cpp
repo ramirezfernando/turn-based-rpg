@@ -111,8 +111,7 @@ void Game::Update() {
         enemy_->Death();
         is_running_ = false;
       } else {
-        text_box_->SetImageFilePathAndLoadTexture(
-            constants::TEXT_BOX_MAIN_FILE_PATH);
+        text_box_v2_->SetMainMenu();
         is_in_battle_ = false;
       }
     }
@@ -138,21 +137,24 @@ void Game::HandleEvents() {
       break;
     case SDL_KEYDOWN:
       if (is_player_turn_) {
-        std::string current_text_box_file_path = text_box_->GetImageFilePath();
-        if (current_text_box_file_path == constants::TEXT_BOX_MAIN_FILE_PATH) {
-          HandleMenuEvents();
-        } else if (current_text_box_file_path ==
-                   constants::TEXT_BOX_ATTACK_FILE_PATH) {
-          HandleAttackEvents();
-        } else if (current_text_box_file_path ==
-                   constants::TEXT_BOX_STATS_FILE_PATH) {
-          HandleStatsEvents();
-        } else if (current_text_box_file_path ==
-                   constants::TEXT_BOX_RUN_FILE_PATH) {
-          HandleRunEvents();
-        } else if (current_text_box_file_path ==
-                   constants::TEXT_BOX_SAVE_FILE_PATH) {
-          HandleSaveEvents();
+        constants::TextBoxType current_text_box_type =
+            text_box_v2_->GetTextBoxType();
+        switch (current_text_box_type) {
+          case constants::TextBoxType::MAIN:
+            HandleMenuEvents();
+            break;
+          case constants::TextBoxType::ATTACK:
+            HandleAttackEvents();
+            break;
+          case constants::TextBoxType::STATS:
+            HandleStatsEvents();
+            break;
+          case constants::TextBoxType::RUN:
+            HandleRunEvents();
+            break;
+          case constants::TextBoxType::SAVE:
+            HandleSaveEvents();
+            break;
         }
       }
       break;
@@ -162,24 +164,19 @@ void Game::HandleEvents() {
 void Game::HandleMenuEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_ATTACK_FILE_PATH);
+      text_box_v2_->SetAttackMenu();
       break;
     case SDLK_2:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_STATS_FILE_PATH);
+      text_box_v2_->SetStatsMenu(player_.get());
       break;
     case SDLK_3:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_RUN_FILE_PATH);
+      text_box_v2_->SetRunMenu();
       break;
     case SDLK_4:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_SAVE_FILE_PATH);
+      text_box_v2_->SetSaveMenu();
       break;
     default:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
   }
 }
@@ -187,7 +184,7 @@ void Game::HandleMenuEvents() {
 void Game::HandleAttackEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_->SetImageFilePathAndLoadTexture("");
+      // TODO: Hide the text box.
       player_->Attack1();
       std::cout << "Player choice (me): Attack 1" << std::endl;
       enemy_->TakeDamage(player_->GetAttack1Damage());
@@ -195,7 +192,7 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_2:
-      text_box_->SetImageFilePathAndLoadTexture("");
+      // TODO: Hide the text box.
       player_->Attack2();
       std::cout << "Player choice (me): Attack 2" << std::endl;
       enemy_->TakeDamage(player_->GetAttack2Damage());
@@ -203,7 +200,7 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_3:
-      text_box_->SetImageFilePathAndLoadTexture("");
+      // TODO: Hide the text box.
       player_->Attack3();
       std::cout << "Player choice (me): Attack 3" << std::endl;
       enemy_->TakeDamage(player_->GetAttack3Damage());
@@ -211,7 +208,7 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     case SDLK_4:
-      text_box_->SetImageFilePathAndLoadTexture("");
+      // TODO: Hide the text box.
       player_->Attack4();
       std::cout << "Player choice (me): Attack 4" << std::endl;
       enemy_->TakeDamage(player_->GetAttack4Damage());
@@ -219,8 +216,7 @@ void Game::HandleAttackEvents() {
       is_in_battle_ = true;
       break;
     default:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
   }
 }
@@ -228,21 +224,10 @@ void Game::HandleAttackEvents() {
 void Game::HandleStatsEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_STATS_FILE_PATH);
-      std::cout << "Player --------------------------------" << std::endl;
-      std::cout << "Level: " << player_->GetLevel() << std::endl;
-      std::cout << "Health: " << player_->GetHealth() << std::endl;
-      std::cout << "Energy: " << player_->GetEnergy() << std::endl;
-      std::cout << "Enemy --------------------------------" << std::endl;
-      std::cout << "Level: " << enemy_->GetLevel() << std::endl;
-      std::cout << "Health: " << enemy_->GetHealth() << std::endl;
-      std::cout << "Energy: " << enemy_->GetEnergy() << std::endl;
-      std::cout << "--------------------------------" << std::endl;
+      text_box_v2_->SetStatsMenu(player_.get());
       break;
     default:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
   }
 }
@@ -252,13 +237,8 @@ void Game::HandleRunEvents() {
     case SDLK_1:
       SetIsRunning(false);
       break;
-    case SDLK_2:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
-      break;
     default:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
   }
 }
@@ -268,12 +248,10 @@ void Game::HandleSaveEvents() {
     case SDLK_1:
       // TODO: Add SQLite database for saving/loading game state.
       std::cout << "Game saved!" << std::endl;
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
     default:
-      text_box_->SetImageFilePathAndLoadTexture(
-          constants::TEXT_BOX_MAIN_FILE_PATH);
+      text_box_v2_->SetMainMenu();
       break;
   }
 }

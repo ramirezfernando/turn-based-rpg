@@ -11,6 +11,7 @@ TextBoxV2::TextBoxV2(const char* font_path, const char* background_path,
   box_texture_ = Util::LoadTexture(background_path);
   text_texture_ = Util::LoadText("1. Attack 2. Stats 3. Run 4. Save", font_,
                                  {0, 0, 0, 255});
+  text_box_type_ = constants::TextBoxType::MAIN;
   box_x_pos_ = x_pos;
   box_y_pos_ = y_pos;
 
@@ -51,4 +52,28 @@ void TextBoxV2::Render() {
 
 void TextBoxV2::SetText(const std::string& text, SDL_Color color) {
   text_texture_ = Util::LoadText(text.c_str(), font_, color);
+}
+
+void TextBoxV2::SetMainMenu() {
+  SetText("1. Attack 2. Stats 3. Run 4. Save");
+  text_box_type_ = constants::TextBoxType::MAIN;
+}
+void TextBoxV2::SetAttackMenu() {
+  SetText("1. Atk1 2. Atk2 3. Atk3 4. Atk4");
+  text_box_type_ = constants::TextBoxType::ATTACK;
+}
+void TextBoxV2::SetStatsMenu(Character* player) {
+  std::string stats_text = "Lvl: " + std::to_string(player->GetLevel()) +
+                           " HP: " + std::to_string(player->GetHealth()) +
+                           " SP: " + std::to_string(player->GetEnergy());
+  SetText(stats_text);
+  text_box_type_ = constants::TextBoxType::STATS;
+}
+void TextBoxV2::SetRunMenu() {
+  SetText("1. Run 2. Back");
+  text_box_type_ = constants::TextBoxType::RUN;
+}
+void TextBoxV2::SetSaveMenu() {
+  SetText("1. Save 2. Back");
+  text_box_type_ = constants::TextBoxType::SAVE;
 }
