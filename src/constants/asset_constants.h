@@ -64,11 +64,6 @@ extern const int WATER_PRIESTESS_IDLE_NUM_FRAMES;
 extern const char* WATER_PRIESTESS_TAKE_DAMAGE_FOLDER_PATH;
 extern const int WATER_PRIESTESS_TAKE_DAMAGE_NUM_FRAMES;
 
-extern const char* TEXT_BOX_ATTACK_FILE_PATH;
-extern const char* TEXT_BOX_MAIN_FILE_PATH;
-extern const char* TEXT_BOX_RUN_FILE_PATH;
-extern const char* TEXT_BOX_SAVE_FILE_PATH;
-extern const char* TEXT_BOX_STATS_FILE_PATH;
 extern const char* TEXT_BOX_BACKGROUND_FILE_PATH;
 extern const char* FONT_FILE_PATH;
 }  // namespace constants
