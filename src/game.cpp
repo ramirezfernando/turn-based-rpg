@@ -42,6 +42,7 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
       constants::TEXT_BOX_Y_POS));
   if (text_box_) {
     std::cout << "Text box created" << std::endl;
+    should_render_text_box_ = true;
   }
 
   player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
@@ -103,6 +104,7 @@ void Game::Update() {
         enemy_->Death();
         is_running_ = false;
       } else {
+        should_render_text_box_ = true;
         text_box_->SetMainMenu();
         is_in_battle_ = false;
       }
@@ -113,7 +115,9 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   background_->Render();
-  text_box_->Render();
+  if (should_render_text_box_) {
+    text_box_->Render();
+  }
   player_->Render();
   enemy_->Render();
   // Double buffering.
@@ -175,36 +179,36 @@ void Game::HandleMenuEvents() {
 void Game::HandleAttackEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      // TODO: Hide the text box.
       player_->Attack1();
       std::cout << "Player choice (me): Attack 1" << std::endl;
       enemy_->TakeDamage(player_->GetAttack1Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
+      should_render_text_box_ = false;
       break;
     case SDLK_2:
-      // TODO: Hide the text box.
       player_->Attack2();
       std::cout << "Player choice (me): Attack 2" << std::endl;
       enemy_->TakeDamage(player_->GetAttack2Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
+      should_render_text_box_ = false;
       break;
     case SDLK_3:
-      // TODO: Hide the text box.
       player_->Attack3();
       std::cout << "Player choice (me): Attack 3" << std::endl;
       enemy_->TakeDamage(player_->GetAttack3Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
+      should_render_text_box_ = false;
       break;
     case SDLK_4:
-      // TODO: Hide the text box.
       player_->Attack4();
       std::cout << "Player choice (me): Attack 4" << std::endl;
       enemy_->TakeDamage(player_->GetAttack4Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
+      should_render_text_box_ = false;
       break;
     default:
       text_box_->SetMainMenu();

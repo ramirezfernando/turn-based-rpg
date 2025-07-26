@@ -38,5 +38,5 @@ class Game {
   std::unique_ptr<TextBox> text_box_;
   std::unique_ptr<Character> player_;
   std::unique_ptr<Character> enemy_;
-  bool is_running_, is_player_turn_, is_in_battle_;
+  bool is_running_, is_player_turn_, is_in_battle_, should_render_text_box_;
 };
