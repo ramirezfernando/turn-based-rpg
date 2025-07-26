@@ -20,7 +20,6 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
     }
     renderer_ = SDL_CreateRenderer(window_, -1, 0);
     if (renderer_) {
-      SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
       std::clog << "Renderer created" << std::endl;
     }
     is_running_ = true;
