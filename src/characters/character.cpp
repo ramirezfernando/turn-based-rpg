@@ -60,54 +60,81 @@ void Character::Render() {
   }
 }
 
-// TODO: Provide AI more context about the opponent character.
-constants::AttackType Character::GetAiDecision() {
+constants::AttackType Character::GetAiDecision(Character* enemy) {
   CURL* curl = curl_easy_init();
   std::string response_data;
   if (!curl) {
     std::cerr << "Failed to initialize cURL" << std::endl;
-    return constants::AttackType::ATTACK1;  // Default fallback
+    return constants::AttackType::ATTACK1;
   }
 
-  std::string api_key = "";
-  //std::string api_key = Util::GetApiKey();
+  //std::string api_key = "";
+  std::string api_key = Util::GetApiKey();
 
   if (api_key.empty()) {
     std::cerr << "API key is empty. Please set it in api_key.txt." << std::endl;
-    return constants::AttackType::ATTACK1;  // Default fallback
+    return constants::AttackType::ATTACK1;
   }
 
-  // Create a detailed prompt that considers character attributes and state
   std::string prompt =
       "You are an AI controlling a character in a turn-based RPG battle. "
-      "Make a strategic decision based on the following state:\n\n";
+      "This game features three character types: Fire Knight, Ground Monk, "
+      "and Water Priestess. Each character has unique attributes and "
+      "abilities that affect their combat style and strategy.\n\n"
 
-  // Add character state
+      "Each character can perform four types of attacks 1 through 4, each with "
+      "different damage and energy costs; attack 1 does the least damage "
+      "and costs the least energy, while attack 4 does the most damage and "
+      "costs the most energy. The game ends when either the player or "
+      "the enemy's health reaches zero or their energy is depleted.\n\n"
+
+      "The character types and their attributes are:\n\n"
+
+      "1. Fire Knight:\n"
+      "- High damage dealer\n"
+      "- High energy cost\n"
+      "- Best suited for aggressive play and high damage output\n\n"
+
+      "2. Ground Monk:\n"
+      "- Balanced character\n"
+      "- Standard energy costs\n"
+      "- Well-rounded and adaptable\n\n"
+
+      "3. Water Priestess:\n"
+      "- Lower base damage\n"
+      "- Efficient energy usage\n"
+      "- Excels at sustained combat\n\n"
+
+      "Your task is to choose the most strategic attack based on the current "
+      "state of the battle. Consider the following factors:\n";
+
+  if (dynamic_cast<FireKnight*>(this)) {
+    prompt += "You are a Fire Knight.\n";
+  } else if (dynamic_cast<GroundMonk*>(this)) {
+    prompt += "You are a Ground Monk.\n";
+  } else if (dynamic_cast<WaterPriestess*>(this)) {
+    prompt += "You are a Water Priestess.\n";
+  }
+
+  if (dynamic_cast<FireKnight*>(enemy)) {
+    prompt += "The enemy is a Fire Knight.\n";
+  } else if (dynamic_cast<GroundMonk*>(enemy)) {
+    prompt += "The enemy is a Ground Monk.\n";
+  } else if (dynamic_cast<WaterPriestess*>(enemy)) {
+    prompt += "The enemy is a Water Priestess.\n";
+  }
+
   prompt += "Your character stats:\n";
   prompt += "- Level: " + std::to_string(level_) + "\n";
   prompt += "- Health: " + std::to_string(health_) + "\n";
   prompt += "- Energy: " + std::to_string(energy_) + "\n";
 
-  // Add character type specific context
-  if (dynamic_cast<FireKnight*>(this)) {
-    prompt += "You are a Fire Knight:\n";
-    prompt += "- High damage dealer\n";
-    prompt += "- High energy cost\n";
-    prompt += "- Best suited for aggressive play and high damage output\n";
-  } else if (dynamic_cast<GroundMonk*>(this)) {
-    prompt += "You are a Ground Monk:\n";
-    prompt += "- Balanced character\n";
-    prompt += "- Standard energy costs\n";
-    prompt += "- Well-rounded and adaptable\n";
-  } else if (dynamic_cast<WaterPriestess*>(this)) {
-    prompt += "You are a Water Priestess:\n";
-    prompt += "- Lower base damage\n";
-    prompt += "- Efficient energy usage\n";
-    prompt += "- Excels at sustained combat\n";
-  }
+  prompt += "Enemy character stats:\n";
+  prompt += "- Level: " + std::to_string(enemy->GetLevel()) + "\n";
+  prompt += "- Health: " + std::to_string(enemy->GetHealth()) + "\n";
+  prompt += "- Energy: " + std::to_string(enemy->GetEnergy()) + "\n";
 
-  // Add attack information
-  prompt += "\nAvailable attacks:\n";
+  prompt += "\nYour available attacks:\n";
   prompt += "1. Basic Attack: " + std::to_string(attack1_damage_) +
             " damage, costs " + std::to_string(attack1_energy_cost_) +
             " energy\n";
@@ -123,7 +150,7 @@ constants::AttackType Character::GetAiDecision() {
 
   prompt +=
       "\nBased on your character type, current state, and available attacks, "
-      "choose the most strategic attack (respond with only the number 1-4).";
+      "choose the most strategic attack. Respond with only the number 1-4.";
 
   std::clog << prompt << std::endl;
 

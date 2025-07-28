@@ -66,7 +66,7 @@ void Game::Update() {
     // Check if player just finished attacking.
     if (!is_player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
         player_->IsAnimationComplete()) {
-      constants::AttackType ai_decision = enemy_->GetAiDecision();
+      constants::AttackType ai_decision = enemy_->GetAiDecision(player_.get());
       switch (ai_decision) {
         case constants::AttackType::ATTACK1:
           enemy_->Attack1();

@@ -43,7 +43,7 @@ class Character {
   int GetAttack2Damage() const { return attack2_damage_; }
   int GetAttack3Damage() const { return attack3_damage_; }
   int GetAttack4Damage() const { return attack4_damage_; }
-  constants::AttackType GetAiDecision();
+  constants::AttackType GetAiDecision(Character* enemy);
   bool IsAnimationComplete() const { return count_ >= frames_; }
   bool IsAttacking() const { return is_attacking_; }
   void SetAttacking(bool attacking) { is_attacking_ = attacking; }
