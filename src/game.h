@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <sqlite3.h>
 #include <unistd.h>
 #include <fstream>
 #include <iostream>
@@ -23,6 +24,8 @@ class Game {
   void Render();
   void SetIsRunning(bool is_running) { is_running_ = is_running; }
   bool IsRunning() { return is_running_; }
+  void SaveGameState(Character* player, Character* enemy);
+  //void LoadGameState();
   void HandleEvents();
   void HandleMenuEvents();
   void HandleAttackEvents();
@@ -34,6 +37,7 @@ class Game {
 
  private:
   SDL_Window* window_;
+  sqlite3* database_;
   std::unique_ptr<Background> background_;
   std::unique_ptr<TextBox> text_box_;
   std::unique_ptr<Character> player_;
