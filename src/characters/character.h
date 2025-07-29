@@ -63,7 +63,6 @@ class Character {
   int attack1_damage_, attack2_damage_, attack3_damage_, attack4_damage_,
       attack1_energy_cost_, attack2_energy_cost_, attack3_energy_cost_,
       attack4_energy_cost_;
-  float damage_scaling_ = 1.0f, health_scaling_ = 1.0f, energy_scaling_ = 1.0f;
   std::string folder_path_;
   Uint32 last_frame_time_ = 0;
   bool is_enemy_ = false, is_attacking_ = false;
