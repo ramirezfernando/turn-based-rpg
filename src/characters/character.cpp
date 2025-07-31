@@ -60,6 +60,17 @@ void Character::Render() {
   }
 }
 
+std::string Character::GetCharacterTypeString() const {
+  if (dynamic_cast<const FireKnight*>(this)) {
+    return constants::FIRE_KNIGHT_CHARACTER_TYPE_STRING;
+  } else if (dynamic_cast<const GroundMonk*>(this)) {
+    return constants::GROUND_MONK_CHARACTER_TYPE_STRING;
+  } else if (dynamic_cast<const WaterPriestess*>(this)) {
+    return constants::WATER_PRIESTESS_CHARACTER_TYPE_STRING;
+  }
+  return "";
+}
+
 constants::AttackType Character::GetAiDecision(Character* enemy) {
   CURL* curl = curl_easy_init();
   std::string response_data;

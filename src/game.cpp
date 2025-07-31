@@ -131,7 +131,7 @@ void Game::SaveGameState(Character* player, Character* enemy) {
       "CREATE TABLE IF NOT EXISTS game_state ("
       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
       "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, "
-      "is_player_turn INTEGER, "
+      "is_player_turn BOOLEAN, "
 
       "player_type TEXT, "
       "player_level INTEGER, "
@@ -163,11 +163,13 @@ void Game::SaveGameState(Character* player, Character* enemy) {
     return;
   }
   sqlite3_bind_int(stmt, 1, is_player_turn_);
-  sqlite3_bind_text(stmt, 2, player->GetPath().c_str(), -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 2, player->GetCharacterTypeString().c_str(), -1,
+                    SQLITE_STATIC);
   sqlite3_bind_int(stmt, 3, player->GetLevel());
   sqlite3_bind_int(stmt, 4, player->GetHealth());
   sqlite3_bind_int(stmt, 5, player->GetEnergy());
-  sqlite3_bind_text(stmt, 6, enemy->GetPath().c_str(), -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 6, enemy->GetCharacterTypeString().c_str(), -1,
+                    SQLITE_STATIC);
   sqlite3_bind_int(stmt, 7, enemy->GetLevel());
   sqlite3_bind_int(stmt, 8, enemy->GetHealth());
   sqlite3_bind_int(stmt, 9, enemy->GetEnergy());

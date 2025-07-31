@@ -29,6 +29,7 @@ class Character {
   void SetAttack2EnergyCost(int energy) { attack2_energy_cost_ = energy; }
   void SetAttack3EnergyCost(int energy) { attack3_energy_cost_ = energy; }
   void SetAttack4EnergyCost(int energy) { attack4_energy_cost_ = energy; }
+  std::string GetCharacterTypeString() const;
   SDL_Texture* GetTexture() { return character_texture_; }
   int GetXPos() { return x_pos_; }
   int GetYPos() { return y_pos_; }

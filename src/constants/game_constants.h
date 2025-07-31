@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace constants {
 extern const int FRAME_DELAY;
@@ -31,6 +32,7 @@ enum class AttackType {
   ATTACK4,
 };
 
+extern const std::string FIRE_KNIGHT_CHARACTER_TYPE_STRING;
 extern const int FIRE_KNIGHT_ATTACK_1_DAMAGE;
 extern const int FIRE_KNIGHT_ATTACK_2_DAMAGE;
 extern const int FIRE_KNIGHT_ATTACK_3_DAMAGE;
@@ -40,6 +42,7 @@ extern const int FIRE_KNIGHT_ATTACK_2_ENERGY_COST;
 extern const int FIRE_KNIGHT_ATTACK_3_ENERGY_COST;
 extern const int FIRE_KNIGHT_ATTACK_4_ENERGY_COST;
 
+extern const std::string GROUND_MONK_CHARACTER_TYPE_STRING;
 extern const int GROUND_MONK_ATTACK_1_DAMAGE;
 extern const int GROUND_MONK_ATTACK_2_DAMAGE;
 extern const int GROUND_MONK_ATTACK_3_DAMAGE;
@@ -49,6 +52,7 @@ extern const int GROUND_MONK_ATTACK_2_ENERGY_COST;
 extern const int GROUND_MONK_ATTACK_3_ENERGY_COST;
 extern const int GROUND_MONK_ATTACK_4_ENERGY_COST;
 
+extern const std::string WATER_PRIESTESS_CHARACTER_TYPE_STRING;
 extern const int WATER_PRIESTESS_ATTACK_1_DAMAGE;
 extern const int WATER_PRIESTESS_ATTACK_2_DAMAGE;
 extern const int WATER_PRIESTESS_ATTACK_3_DAMAGE;

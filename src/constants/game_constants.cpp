@@ -1,4 +1,5 @@
 #include "game_constants.h"
+#include <string>
 
 namespace constants {
 const int FRAME_DELAY =
@@ -21,6 +22,7 @@ const int CHARACTER_ENEMY_Y_POS =
     50;  // The y position of the enemy character (20 pixels)
 
 // Fire Knight - High damage, high energy cost
+const std::string FIRE_KNIGHT_CHARACTER_TYPE_STRING = "FIRE_KNIGHT";
 const int FIRE_KNIGHT_ATTACK_1_DAMAGE = 12;
 const int FIRE_KNIGHT_ATTACK_2_DAMAGE = 18;
 const int FIRE_KNIGHT_ATTACK_3_DAMAGE = 25;
@@ -31,6 +33,7 @@ const int FIRE_KNIGHT_ATTACK_3_ENERGY_COST = 35;
 const int FIRE_KNIGHT_ATTACK_4_ENERGY_COST = 50;
 
 // Ground Monk - Balanced stats
+const std::string GROUND_MONK_CHARACTER_TYPE_STRING = "GROUND_MONK";
 const int GROUND_MONK_ATTACK_1_DAMAGE = 9;
 const int GROUND_MONK_ATTACK_2_DAMAGE = 14;
 const int GROUND_MONK_ATTACK_3_DAMAGE = 19;
@@ -41,6 +44,7 @@ const int GROUND_MONK_ATTACK_3_ENERGY_COST = 25;
 const int GROUND_MONK_ATTACK_4_ENERGY_COST = 38;
 
 // Water Priestess - Lower damage, efficient energy
+const std::string WATER_PRIESTESS_CHARACTER_TYPE_STRING = "WATER_PRIESTESS";
 const int WATER_PRIESTESS_ATTACK_1_DAMAGE = 7;
 const int WATER_PRIESTESS_ATTACK_2_DAMAGE = 11;
 const int WATER_PRIESTESS_ATTACK_3_DAMAGE = 16;
