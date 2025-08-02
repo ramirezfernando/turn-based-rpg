@@ -232,7 +232,14 @@ void Game::HandleRunEvents() {
 void Game::HandleSaveEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      SaveGameState(player_.get(), enemy_.get());
+      if (!database_) {
+        database_ = std::unique_ptr<Database>(new Database());
+        if (!database_->Open(constants::DATABASE_FILE_PATH)) {
+          std::cerr << "Failed to open database." << std::endl;
+          return;
+        }
+      }
+      database_->SaveGame(player_.get(), enemy_.get());
       text_box_->SetMainMenu();
       break;
     default:

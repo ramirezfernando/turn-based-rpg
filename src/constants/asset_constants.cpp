@@ -108,6 +108,6 @@ const int WATER_PRIESTESS_TAKE_DAMAGE_NUM_FRAMES = 7;
 const char* TEXT_BOX_BACKGROUND_FILE_PATH = "assets/text_box/background.png";
 const char* FONT_FILE_PATH = "assets/text_box/ttf/hack-regular.ttf";
 
-const char* DATABASE_FILE_PATH = "database/database.sqlite";
+const char* DATABASE_FILE_PATH = "src/database/database.sqlite";
 
 }  // namespace constants
