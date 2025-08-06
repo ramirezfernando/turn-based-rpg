@@ -14,20 +14,13 @@ A 2D, turn-based RPG developed using C++ and SDL2.
 
 ## How to Play <a name="how-to-play"></a>
 ### Gameplay <a name="gameplay"></a>
-Players can choose between three different characters to fight against each other. The game ends when a player has reached 0 health. Players can choose between:
+Players can choose between three different characters to fight against enemy AI (gpt-3.5-turbo). The game features a turn-based combat system where players can attack, check stats, save progress, or run away from battles.
 
 | Fire Knight 🔥       | Water Priestess 🌊      | Ground Monk 🪨         |
 |--------------------|-----------------------|----------------------|
 | ![Fire Knight](./assets/characters/fire_knight/fire_knight.png) | ![Water Priestess](./assets/characters/water_priestess/water_priestess.png) | ![Ground Monk](./assets/characters/ground_monk/ground_monk.png) |
         
 ## Getting Started <a name="getting-started"></a>
-
-### Dependencies <a name="dependencies"></a>
-The system requirements for running on a macOS are:
-* [Clang](https://clang.llvm.org/)
-* [Homebrew](https://brew.sh/)
-* [SDL2](https://www.libsdl.org/)
-* [SDL2_image](https://www.libsdl.org/projects/SDL_image/)
 
 ### Installation <a name="installation"></a>
 
@@ -39,21 +32,20 @@ The system requirements for running on a macOS are:
     ```sh
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
     ```
-3. Download SDL2 libraries
+3. Download dependencies
    ```sh
-    brew install sdl2
-    brew install sdl2_image
+    brew install sdl2 # for peripheral handling
+    brew install sdl2_image # for image loading
+    brew install sdl2_ttf # for text rendering
+    brew install nlohmann_json # for JSON handling
+    ```
    ```
 
 ### Executing program <a name="executing-program"></a>
 
-1. Compile the program into an executable
+1. Compile and run the game
 ```
 make game
-```
-2. Run the executable
-```
-./play
 ```
 
 ## Acknowledgments <a name="acknowledgments"></a>
