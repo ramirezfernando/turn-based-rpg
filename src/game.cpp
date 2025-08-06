@@ -139,11 +139,11 @@ void Game::HandleEvents() {
           case constants::TextBoxType::STATS:
             HandleStatsEvents();
             break;
-          case constants::TextBoxType::RUN:
-            HandleRunEvents();
-            break;
           case constants::TextBoxType::SAVE:
             HandleSaveEvents();
+            break;
+          case constants::TextBoxType::RUN:
+            HandleRunEvents();
             break;
         }
       }
@@ -160,10 +160,10 @@ void Game::HandleMenuEvents() {
       text_box_->SetStatsMenu(player_.get());
       break;
     case SDLK_3:
-      text_box_->SetRunMenu();
+      text_box_->SetSaveMenu();
       break;
     case SDLK_4:
-      text_box_->SetSaveMenu();
+      text_box_->SetRunMenu();
       break;
     default:
       text_box_->SetMainMenu();

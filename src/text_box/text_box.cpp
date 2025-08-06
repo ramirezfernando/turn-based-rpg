@@ -9,7 +9,7 @@ TextBox::TextBox(const char* font_path, const char* background_path,
   font_ = TTF_OpenFont(font_path, font_size);
   box_texture_ = Util::LoadTexture(background_path);
   text_texture_ =
-      Util::LoadText("1.Attack 2.Stats 3.Run 4.Save", font_, {0, 0, 0, 255});
+      Util::LoadText("1.Attack 2.Stats 3.Save 4.Run", font_, {0, 0, 0, 255});
   text_box_type_ = constants::TextBoxType::MAIN;
   box_x_pos_ = x_pos;
   box_y_pos_ = y_pos;
@@ -54,7 +54,7 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
 }
 
 void TextBox::SetMainMenu() {
-  SetText("1.Attack 2.Stats 3.Run 4.Save");
+  SetText("1.Attack 2.Stats 3.Save 4.Run");
   text_box_type_ = constants::TextBoxType::MAIN;
 }
 void TextBox::SetAttackMenu() {
@@ -69,7 +69,7 @@ void TextBox::SetStatsMenu(Character* player) {
   text_box_type_ = constants::TextBoxType::STATS;
 }
 void TextBox::SetRunMenu() {
-  SetText("1.Run 2.Back");
+  SetText("1. Are you sure you want to run?");
   text_box_type_ = constants::TextBoxType::RUN;
 }
 void TextBox::SetSaveMenu() {
