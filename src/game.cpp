@@ -231,6 +231,7 @@ void Game::HandleRunEvents() {
 
 void Game::HandleSaveEvents() {
   switch (event_.key.keysym.sym) {
+    // TODO: Clean up this code. The only logic that changes is the slot.
     case SDLK_1:
       if (!database_) {
         database_ = std::unique_ptr<Database>(new Database());
@@ -239,7 +240,18 @@ void Game::HandleSaveEvents() {
           return;
         }
       }
-      database_->SaveGame(player_.get(), enemy_.get());
+      database_->SaveGame(1, player_.get(), enemy_.get());
+      text_box_->SetMainMenu();
+      break;
+    case SDLK_2:
+      if (!database_) {
+        database_ = std::unique_ptr<Database>(new Database());
+        if (!database_->Open(constants::DATABASE_FILE_PATH)) {
+          std::cerr << "Failed to open database." << std::endl;
+          return;
+        }
+      }
+      database_->SaveGame(2, player_.get(), enemy_.get());
       text_box_->SetMainMenu();
       break;
     default:

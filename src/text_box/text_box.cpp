@@ -73,6 +73,8 @@ void TextBox::SetRunMenu() {
   text_box_type_ = constants::TextBoxType::RUN;
 }
 void TextBox::SetSaveMenu() {
-  SetText("1.Save 2.Back");
+  // TODO: Add timestamp to last saved game slots.
+  std::string save_slots_text = "1. " + save_slots[0] + " 2. " + save_slots[1];
+  SetText(save_slots_text);
   text_box_type_ = constants::TextBoxType::SAVE;
 }

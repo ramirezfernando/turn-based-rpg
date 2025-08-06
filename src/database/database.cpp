@@ -34,7 +34,7 @@ void Database::Close() {
   }
 }
 
-void Database::SaveGame(Character* player, Character* enemy) {
+void Database::SaveGame(int slot, Character* player, Character* enemy) {
   if (!database_) {
     std::cerr << "Database is not open." << std::endl;
     return;
@@ -42,14 +42,12 @@ void Database::SaveGame(Character* player, Character* enemy) {
 
   std::string sql =
       "CREATE TABLE IF NOT EXISTS game_state ("
-      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "slot INTEGER PRIMARY KEY UNIQUE, "
       "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, "
-
       "player_type TEXT, "
       "player_level INTEGER, "
       "player_health INTEGER, "
       "player_energy INTEGER, "
-
       "enemy_type TEXT, "
       "enemy_level INTEGER, "
       "enemy_health INTEGER, "
@@ -67,10 +65,11 @@ void Database::SaveGame(Character* player, Character* enemy) {
   }
 
   sql =
-      "INSERT INTO game_state ("
+      "INSERT OR REPLACE INTO game_state ("
+      "slot, "
       "player_type, player_level, player_health, player_energy, "
       "enemy_type, enemy_level, enemy_health, enemy_energy) "
-      "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(database_, sql.c_str(), -1, &stmt, nullptr) !=
@@ -80,16 +79,17 @@ void Database::SaveGame(Character* player, Character* enemy) {
     return;
   }
 
-  sqlite3_bind_text(stmt, 1, player->GetCharacterTypeString().c_str(), -1,
+  sqlite3_bind_int(stmt, 1, slot);
+  sqlite3_bind_text(stmt, 2, player->GetCharacterTypeString().c_str(), -1,
                     SQLITE_STATIC);
-  sqlite3_bind_int(stmt, 2, player->GetLevel());
-  sqlite3_bind_int(stmt, 3, player->GetHealth());
-  sqlite3_bind_int(stmt, 4, player->GetEnergy());
-  sqlite3_bind_text(stmt, 5, enemy->GetCharacterTypeString().c_str(), -1,
+  sqlite3_bind_int(stmt, 3, player->GetLevel());
+  sqlite3_bind_int(stmt, 4, player->GetHealth());
+  sqlite3_bind_int(stmt, 5, player->GetEnergy());
+  sqlite3_bind_text(stmt, 6, enemy->GetCharacterTypeString().c_str(), -1,
                     SQLITE_STATIC);
-  sqlite3_bind_int(stmt, 6, enemy->GetLevel());
-  sqlite3_bind_int(stmt, 7, enemy->GetHealth());
-  sqlite3_bind_int(stmt, 8, enemy->GetEnergy());
+  sqlite3_bind_int(stmt, 7, enemy->GetLevel());
+  sqlite3_bind_int(stmt, 8, enemy->GetHealth());
+  sqlite3_bind_int(stmt, 9, enemy->GetEnergy());
 
   if (sqlite3_step(stmt) != SQLITE_DONE) {
     std::cerr << "Failed to insert data: " << sqlite3_errmsg(database_)
