@@ -20,6 +20,7 @@ class TextBox {
   void SetStatsMenu(Character* player);
   void SetRunMenu();
   void SetSaveMenu();
+  void SetSaveSlotText(int slot, const std::string& text);
   constants::TextBoxType GetTextBoxType() const { return text_box_type_; }
 
  private:
@@ -29,5 +30,5 @@ class TextBox {
   SDL_Texture* box_texture_ = nullptr;
   SDL_Rect text_src_rect_, text_dest_rect_, box_src_rect_, box_dest_rect_;
   int text_x_pos_, text_y_pos_, box_x_pos_, box_y_pos_;
-  std::string save_slots[2] = {"No saved game", "No saved game"};
+  std::string save_slots_text_[2] = {"No saved game", "No saved game"};
 };

@@ -241,6 +241,7 @@ void Game::HandleSaveEvents() {
         }
       }
       database_->SaveGame(1, player_.get(), enemy_.get());
+      text_box_->SetSaveSlotText(1, "Saved game");
       text_box_->SetMainMenu();
       break;
     case SDLK_2:
@@ -252,6 +253,7 @@ void Game::HandleSaveEvents() {
         }
       }
       database_->SaveGame(2, player_.get(), enemy_.get());
+      text_box_->SetSaveSlotText(2, "Saved game");
       text_box_->SetMainMenu();
       break;
     default:
