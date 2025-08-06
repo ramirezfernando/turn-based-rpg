@@ -8,6 +8,8 @@ class Database {
   ~Database();
   bool Open(const std::string& db_path);
   void Close();
+  // TODO: Should only save the game to 3 possible slots. Add this once there is 
+  // a UI to save the game.
   void SaveGame(Character* player, Character* enemy);
   // TODO: Create `LoadGame()` member function to load game state from the 
   // database. Add this once there is a UI to load a saved game before starting
