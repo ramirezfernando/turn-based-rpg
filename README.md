@@ -38,7 +38,6 @@ Players can choose between three different characters to fight against enemy AI 
     brew install sdl2_image # for image loading
     brew install sdl2_ttf # for text rendering
     brew install nlohmann_json # for JSON handling
-    ```
    ```
 
 ### Executing program <a name="executing-program"></a>
