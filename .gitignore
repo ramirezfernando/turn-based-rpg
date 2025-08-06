@@ -2,3 +2,4 @@
 out/
 *.o
 api_key.txt
+*.sqlite
