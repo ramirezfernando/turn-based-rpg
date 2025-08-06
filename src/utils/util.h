@@ -7,6 +7,7 @@
 
 namespace Util {
 std::string GetApiKey();
+std::string GetLocalTime();
 SDL_Texture* LoadTexture(const char* file_name);
 SDL_Texture* LoadText(const char* text, TTF_Font* font, SDL_Color color);
 void RenderInvertedTexture(SDL_Texture* texture, SDL_Rect src, SDL_Rect dest,

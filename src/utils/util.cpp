@@ -1,5 +1,7 @@
 #include "util.h"
 #include <fstream>
+#include <iomanip>
+#include <sstream>
 #include "game.h"
 
 namespace Util {
@@ -9,6 +11,16 @@ std::string GetApiKey() {
   file >> api_key;
   file.close();
   return api_key;
+}
+
+std::string GetLocalTime() {
+  auto t = std::time(nullptr);
+  std::tm local_tm;
+  localtime_r(&t, &local_tm);
+  std::ostringstream oss;
+  oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
+  std::string local_timestamp = oss.str();
+  return local_timestamp;
 }
 
 SDL_Texture* LoadTexture(const char* file_name) {
