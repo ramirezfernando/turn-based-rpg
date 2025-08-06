@@ -30,5 +30,5 @@ class TextBox {
   SDL_Texture* box_texture_ = nullptr;
   SDL_Rect text_src_rect_, text_dest_rect_, box_src_rect_, box_dest_rect_;
   int text_x_pos_, text_y_pos_, box_x_pos_, box_y_pos_;
-  std::string save_slots_text_[2] = {"No saved game", "No saved game"};
+  std::string save_slots_text_[1] = {"No saved game"};
 };

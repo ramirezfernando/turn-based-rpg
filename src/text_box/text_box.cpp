@@ -74,15 +74,14 @@ void TextBox::SetRunMenu() {
 }
 void TextBox::SetSaveMenu() {
   // TODO: Add timestamp to last saved game slots.
-  std::string save_slots_text =
-      "1. " + save_slots_text_[0] + " 2. " + save_slots_text_[1];
+  std::string save_slots_text = "1. " + save_slots_text_[0];
   SetText(save_slots_text);
   text_box_type_ = constants::TextBoxType::SAVE;
 }
 
 void TextBox::SetSaveSlotText(int slot, const std::string& text) {
-  // Only 2 save slots are supported.
-  if (slot != 1 && slot != 2) {
+  // Only 1 save slot is implemented for now.
+  if (slot != 1) {
     std::cerr << "Invalid save slot: " << slot << std::endl;
     return;
   }
