@@ -1,5 +1,6 @@
 #include "database.h"
 #include <iostream>
+#include "utils/util.h"
 
 Database::Database() : database_(nullptr) {
   std::clog << "Database initialized" << std::endl;
@@ -43,7 +44,12 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   std::string sql =
       "CREATE TABLE IF NOT EXISTS game_state ("
       "slot INTEGER PRIMARY KEY UNIQUE, "
-      "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, "
+      "slot INTEGER, "
+      // SQLite provides default timestamp as current time in UTC. I want to
+      // store it as local time, so I will handle that in the C++ code.
+      // "timestamp DATETIME DEFAULT (datetime('now', 'localtime')), " still
+      // returns UTC time.
+      "timestamp DATETIME, "
       "player_type TEXT, "
       "player_level INTEGER, "
       "player_health INTEGER, "
@@ -51,8 +57,7 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
       "enemy_type TEXT, "
       "enemy_level INTEGER, "
       "enemy_health INTEGER, "
-      "enemy_energy INTEGER);"
-      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+      "enemy_energy INTEGER);";
 
   char* error_message = nullptr;
   if (sqlite3_exec(database_, sql.c_str(), nullptr, nullptr, &error_message) !=
@@ -67,9 +72,10 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   sql =
       "INSERT OR REPLACE INTO game_state ("
       "slot, "
+      "timestamp, "
       "player_type, player_level, player_health, player_energy, "
       "enemy_type, enemy_level, enemy_health, enemy_energy) "
-      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
   sqlite3_stmt* stmt;
   if (sqlite3_prepare_v2(database_, sql.c_str(), -1, &stmt, nullptr) !=
@@ -80,16 +86,17 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   }
 
   sqlite3_bind_int(stmt, 1, slot);
-  sqlite3_bind_text(stmt, 2, player->GetCharacterTypeString().c_str(), -1,
+  sqlite3_bind_text(stmt, 2, Util::GetLocalTime().c_str(), -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 3, player->GetCharacterTypeString().c_str(), -1,
                     SQLITE_STATIC);
-  sqlite3_bind_int(stmt, 3, player->GetLevel());
-  sqlite3_bind_int(stmt, 4, player->GetHealth());
-  sqlite3_bind_int(stmt, 5, player->GetEnergy());
-  sqlite3_bind_text(stmt, 6, enemy->GetCharacterTypeString().c_str(), -1,
+  sqlite3_bind_int(stmt, 4, player->GetLevel());
+  sqlite3_bind_int(stmt, 5, player->GetHealth());
+  sqlite3_bind_int(stmt, 6, player->GetEnergy());
+  sqlite3_bind_text(stmt, 7, enemy->GetCharacterTypeString().c_str(), -1,
                     SQLITE_STATIC);
-  sqlite3_bind_int(stmt, 7, enemy->GetLevel());
-  sqlite3_bind_int(stmt, 8, enemy->GetHealth());
-  sqlite3_bind_int(stmt, 9, enemy->GetEnergy());
+  sqlite3_bind_int(stmt, 8, enemy->GetLevel());
+  sqlite3_bind_int(stmt, 9, enemy->GetHealth());
+  sqlite3_bind_int(stmt, 10, enemy->GetEnergy());
 
   if (sqlite3_step(stmt) != SQLITE_DONE) {
     std::cerr << "Failed to insert data: " << sqlite3_errmsg(database_)
