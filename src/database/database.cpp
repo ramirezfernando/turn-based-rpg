@@ -108,3 +108,66 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   sqlite3_finalize(stmt);
   sqlite3_exec(database_, "COMMIT TRANSACTION;", nullptr, nullptr, nullptr);
 }
+
+bool Database::isLoadGameAvailable(int slot) {
+  if (!database_) {
+    std::cerr << "Database is not open." << std::endl;
+    return false;
+  }
+
+  std::string sql = "SELECT COUNT(*) FROM game_state WHERE slot = ?;";
+  sqlite3_stmt* stmt;
+
+  if (sqlite3_prepare_v2(database_, sql.c_str(), -1, &stmt, nullptr) !=
+      SQLITE_OK) {
+    std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(database_)
+              << std::endl;
+    return false;
+  }
+
+  sqlite3_bind_int(stmt, 1, slot);
+
+  if (sqlite3_step(stmt) == SQLITE_ROW) {
+    int count = sqlite3_column_int(stmt, 0);
+    return count > 0;
+  } else {
+    std::cerr << "Failed to execute query: " << sqlite3_errmsg(database_)
+              << std::endl;
+  }
+
+  sqlite3_finalize(stmt);
+  return false;
+}
+
+std::string Database::getLoadGameTime(int slot) {
+  if (!database_) {
+    std::cerr << "Database is not open." << std::endl;
+    return "";
+  }
+
+  std::string sql = "SELECT timestamp FROM game_state WHERE slot = ?;";
+  sqlite3_stmt* stmt;
+
+  if (sqlite3_prepare_v2(database_, sql.c_str(), -1, &stmt, nullptr) !=
+      SQLITE_OK) {
+    std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(database_)
+              << std::endl;
+    return "";
+  }
+
+  sqlite3_bind_int(stmt, 1, slot);
+
+  if (sqlite3_step(stmt) == SQLITE_ROW) {
+    const char* timestamp =
+        reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+    std::string time_str(timestamp);
+    sqlite3_finalize(stmt);
+    return time_str;
+  } else {
+    std::cerr << "Failed to execute query: " << sqlite3_errmsg(database_)
+              << std::endl;
+  }
+
+  sqlite3_finalize(stmt);
+  return "";
+}

@@ -160,6 +160,16 @@ void Game::HandleMenuEvents() {
       text_box_->SetStatsMenu(player_.get());
       break;
     case SDLK_3:
+      if (!database_) {
+        database_ = std::unique_ptr<Database>(new Database());
+        if (!database_->Open(constants::DATABASE_FILE_PATH)) {
+          std::cerr << "Failed to open database." << std::endl;
+          return;
+        }
+      }
+      if (database_->isLoadGameAvailable(1)) {
+        text_box_->SetSaveSlotText(1, database_->getLoadGameTime(1));
+      }
       text_box_->SetSaveMenu();
       break;
     case SDLK_4:

@@ -9,9 +9,10 @@ class Database {
   bool Open(const std::string& db_path);
   void Close();
   void SaveGame(int slot, Character* player, Character* enemy);
-  // TODO: Create `LoadGame()` member function to load game state from the
-  // database. Add this once there is a UI to load a saved game before starting
-  // a new game.
+  void LoadGame(int slot, Character* player, Character* enemy);
+  bool isLoadGameAvailable(int slot);
+  std::string getLoadGameTime(int slot);
+
  private:
   sqlite3* database_;
 };
