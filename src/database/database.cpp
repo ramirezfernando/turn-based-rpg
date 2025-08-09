@@ -44,7 +44,6 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   std::string sql =
       "CREATE TABLE IF NOT EXISTS game_state ("
       "slot INTEGER PRIMARY KEY UNIQUE, "
-      "slot INTEGER, "
       // SQLite provides default timestamp as current time in UTC. I want to
       // store it as local time, so I will handle that in the C++ code.
       "timestamp DATETIME, "
