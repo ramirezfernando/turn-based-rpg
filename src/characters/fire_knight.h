@@ -2,6 +2,8 @@
 
 #include "character.h"
 
+// The implementation of the `Character` interface for the Fire Knight. The Fire
+// Knight is a high-damage, high-energy-cost character.
 class FireKnight : public Character {
  public:
   FireKnight(bool is_enemy);

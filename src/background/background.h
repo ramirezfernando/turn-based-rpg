@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+// The class is responsible for rendering the background in the game. Owned by
+// the `Game` class.
 class Background {
  public:
   Background(const char* file_path, int width, int height);

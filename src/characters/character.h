@@ -4,6 +4,7 @@
 #include "constants/game_constants.h"
 #include "utils/util.h"
 
+// The interface for all characters in the game. Owned by the `Game` class.
 class Character {
  public:
   virtual ~Character();

@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 
+// Constant values used throughout the game.
 namespace constants {
 extern const int FRAME_DELAY;
 extern const int WINDOW_SIZE;

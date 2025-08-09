@@ -8,6 +8,8 @@
 #include "characters/character.h"
 #include "constants/game_constants.h"
 
+// The class is responsible for rendering text boxes in the game. Owned by the
+// `Game` class.
 class TextBox {
  public:
   TextBox(const char* font_path, const char* background_path, int font_size,

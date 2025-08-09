@@ -1,7 +1,11 @@
+#pragma once
+
 #include <sqlite3.h>
 #include <string>
 #include "characters/character.h"
 
+// SQLite database handler for saving and loading game states. Owned by the
+// `Game` class.
 class Database {
  public:
   Database();

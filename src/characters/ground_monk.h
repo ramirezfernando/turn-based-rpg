@@ -1,5 +1,9 @@
+#pragma once
+
 #include "character.h"
 
+// The implementation of the `Character` interface for the Ground Monk. The
+// Ground Monk is a balanced character with standard energy costs.
 class GroundMonk : public Character {
  public:
   GroundMonk(bool is_enemy);

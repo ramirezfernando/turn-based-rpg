@@ -17,6 +17,7 @@
 #include "database/database.h"
 #include "text_box/text_box.h"
 
+// The main game class that manages the game loop, rendering, and events.
 class Game {
  public:
   ~Game();
