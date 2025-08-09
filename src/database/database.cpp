@@ -47,8 +47,6 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
       "slot INTEGER, "
       // SQLite provides default timestamp as current time in UTC. I want to
       // store it as local time, so I will handle that in the C++ code.
-      // "timestamp DATETIME DEFAULT (datetime('now', 'localtime')), " still
-      // returns UTC time.
       "timestamp DATETIME, "
       "player_type TEXT, "
       "player_level INTEGER, "
@@ -106,7 +104,6 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   }
 
   sqlite3_finalize(stmt);
-  sqlite3_exec(database_, "COMMIT TRANSACTION;", nullptr, nullptr, nullptr);
 }
 
 bool Database::isLoadGameAvailable(int slot) {
@@ -129,14 +126,14 @@ bool Database::isLoadGameAvailable(int slot) {
 
   if (sqlite3_step(stmt) == SQLITE_ROW) {
     int count = sqlite3_column_int(stmt, 0);
+    sqlite3_finalize(stmt);
     return count > 0;
   } else {
     std::cerr << "Failed to execute query: " << sqlite3_errmsg(database_)
               << std::endl;
+    sqlite3_finalize(stmt);
+    return false;
   }
-
-  sqlite3_finalize(stmt);
-  return false;
 }
 
 std::string Database::getLoadGameTime(int slot) {
@@ -166,8 +163,7 @@ std::string Database::getLoadGameTime(int slot) {
   } else {
     std::cerr << "Failed to execute query: " << sqlite3_errmsg(database_)
               << std::endl;
+    sqlite3_finalize(stmt);
+    return "";
   }
-
-  sqlite3_finalize(stmt);
-  return "";
 }
