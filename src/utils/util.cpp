@@ -18,7 +18,8 @@ std::string GetLocalTime() {
   std::tm local_tm;
   localtime_r(&t, &local_tm);
   std::ostringstream oss;
-  oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
+  // Returns the local time in 12-hour format.
+  oss << std::put_time(&local_tm, "%Y-%m-%d %I:%M:%S %p");
   std::string local_timestamp = oss.str();
   return local_timestamp;
 }
