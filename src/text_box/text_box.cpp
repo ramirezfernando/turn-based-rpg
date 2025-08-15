@@ -43,6 +43,9 @@ TextBox::~TextBox() {
 }
 
 void TextBox::Render() {
+  if (!should_render_) {
+    return;
+  }
   SDL_RenderCopy(Game::renderer_, box_texture_, &box_src_rect_,
                  &box_dest_rect_);
   SDL_RenderCopy(Game::renderer_, text_texture_, &text_src_rect_,

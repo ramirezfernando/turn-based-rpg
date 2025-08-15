@@ -41,7 +41,7 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
       constants::TEXT_BOX_Y_POS));
   if (text_box_) {
     std::clog << "Text box created" << std::endl;
-    should_render_text_box_ = true;
+    text_box_->SetShouldRender(true);
   }
 
   player_ = std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
@@ -79,10 +79,7 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   background_->Render();
-  // TODO: Make `should_render_text_box_` a member of `TextBox`.
-  if (should_render_text_box_) {
-    text_box_->Render();
-  }
+  text_box_->Render();  // Only render if `should_render_` is true.
   player_->Render();
   enemy_->Render();
   SDL_RenderPresent(renderer_);
@@ -141,7 +138,7 @@ void Game::HandleBattleUpdate() {
         enemy_->Death();
         is_running_ = false;
       } else {
-        should_render_text_box_ = true;
+        text_box_->SetShouldRender(true);
         text_box_->SetMainMenu();
         is_in_battle_ = false;
       }
@@ -217,28 +214,28 @@ void Game::HandleBattleAttackEvents() {
       enemy_->TakeDamage(player_->GetAttack1Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
-      should_render_text_box_ = false;
+      text_box_->SetShouldRender(false);
       break;
     case SDLK_2:
       player_->Attack2();
       enemy_->TakeDamage(player_->GetAttack2Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
-      should_render_text_box_ = false;
+      text_box_->SetShouldRender(false);
       break;
     case SDLK_3:
       player_->Attack3();
       enemy_->TakeDamage(player_->GetAttack3Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
-      should_render_text_box_ = false;
+      text_box_->SetShouldRender(false);
       break;
     case SDLK_4:
       player_->Attack4();
       enemy_->TakeDamage(player_->GetAttack4Damage());
       is_player_turn_ = false;
       is_in_battle_ = true;
-      should_render_text_box_ = false;
+      text_box_->SetShouldRender(false);
       break;
     default:
       text_box_->SetMainMenu();
