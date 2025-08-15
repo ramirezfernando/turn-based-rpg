@@ -10,7 +10,7 @@ TextBox::TextBox(const char* font_path, const char* background_path,
   box_texture_ = Util::LoadTexture(background_path);
   text_texture_ =
       Util::LoadText("1.Attack 2.Stats 3.Save 4.Run", font_, {0, 0, 0, 255});
-  text_box_type_ = TextBoxType::BATTLE_OPTIONS;
+  text_box_type_ = Type::BATTLE_OPTIONS;
   box_x_pos_ = x_pos;
   box_y_pos_ = y_pos;
 
@@ -58,27 +58,27 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
 
 void TextBox::SetBattleOptions() {
   SetText("1.Attack 2.Stats 3.Save 4.Run");
-  text_box_type_ = TextBoxType::BATTLE_OPTIONS;
+  text_box_type_ = Type::BATTLE_OPTIONS;
 }
 void TextBox::SetBattleAttack() {
   SetText("1.Atk1 2.Atk2 3.Atk3 4.Atk4");
-  text_box_type_ = TextBoxType::BATTLE_ATTACK;
+  text_box_type_ = Type::BATTLE_ATTACK;
 }
 void TextBox::SetBattleStats(Character* player) {
   std::string stats_text = "LVL:" + std::to_string(player->GetLevel()) +
                            " HP:" + std::to_string(player->GetHealth()) +
                            " EN:" + std::to_string(player->GetEnergy());
   SetText(stats_text);
-  text_box_type_ = TextBoxType::BATTLE_STATS;
+  text_box_type_ = Type::BATTLE_STATS;
 }
 void TextBox::SetBattleRun() {
   SetText("1. Are you sure you want to run?");
-  text_box_type_ = TextBoxType::BATTLE_RUN;
+  text_box_type_ = Type::BATTLE_RUN;
 }
 void TextBox::SetBattleSave() {
   std::string save_slots_text = "1. " + save_slots_text_[0];
   SetText(save_slots_text);
-  text_box_type_ = TextBoxType::BATTLE_SAVE;
+  text_box_type_ = Type::BATTLE_SAVE;
 }
 
 void TextBox::SetSaveSlotText(int slot, const std::string& text) {

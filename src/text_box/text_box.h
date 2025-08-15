@@ -12,7 +12,7 @@
 // `Game` class.
 class TextBox {
  public:
-  enum class TextBoxType {
+  enum class Type {
     BATTLE_OPTIONS,
     BATTLE_ATTACK,
     BATTLE_STATS,
@@ -32,10 +32,10 @@ class TextBox {
   void SetBattleRun();
   void SetBattleSave();
   void SetSaveSlotText(int slot, const std::string& text);
-  TextBoxType GetTextBoxType() const { return text_box_type_; }
+  Type GetType() const { return text_box_type_; }
 
  private:
-  TextBoxType text_box_type_;
+  Type text_box_type_;
   TTF_Font* font_ = nullptr;
   SDL_Texture* text_texture_ = nullptr;
   SDL_Texture* box_texture_ = nullptr;

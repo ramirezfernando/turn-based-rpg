@@ -153,22 +153,21 @@ void Game::HandleBattleEvents() {
       break;
     case SDL_KEYDOWN:
       if (is_player_turn_) {
-        TextBox::TextBoxType current_text_box_type =
-            text_box_->GetTextBoxType();
+        TextBox::Type current_text_box_type = text_box_->GetType();
         switch (current_text_box_type) {
-          case TextBox::TextBoxType::BATTLE_OPTIONS:
+          case TextBox::Type::BATTLE_OPTIONS:
             HandleBattleOptionEvents();
             break;
-          case TextBox::TextBoxType::BATTLE_ATTACK:
+          case TextBox::Type::BATTLE_ATTACK:
             HandleBattleAttackEvents();
             break;
-          case TextBox::TextBoxType::BATTLE_STATS:
+          case TextBox::Type::BATTLE_STATS:
             HandleBattleStatsEvents();
             break;
-          case TextBox::TextBoxType::BATTLE_SAVE:
+          case TextBox::Type::BATTLE_SAVE:
             HandleBattleSaveEvents();
             break;
-          case TextBox::TextBoxType::BATTLE_RUN:
+          case TextBox::Type::BATTLE_RUN:
             HandleBattleRunEvents();
             break;
         }
