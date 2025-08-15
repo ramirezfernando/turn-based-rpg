@@ -33,15 +33,17 @@ class Game {
   void SetIsRunning(bool is_running) { is_running_ = is_running; }
   bool IsRunning() { return is_running_; }
   void HandleEvents();
-  void HandleMenuEvents();
-  void HandleAttackEvents();
-  void HandleStatsEvents();
-  void HandleRunEvents();
-  void HandleSaveEvents();
   static SDL_Renderer* renderer_;
   static SDL_Event event_;
 
  private:
+  void HandleBattleUpdate();
+  void HandleBattleEvents();
+  void HandleBattleChoiceEvents();
+  void HandleBattleAttackEvents();
+  void HandleBattleStatsEvents();
+  void HandleBattleSaveEvents();
+  void HandleBattleRunEvents();
   SDL_Window* window_;
   std::unique_ptr<Database> database_;
   std::unique_ptr<Background> background_;

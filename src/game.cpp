@@ -56,12 +56,54 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
 
   is_player_turn_ = true;
   is_in_battle_ = false;
+  // TODO: Set the initial state to CHARACTER_SELECTION.
+  state_ = State::BATTLE;
 }
 
 void Game::Update() {
   player_->Update();
   enemy_->Update();
+  switch (state_) {
+    case State::CHARACTER_SELECTION:
+      // TODO: Handle character selection logic here.
+      break;
+    case State::BATTLE:
+      HandleBattleUpdate();
+      break;
+    case State::GAME_OVER:
+      // TODO: Handle game over logic here.
+      break;
+  }
+}
 
+void Game::Render() {
+  SDL_RenderClear(renderer_);
+  background_->Render();
+  // TODO: Make `should_render_text_box_` a member of `TextBox`.
+  if (should_render_text_box_) {
+    text_box_->Render();
+  }
+  player_->Render();
+  enemy_->Render();
+  SDL_RenderPresent(renderer_);
+}
+
+void Game::HandleEvents() {
+  SDL_PollEvent(&event_);
+  switch (state_) {
+    case State::CHARACTER_SELECTION:
+      // TODO: Handle character selection logic here.
+      break;
+    case State::BATTLE:
+      HandleBattleEvents();
+      break;
+    case State::GAME_OVER:
+      // TODO: Handle game over logic here.
+      break;
+  }
+}
+
+void Game::HandleBattleUpdate() {
   if (is_in_battle_) {
     // Check if player just finished attacking.
     if (!is_player_turn_ && !player_->IsAttacking() && !enemy_->IsAttacking() &&
@@ -107,20 +149,7 @@ void Game::Update() {
   }
 }
 
-void Game::Render() {
-  SDL_RenderClear(renderer_);
-  background_->Render();
-  if (should_render_text_box_) {
-    text_box_->Render();
-  }
-  player_->Render();
-  enemy_->Render();
-  // Double buffering.
-  SDL_RenderPresent(renderer_);
-}
-
-void Game::HandleEvents() {
-  SDL_PollEvent(&event_);
+void Game::HandleBattleEvents() {
   switch (event_.type) {
     case SDL_QUIT:
       is_running_ = false;
@@ -131,19 +160,19 @@ void Game::HandleEvents() {
             text_box_->GetTextBoxType();
         switch (current_text_box_type) {
           case constants::TextBoxType::MAIN:
-            HandleMenuEvents();
+            HandleBattleChoiceEvents();
             break;
           case constants::TextBoxType::ATTACK:
-            HandleAttackEvents();
+            HandleBattleAttackEvents();
             break;
           case constants::TextBoxType::STATS:
-            HandleStatsEvents();
+            HandleBattleStatsEvents();
             break;
           case constants::TextBoxType::SAVE:
-            HandleSaveEvents();
+            HandleBattleSaveEvents();
             break;
           case constants::TextBoxType::RUN:
-            HandleRunEvents();
+            HandleBattleRunEvents();
             break;
         }
       }
@@ -151,7 +180,7 @@ void Game::HandleEvents() {
   }
 }
 
-void Game::HandleMenuEvents() {
+void Game::HandleBattleChoiceEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       text_box_->SetAttackMenu();
@@ -181,7 +210,7 @@ void Game::HandleMenuEvents() {
   }
 }
 
-void Game::HandleAttackEvents() {
+void Game::HandleBattleAttackEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       player_->Attack1();
@@ -217,7 +246,7 @@ void Game::HandleAttackEvents() {
   }
 }
 
-void Game::HandleStatsEvents() {
+void Game::HandleBattleStatsEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       text_box_->SetStatsMenu(player_.get());
@@ -228,7 +257,7 @@ void Game::HandleStatsEvents() {
   }
 }
 
-void Game::HandleRunEvents() {
+void Game::HandleBattleRunEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
       SetIsRunning(false);
@@ -239,7 +268,7 @@ void Game::HandleRunEvents() {
   }
 }
 
-void Game::HandleSaveEvents() {
+void Game::HandleBattleSaveEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1: {
       if (!database_) {
