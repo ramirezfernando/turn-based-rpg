@@ -20,10 +20,16 @@
 // The main game class that manages the game loop, rendering, and events.
 class Game {
  public:
+  enum class State {
+    CHARACTER_SELECTION,
+    BATTLE,
+    GAME_OVER,
+  };
   ~Game();
   void Init(const char* title, int x_pos, int y_pos, int width, int height);
   void Update();
   void Render();
+  void SetState(State state) { state_ = state; }
   void SetIsRunning(bool is_running) { is_running_ = is_running; }
   bool IsRunning() { return is_running_; }
   void HandleEvents();
@@ -43,4 +49,5 @@ class Game {
   std::unique_ptr<Character> player_;
   std::unique_ptr<Character> enemy_;
   bool is_running_, is_player_turn_, is_in_battle_, should_render_text_box_;
+  State state_;
 };
