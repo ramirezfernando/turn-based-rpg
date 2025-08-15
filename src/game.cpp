@@ -193,8 +193,8 @@ void Game::HandleBattleOptionEvents() {
           return;
         }
       }
-      if (database_->isLoadGameAvailable(1)) {
-        text_box_->SetSaveSlotText(1, database_->getLoadGameTime(1));
+      if (database_->IsPreviousSaveAvailable(1)) {
+        text_box_->SetSaveSlotText(1, database_->GetPreviousSaveTime(1));
       }
       text_box_->SetBattleSave();
       break;

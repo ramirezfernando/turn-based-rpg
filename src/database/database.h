@@ -14,8 +14,8 @@ class Database {
   void Close();
   void SaveGame(int slot, Character* player, Character* enemy);
   void LoadGame(int slot, Character* player, Character* enemy);
-  bool isLoadGameAvailable(int slot);
-  std::string getLoadGameTime(int slot);
+  bool IsPreviousSaveAvailable(int slot);
+  std::string GetPreviousSaveTime(int slot);
 
  private:
   sqlite3* database_;

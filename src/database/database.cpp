@@ -105,7 +105,7 @@ void Database::SaveGame(int slot, Character* player, Character* enemy) {
   sqlite3_finalize(stmt);
 }
 
-bool Database::isLoadGameAvailable(int slot) {
+bool Database::IsPreviousSaveAvailable(int slot) {
   if (!database_) {
     std::cerr << "Database is not open." << std::endl;
     return false;
@@ -135,7 +135,7 @@ bool Database::isLoadGameAvailable(int slot) {
   }
 }
 
-std::string Database::getLoadGameTime(int slot) {
+std::string Database::GetPreviousSaveTime(int slot) {
   if (!database_) {
     std::cerr << "Database is not open." << std::endl;
     return "";
