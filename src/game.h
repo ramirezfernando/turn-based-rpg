@@ -45,11 +45,11 @@ class Game {
   void HandleBattleSaveEvents();
   void HandleBattleRunEvents();
   SDL_Window* window_;
+  State state_;
   std::unique_ptr<Database> database_;
   std::unique_ptr<Background> background_;
   std::unique_ptr<TextBox> text_box_;
   std::unique_ptr<Character> player_;
   std::unique_ptr<Character> enemy_;
   bool is_running_, is_player_turn_, is_in_battle_, should_render_text_box_;
-  State state_;
 };
