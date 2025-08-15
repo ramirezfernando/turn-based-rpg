@@ -37,9 +37,10 @@ class Game {
   static SDL_Event event_;
 
  private:
+  // State::BATTLE functions
   void HandleBattleUpdate();
   void HandleBattleEvents();
-  void HandleBattleChoiceEvents();
+  void HandleBattleOptionEvents();
   void HandleBattleAttackEvents();
   void HandleBattleStatsEvents();
   void HandleBattleSaveEvents();

@@ -7,14 +7,6 @@ namespace constants {
 extern const int FRAME_DELAY;
 extern const int WINDOW_SIZE;
 
-enum class TextBoxType {
-  MAIN,
-  ATTACK,
-  STATS,
-  RUN,
-  SAVE,
-};
-
 extern const int TEXT_BOX_WIDTH;
 extern const int TEXT_BOX_HEIGHT;
 extern const int TEXT_BOX_X_POS;

@@ -139,7 +139,7 @@ void Game::HandleBattleUpdate() {
         is_running_ = false;
       } else {
         text_box_->SetShouldRender(true);
-        text_box_->SetMainMenu();
+        text_box_->SetBattleOptions();
         is_in_battle_ = false;
       }
     }
@@ -153,22 +153,22 @@ void Game::HandleBattleEvents() {
       break;
     case SDL_KEYDOWN:
       if (is_player_turn_) {
-        constants::TextBoxType current_text_box_type =
+        TextBox::TextBoxType current_text_box_type =
             text_box_->GetTextBoxType();
         switch (current_text_box_type) {
-          case constants::TextBoxType::MAIN:
-            HandleBattleChoiceEvents();
+          case TextBox::TextBoxType::BATTLE_OPTIONS:
+            HandleBattleOptionEvents();
             break;
-          case constants::TextBoxType::ATTACK:
+          case TextBox::TextBoxType::BATTLE_ATTACK:
             HandleBattleAttackEvents();
             break;
-          case constants::TextBoxType::STATS:
+          case TextBox::TextBoxType::BATTLE_STATS:
             HandleBattleStatsEvents();
             break;
-          case constants::TextBoxType::SAVE:
+          case TextBox::TextBoxType::BATTLE_SAVE:
             HandleBattleSaveEvents();
             break;
-          case constants::TextBoxType::RUN:
+          case TextBox::TextBoxType::BATTLE_RUN:
             HandleBattleRunEvents();
             break;
         }
@@ -177,13 +177,13 @@ void Game::HandleBattleEvents() {
   }
 }
 
-void Game::HandleBattleChoiceEvents() {
+void Game::HandleBattleOptionEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_->SetAttackMenu();
+      text_box_->SetBattleAttack();
       break;
     case SDLK_2:
-      text_box_->SetStatsMenu(player_.get());
+      text_box_->SetBattleStats(player_.get());
       break;
     case SDLK_3:
       if (!database_) {
@@ -196,13 +196,13 @@ void Game::HandleBattleChoiceEvents() {
       if (database_->isLoadGameAvailable(1)) {
         text_box_->SetSaveSlotText(1, database_->getLoadGameTime(1));
       }
-      text_box_->SetSaveMenu();
+      text_box_->SetBattleSave();
       break;
     case SDLK_4:
-      text_box_->SetRunMenu();
+      text_box_->SetBattleRun();
       break;
     default:
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
   }
 }
@@ -238,7 +238,7 @@ void Game::HandleBattleAttackEvents() {
       text_box_->SetShouldRender(false);
       break;
     default:
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
   }
 }
@@ -246,10 +246,10 @@ void Game::HandleBattleAttackEvents() {
 void Game::HandleBattleStatsEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      text_box_->SetStatsMenu(player_.get());
+      text_box_->SetBattleStats(player_.get());
       break;
     default:
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
   }
 }
@@ -260,7 +260,7 @@ void Game::HandleBattleRunEvents() {
       SetIsRunning(false);
       break;
     default:
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
   }
 }
@@ -277,11 +277,11 @@ void Game::HandleBattleSaveEvents() {
       }
       database_->SaveGame(1, player_.get(), enemy_.get());
       text_box_->SetSaveSlotText(1, Util::GetLocalTime());
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
     }
     default:
-      text_box_->SetMainMenu();
+      text_box_->SetBattleOptions();
       break;
   }
 }
