@@ -12,7 +12,7 @@ class Background {
   Background(const char* file_path, int width, int height);
   ~Background();
   void Render();
-  void SetImageFilePathAndLoadTexture(const char* file_path);
+  void Update(const char* file_path);
   std::string GetImageFilePath() { return file_path_; }
 
  private:

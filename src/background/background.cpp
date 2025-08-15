@@ -27,7 +27,7 @@ void Background::Render() {
   SDL_RenderCopy(Game::renderer_, background_texture_, &src_rect_, &dest_rect_);
 }
 
-void Background::SetImageFilePathAndLoadTexture(const char* file_path) {
+void Background::Update(const char* file_path) {
   file_path_ = std::string(file_path);
   background_texture_ = Util::LoadTexture(file_path);
 }
