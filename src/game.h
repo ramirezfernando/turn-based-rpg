@@ -37,6 +37,10 @@ class Game {
   static SDL_Event event_;
 
  private:
+  // State::CHARACTER_SELECTION functions
+  void HandleCharacterSelectionUpdate();
+  void HandleCharacterSelectionEvents();
+  void HandleSpecificCharacterSelectionEvents(bool is_enemy);
   // State::BATTLE functions
   void HandleBattleUpdate();
   void HandleBattleEvents();
