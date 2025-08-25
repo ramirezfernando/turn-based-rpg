@@ -46,8 +46,7 @@ void Game::Init(const char* title, int x_pos, int y_pos, int width,
 
   // Initial game state is character selection for the player.
   state_ = State::CHARACTER_SELECTION;
-  text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_PLAYER);
-  text_box_->SetCharacterSelection(/*is_enemy=*/false);
+  text_box_->SetPlayerSelection();
 }
 
 void Game::Update() {
@@ -156,8 +155,7 @@ void Game::HandlePlayerSelectionEvents() {
   }
   if (player_) {
     // Since player has been selected, move to enemy selection.
-    text_box_->SetCharacterSelection(/*is_enemy=*/true);
-    text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_ENEMY);
+    text_box_->SetEnemySelection();
   }
 }
 
@@ -173,10 +171,9 @@ void Game::HandleEnemySelectionEvents() {
     case SDLK_3:
       enemy_ = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true));
       break;
-      // Go back to player selection if invalid key is pressed.
+    // Go back to player selection if invalid key is pressed.
     default:
-      text_box_->SetCharacterSelection(/*is_enemy=*/false);
-      text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_PLAYER);
+      text_box_->SetPlayerSelection();
       player_.reset();
       break;
   }

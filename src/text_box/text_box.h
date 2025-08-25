@@ -28,17 +28,18 @@ class TextBox {
   bool ShouldRender() const { return should_render_; }
   void SetShouldRender(bool should_render) { should_render_ = should_render; }
   void SetText(const std::string& text, SDL_Color color = {0, 0, 0, 255});
-  void SetCharacterSelection(bool is_enemy);
+  void SetPlayerSelection();
+  void SetEnemySelection();
   void SetBattleOptions();
   void SetBattleAttack();
   void SetBattleStats(Character* player);
   void SetBattleRun();
   void SetBattleSave();
   void SetSaveSlotText(int slot, const std::string& text);
-  void SetType(Type type) { text_box_type_ = type; }
   Type GetType() const { return text_box_type_; }
 
  private:
+  // `text_box_type_` should only be changed via the setter methods provided.
   Type text_box_type_;
   TTF_Font* font_ = nullptr;
   SDL_Texture* text_texture_ = nullptr;

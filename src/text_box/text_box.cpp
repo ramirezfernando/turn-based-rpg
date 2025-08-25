@@ -56,36 +56,41 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
   text_texture_ = Util::LoadText(text.c_str(), font_, color);
 }
 
-// This function does not change the text box type (unlike other setters)
-// because we need to set the type separately for player and enemy selection.
-void TextBox::SetCharacterSelection(bool is_enemy) {
+void TextBox::SetPlayerSelection() {
   // Omitting full class names for brevity.
-  if (is_enemy) {
-    SetText("Enemy: 1.Priestess 2.Monk 3.Knight");
-  } else {
-    SetText("You: 1.Priestess 2.Monk 3.Knight");
-  }
+  SetText("You: 1.Priestess 2.Monk 3.Knight");
+  text_box_type_ = Type::CHARACTER_SELECTION_PLAYER;
+}
+
+void TextBox::SetEnemySelection() {
+  // Omitting full class names for brevity.
+  SetText("Enemy: 1.Priestess 2.Monk 3.Knight");
+  text_box_type_ = Type::CHARACTER_SELECTION_ENEMY;
 }
 
 void TextBox::SetBattleOptions() {
   SetText("1.Attack 2.Stats 3.Save 4.Run");
   text_box_type_ = Type::BATTLE_OPTIONS;
 }
+
 void TextBox::SetBattleAttack() {
   SetText("1.Atk1 2.Atk2 3.Atk3 4.Atk4");
   text_box_type_ = Type::BATTLE_ATTACK;
 }
+
 void TextBox::SetBattleStats(Character* player) {
   std::string stats_text = "LVL:" + std::to_string(player->GetLevel()) +
                            " HP:" + std::to_string(player->GetHealth()) +
-                           " EN:" + std::to_string(player->GetEnergy());
+                           " E:" + std::to_string(player->GetEnergy());
   SetText(stats_text);
   text_box_type_ = Type::BATTLE_STATS;
 }
+
 void TextBox::SetBattleRun() {
   SetText("1. Are you sure you want to run?");
   text_box_type_ = Type::BATTLE_RUN;
 }
+
 void TextBox::SetBattleSave() {
   std::string save_slots_text = "1. " + save_slots_text_[0];
   SetText(save_slots_text);
