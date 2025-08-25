@@ -67,20 +67,14 @@ void Game::Update() {
 void Game::Render() {
   SDL_RenderClear(renderer_);
   background_->Render();
-  text_box_->Render();  // Only render if `should_render_` is true.
+  // `TextBox::Render()` will return early if it shouldn't render.
+  text_box_->Render();
   switch (state_) {
     case State::CHARACTER_SELECTION:
-      // `player_` and `enemy_` can be null if not yet selected.
-      if (player_) {
-        player_->Render();
-      }
-      if (enemy_) {
-        enemy_->Render();
-      }
+      HandleCharacterSelectionRender();
       break;
     case State::BATTLE:
-      player_->Render();
-      enemy_->Render();
+      HandleBattleRender();
       break;
     case State::GAME_OVER:
       // TODO: Handle game over logic here.
@@ -111,6 +105,16 @@ void Game::HandleCharacterSelectionUpdate() {
   }
   if (enemy_) {
     enemy_->Update();
+  }
+}
+
+void Game::HandleCharacterSelectionRender() {
+  // `player_` and `enemy_` can be null if not yet selected.
+  if (player_) {
+    player_->Render();
+  }
+  if (enemy_) {
+    enemy_->Render();
   }
 }
 
@@ -228,6 +232,11 @@ void Game::HandleBattleUpdate() {
       }
     }
   }
+}
+
+void Game::HandleBattleRender() {
+  player_->Render();
+  enemy_->Render();
 }
 
 void Game::HandleBattleEvents() {

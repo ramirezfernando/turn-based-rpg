@@ -39,10 +39,12 @@ class Game {
  private:
   // State::CHARACTER_SELECTION functions
   void HandleCharacterSelectionUpdate();
+  void HandleCharacterSelectionRender();
   void HandleCharacterSelectionEvents();
   void HandleSpecificCharacterSelectionEvents(bool is_enemy);
   // State::BATTLE functions
   void HandleBattleUpdate();
+  void HandleBattleRender();
   void HandleBattleEvents();
   void HandleBattleOptionEvents();
   void HandleBattleAttackEvents();
