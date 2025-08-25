@@ -12,7 +12,7 @@
 // `Game` class.
 class TextBox {
  public:
-  enum class Type {
+  enum class State {
     CHARACTER_SELECTION_PLAYER,
     CHARACTER_SELECTION_ENEMY,
     BATTLE_OPTIONS,
@@ -36,11 +36,11 @@ class TextBox {
   void SetBattleRun();
   void SetBattleSave();
   void SetSaveSlotText(int slot, const std::string& text);
-  Type GetType() const { return text_box_type_; }
+  State GetState() const { return text_box_state_; }
 
  private:
-  // `text_box_type_` should only be changed via the setter methods provided.
-  Type text_box_type_;
+  // `text_box_state_` should only be changed via the setter methods provided.
+  State text_box_state_;
   TTF_Font* font_ = nullptr;
   SDL_Texture* text_texture_ = nullptr;
   SDL_Texture* box_texture_ = nullptr;

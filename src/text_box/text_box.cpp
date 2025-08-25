@@ -8,9 +8,6 @@ TextBox::TextBox(const char* font_path, const char* background_path,
   TTF_Init();
   font_ = TTF_OpenFont(font_path, font_size);
   box_texture_ = Util::LoadTexture(background_path);
-  text_texture_ =
-      Util::LoadText("1.Attack 2.Stats 3.Save 4.Run", font_, {0, 0, 0, 255});
-  text_box_type_ = Type::BATTLE_OPTIONS;
   box_x_pos_ = x_pos;
   box_y_pos_ = y_pos;
 
@@ -59,23 +56,23 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
 void TextBox::SetPlayerSelection() {
   // Omitting full class names for brevity.
   SetText("You: 1.Priestess 2.Monk 3.Knight");
-  text_box_type_ = Type::CHARACTER_SELECTION_PLAYER;
+  text_box_state_ = State::CHARACTER_SELECTION_PLAYER;
 }
 
 void TextBox::SetEnemySelection() {
   // Omitting full class names for brevity.
   SetText("Enemy: 1.Priestess 2.Monk 3.Knight");
-  text_box_type_ = Type::CHARACTER_SELECTION_ENEMY;
+  text_box_state_ = State::CHARACTER_SELECTION_ENEMY;
 }
 
 void TextBox::SetBattleOptions() {
   SetText("1.Attack 2.Stats 3.Save 4.Run");
-  text_box_type_ = Type::BATTLE_OPTIONS;
+  text_box_state_ = State::BATTLE_OPTIONS;
 }
 
 void TextBox::SetBattleAttack() {
   SetText("1.Atk1 2.Atk2 3.Atk3 4.Atk4");
-  text_box_type_ = Type::BATTLE_ATTACK;
+  text_box_state_ = State::BATTLE_ATTACK;
 }
 
 void TextBox::SetBattleStats(Character* player) {
@@ -83,18 +80,18 @@ void TextBox::SetBattleStats(Character* player) {
                            " HP:" + std::to_string(player->GetHealth()) +
                            " E:" + std::to_string(player->GetEnergy());
   SetText(stats_text);
-  text_box_type_ = Type::BATTLE_STATS;
+  text_box_state_ = State::BATTLE_STATS;
 }
 
 void TextBox::SetBattleRun() {
   SetText("1. Are you sure you want to run?");
-  text_box_type_ = Type::BATTLE_RUN;
+  text_box_state_ = State::BATTLE_RUN;
 }
 
 void TextBox::SetBattleSave() {
   std::string save_slots_text = "1. " + save_slots_text_[0];
   SetText(save_slots_text);
-  text_box_type_ = Type::BATTLE_SAVE;
+  text_box_state_ = State::BATTLE_SAVE;
 }
 
 void TextBox::SetSaveSlotText(int slot, const std::string& text) {

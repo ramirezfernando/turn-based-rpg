@@ -123,16 +123,16 @@ void Game::HandleCharacterSelectionEvents() {
       is_running_ = false;
       break;
     case SDL_KEYDOWN:
-      TextBox::Type current_text_box_type = text_box_->GetType();
-      switch (current_text_box_type) {
-        case TextBox::Type::CHARACTER_SELECTION_PLAYER:
+      TextBox::State current_text_box_state = text_box_->GetState();
+      switch (current_text_box_state) {
+        case TextBox::State::CHARACTER_SELECTION_PLAYER:
           HandlePlayerSelectionEvents();
           break;
-        case TextBox::Type::CHARACTER_SELECTION_ENEMY:
+        case TextBox::State::CHARACTER_SELECTION_ENEMY:
           HandleEnemySelectionEvents();
           break;
         // Adding a default case to avoid compiler warnings for unhandled
-        // TextBox::Type enums.
+        // `TextBox::State` enums.
         default:
           break;
       }
@@ -247,25 +247,25 @@ void Game::HandleBattleEvents() {
       break;
     case SDL_KEYDOWN:
       if (is_player_turn_) {
-        TextBox::Type current_text_box_type = text_box_->GetType();
-        switch (current_text_box_type) {
-          case TextBox::Type::BATTLE_OPTIONS:
+        TextBox::State current_text_box_state = text_box_->GetState();
+        switch (current_text_box_state) {
+          case TextBox::State::BATTLE_OPTIONS:
             HandleBattleOptionEvents();
             break;
-          case TextBox::Type::BATTLE_ATTACK:
+          case TextBox::State::BATTLE_ATTACK:
             HandleBattleAttackEvents();
             break;
-          case TextBox::Type::BATTLE_STATS:
+          case TextBox::State::BATTLE_STATS:
             HandleBattleStatsEvents();
             break;
-          case TextBox::Type::BATTLE_SAVE:
+          case TextBox::State::BATTLE_SAVE:
             HandleBattleSaveEvents();
             break;
-          case TextBox::Type::BATTLE_RUN:
+          case TextBox::State::BATTLE_RUN:
             HandleBattleRunEvents();
             break;
           // Adding a default case to avoid compiler warnings for unhandled
-          // TextBox::Type enums.
+          // `TextBox::State` enums.
           default:
             break;
         }
