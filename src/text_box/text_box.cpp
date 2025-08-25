@@ -56,13 +56,13 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
 void TextBox::SetPlayerSelection() {
   // Omitting full class names for brevity.
   SetText("You: 1.Priestess 2.Monk 3.Knight");
-  text_box_state_ = State::CHARACTER_SELECTION_PLAYER;
+  text_box_state_ = State::PLAYER_SELECTION;
 }
 
 void TextBox::SetEnemySelection() {
   // Omitting full class names for brevity.
   SetText("Enemy: 1.Priestess 2.Monk 3.Knight");
-  text_box_state_ = State::CHARACTER_SELECTION_ENEMY;
+  text_box_state_ = State::ENEMY_SELECTION;
 }
 
 void TextBox::SetBattleOptions() {

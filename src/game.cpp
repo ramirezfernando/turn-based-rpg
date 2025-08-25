@@ -125,10 +125,10 @@ void Game::HandleCharacterSelectionEvents() {
     case SDL_KEYDOWN:
       TextBox::State current_text_box_state = text_box_->GetState();
       switch (current_text_box_state) {
-        case TextBox::State::CHARACTER_SELECTION_PLAYER:
+        case TextBox::State::PLAYER_SELECTION:
           HandlePlayerSelectionEvents();
           break;
-        case TextBox::State::CHARACTER_SELECTION_ENEMY:
+        case TextBox::State::ENEMY_SELECTION:
           HandleEnemySelectionEvents();
           break;
         // Adding a default case to avoid compiler warnings for unhandled
