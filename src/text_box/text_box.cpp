@@ -59,10 +59,11 @@ void TextBox::SetText(const std::string& text, SDL_Color color) {
 // This function does not change the text box type (unlike other setters)
 // because we need to set the type separately for player and enemy selection.
 void TextBox::SetCharacterSelection(bool is_enemy) {
+  // Omitting full class names for brevity.
   if (is_enemy) {
-    SetText("Enemy: 1.WaterPriestess 2.Ground Monk 3.Fire Knight");
+    SetText("Enemy: 1.Priestess 2.Monk 3.Knight");
   } else {
-    SetText("Player: 1.Water Priestess 2.Ground Monk3. Fire Knight");
+    SetText("You: 1.Priestess 2.Monk 3.Knight");
   }
 }
 
