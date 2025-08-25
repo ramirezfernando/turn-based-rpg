@@ -78,7 +78,7 @@ void TextBox::SetBattleAttack() {
 void TextBox::SetBattleStats(Character* player) {
   std::string stats_text = "LVL:" + std::to_string(player->GetLevel()) +
                            " HP:" + std::to_string(player->GetHealth()) +
-                           " E:" + std::to_string(player->GetEnergy());
+                           " NRG:" + std::to_string(player->GetEnergy());
   SetText(stats_text);
   text_box_state_ = State::BATTLE_STATS;
 }
