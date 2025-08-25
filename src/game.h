@@ -41,7 +41,8 @@ class Game {
   void HandleCharacterSelectionUpdate();
   void HandleCharacterSelectionRender();
   void HandleCharacterSelectionEvents();
-  void HandleSpecificCharacterSelectionEvents(bool is_enemy);
+  void HandlePlayerSelectionEvents();
+  void HandleEnemySelectionEvents();
   // State::BATTLE functions
   void HandleBattleUpdate();
   void HandleBattleRender();

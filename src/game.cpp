@@ -127,10 +127,10 @@ void Game::HandleCharacterSelectionEvents() {
       TextBox::Type current_text_box_type = text_box_->GetType();
       switch (current_text_box_type) {
         case TextBox::Type::CHARACTER_SELECTION_PLAYER:
-          HandleSpecificCharacterSelectionEvents(/*is_enemy=*/false);
+          HandlePlayerSelectionEvents();
           break;
         case TextBox::Type::CHARACTER_SELECTION_ENEMY:
-          HandleSpecificCharacterSelectionEvents(/*is_enemy=*/true);
+          HandleEnemySelectionEvents();
           break;
         // Adding a default case to avoid compiler warnings for unhandled
         // TextBox::Type enums.
@@ -141,47 +141,51 @@ void Game::HandleCharacterSelectionEvents() {
   }
 }
 
-void Game::HandleSpecificCharacterSelectionEvents(bool is_enemy) {
+void Game::HandlePlayerSelectionEvents() {
   switch (event_.key.keysym.sym) {
     case SDLK_1:
-      if (is_enemy) {
-        enemy_ = std::unique_ptr<Character>(new WaterPriestess(is_enemy));
-        state_ = State::BATTLE;
-        text_box_->SetBattleOptions();
-        is_player_turn_ = true;
-        is_in_battle_ = false;
-      } else {
-        player_ = std::unique_ptr<Character>(new WaterPriestess(is_enemy));
-        text_box_->SetCharacterSelection(/*is_enemy=*/true);
-        text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_ENEMY);
-      }
+      player_ =
+          std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/false));
       break;
     case SDLK_2:
-      if (is_enemy) {
-        enemy_ = std::unique_ptr<Character>(new GroundMonk(is_enemy));
-        state_ = State::BATTLE;
-        text_box_->SetBattleOptions();
-        is_player_turn_ = true;
-        is_in_battle_ = false;
-      } else {
-        player_ = std::unique_ptr<Character>(new GroundMonk(is_enemy));
-        text_box_->SetCharacterSelection(/*is_enemy=*/true);
-        text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_ENEMY);
-      }
+      player_ = std::unique_ptr<Character>(new GroundMonk(/*is_enemy=*/false));
       break;
     case SDLK_3:
-      if (is_enemy) {
-        enemy_ = std::unique_ptr<Character>(new FireKnight(is_enemy));
-        state_ = State::BATTLE;
-        text_box_->SetBattleOptions();
-        is_player_turn_ = true;
-        is_in_battle_ = false;
-      } else {
-        player_ = std::unique_ptr<Character>(new FireKnight(is_enemy));
-        text_box_->SetCharacterSelection(/*is_enemy=*/true);
-        text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_ENEMY);
-      }
+      player_ = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/false));
       break;
+  }
+  if (player_) {
+    // Since player has been selected, move to enemy selection.
+    text_box_->SetCharacterSelection(/*is_enemy=*/true);
+    text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_ENEMY);
+  }
+}
+
+void Game::HandleEnemySelectionEvents() {
+  switch (event_.key.keysym.sym) {
+    case SDLK_1:
+      enemy_ =
+          std::unique_ptr<Character>(new WaterPriestess(/*is_enemy=*/true));
+      break;
+    case SDLK_2:
+      enemy_ = std::unique_ptr<Character>(new GroundMonk(/*is_enemy=*/true));
+      break;
+    case SDLK_3:
+      enemy_ = std::unique_ptr<Character>(new FireKnight(/*is_enemy=*/true));
+      break;
+      // Go back to player selection if invalid key is pressed.
+    default:
+      text_box_->SetCharacterSelection(/*is_enemy=*/false);
+      text_box_->SetType(TextBox::Type::CHARACTER_SELECTION_PLAYER);
+      player_.reset();
+      break;
+  }
+  if (enemy_) {
+    // Since enemy has been selected, move to battle state.
+    text_box_->SetBattleOptions();
+    is_player_turn_ = true;
+    is_in_battle_ = false;
+    state_ = State::BATTLE;
   }
 }
 
