@@ -2,7 +2,9 @@
 
 A 2D, turn-based RPG developed in C++ using SDL2, featuring three unique characters and AI-powered enemy decision-making via OpenAI's GPT-3.5 Turbo.
 
-![Demo Screenshot](images/demo.png)
+![Demo Screenshot](images/rpg.gif)
+
+Note: The Fire Knight is controlled by AI. See prompt [here](https://github.com/ramirezfernando/turn-based-rpg/blob/74040d06f8cb6f54d8a039da8c9e6b038f4120d6/src/characters/character.cpp#L74).
 
 ## Table of Contents
 
